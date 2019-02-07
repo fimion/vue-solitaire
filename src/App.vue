@@ -1,28 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <deck></deck>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Deck from "./components/Deck";
 
 export default {
   name: "app",
   components: {
-    HelloWorld
-  }
+    Deck,
+  },
 };
 </script>
 
 <style lang="scss">
+  *{
+    --color-white:#e6e6e6;
+    --color-black:#121212;
+    --color-red:#ee1111;
+    --playing-mat:#008800;
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+  }
+  html,body{
+    background-color:var(--playing-mat)
+  }
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  width: 99vw;
+  background-color:var(--playing-mat);
+  margin:0;
+  padding:10px;
 }
 </style>

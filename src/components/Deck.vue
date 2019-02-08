@@ -1,14 +1,16 @@
 <template>
   <div class="deck">
-    <playing-card v-for="card in deck"
+    <playing-card v-for="(card,i) in deck"
+                  @click="flipCard(i)"
                   :card="card"
-                  :key="card"/>
+                  :key="card.card"/>
   </div>
 </template>
 
 <script>
   import PlayingCard from './PlayingCard'
-
+  import {createNamespacedHelpers} from 'vuex'
+  const  {mapActions:deckActions}= createNamespacedHelpers('deck')
   export default {
     name: "Deck",
     props: {
@@ -16,6 +18,11 @@
         type: Array,
         required: true,
       },
+    },
+    methods:{
+      ...deckActions([
+          'flipCard',
+      ]),
     },
     components: {
       PlayingCard,

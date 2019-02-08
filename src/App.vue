@@ -10,28 +10,24 @@
 
 <script>
   import Deck from "./components/Deck"
+  import {createNamespacedHelpers} from "vuex"
+
+  const {mapState: deckState, mapActions:deckActions} = createNamespacedHelpers('deck')
 
   export default {
     name: "app",
     data: function () {
-      let cards = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'],
-          suits = ['H', 'C', 'S', 'D'],
-          deck = suits.map((suit) => {
-                return cards.map((card) => card + suit)
-              })
-              .flat()
-              .map((e) => {
-                return {faceUp: false, card: e}
-              })
-
-      return {
-        deck: deck,
-      }
+      return {}
+    },
+    computed:{
+      ...deckState({
+        'deck': s=>s.cards,
+      }),
     },
     methods: {
-      shuffleDeck() {
-        this.deck = this.deck.sort(() => (Math.random() - 0.5))
-      },
+      ...deckActions([
+          'shuffleDeck',
+      ]),
     },
     components: {
       Deck,

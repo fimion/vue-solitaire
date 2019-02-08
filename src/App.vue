@@ -52,8 +52,13 @@
 
   #app {
     width: 99vw;
+    min-height:100vh;
     background-color: var(--playing-mat);
     margin: 0;
     padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(20px, 200px));
+    grid-template-rows: minmax(30px,300px) 1fr;
+    grid-gap: 10px;
   }
 </style>

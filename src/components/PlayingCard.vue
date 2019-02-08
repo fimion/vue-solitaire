@@ -17,17 +17,21 @@
 </template>
 
 <script>
-  import {Card} from "../classes/Card.js"
+  import Card from "../classes/Card.js"
+  import EmptyCard from "../classes/EmptyCard.js"
 
   export default {
     name: "PlayingCard",
     props: {
       card: {
-        type: Card,
+        type: [Card,EmptyCard],
         required: true,
       },
     },
     computed: {
+      isEmpty(){
+        return this.card.isEmpty
+      },
       faceUp(){
         return this.card.faceUp
       },

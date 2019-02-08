@@ -33,5 +33,7 @@
 </script>
 
 <style scoped>
-
+.flop-area{
+  grid-column-start: span 2;
+}
 </style>

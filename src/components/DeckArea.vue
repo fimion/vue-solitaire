@@ -35,9 +35,6 @@
 
 <style scoped>
   .deck {
-    /*display: grid;
-    grid-template-columns: repeat(4, minmax(20px, 200px));
-    grid-auto-rows: 1fr;
-    grid-gap: 8px;*/
+
   }
 </style>

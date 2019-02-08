@@ -1,23 +1,25 @@
 <template>
   <div class="deck">
+    <card-stack>
     <playing-card v-for="(card,i) in deck"
                   @click="flipCard(i)"
                   :card="card"
                   :key="card.card"/>
+    </card-stack>
   </div>
 </template>
 
 <script>
   import PlayingCard from './PlayingCard'
+  import CardStack from './CardStack.vue'
   import {createNamespacedHelpers} from 'vuex'
-  const  {mapActions:deckActions}= createNamespacedHelpers('deck')
+  const  {mapActions:deckActions,mapState:deckState}= createNamespacedHelpers('deck')
   export default {
     name: "Deck",
-    props: {
-      deck: {
-        type: Array,
-        required: true,
-      },
+    computed:{
+      ...deckState({
+        'deck': s=>s.cards,
+      }),
     },
     methods:{
       ...deckActions([
@@ -26,15 +28,16 @@
     },
     components: {
       PlayingCard,
+      CardStack,
     },
   }
 </script>
 
 <style scoped>
   .deck {
-    display: grid;
+    /*display: grid;
     grid-template-columns: repeat(4, minmax(20px, 200px));
     grid-auto-rows: 1fr;
-    grid-gap: 8px;
+    grid-gap: 8px;*/
   }
 </style>

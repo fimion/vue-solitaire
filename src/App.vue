@@ -1,36 +1,35 @@
 <template>
   <div id="app">
-    <button class="shuffle-button"
-            @click="shuffleDeck">
-      Shuffle
-    </button>
-    <deck :deck="deck"></deck>
+    <deck-area />
+    <flop-area />
   </div>
 </template>
 
 <script>
-  import Deck from "./components/Deck"
+  import DeckArea from "./components/DeckArea"
+  import FlopArea from "./components/FlopArea.vue"
   import {createNamespacedHelpers} from "vuex"
 
-  const {mapState: deckState, mapActions:deckActions} = createNamespacedHelpers('deck')
+  const {
+    mapActions:deckActions,
+  } = createNamespacedHelpers('deck')
 
   export default {
     name: "app",
     data: function () {
       return {}
     },
-    computed:{
-      ...deckState({
-        'deck': s=>s.cards,
-      }),
-    },
     methods: {
       ...deckActions([
           'shuffleDeck',
       ]),
     },
+    created(){
+      this.shuffleDeck()
+    },
     components: {
-      Deck,
+      DeckArea,
+      FlopArea,
     },
   }
 </script>

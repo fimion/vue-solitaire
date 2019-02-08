@@ -32,47 +32,19 @@
         return this.card.faceUp
       },
       suit() {
-        return this.card.card[this.card.card.length-1]
+        return this.card.suit
       },
       rank() {
-        return this.card.card.slice(0,this.card.card.length-1)
+        return this.card.rank
       },
       color() {
         return this.suit === 'H' || this.suit === 'D' ? 'red' : 'black'
       },
       symbol() {
-        return {
-          'H': '♥',
-          'D': '♦',
-          'C': '♣',
-          'S': '♠',
-        }[this.suit]
+        return this.card.symbol
       },
       name() {
-        let suitnames = {
-              'H': 'Hearts',
-              'D': 'Diamonds',
-              'C': 'Clubs',
-              'S': 'Spades',
-            },
-            cardNames = {
-              'A': 'Ace',
-              '2': 'Two',
-              '3': 'Three',
-              '4': 'Four',
-              '5': 'Five',
-              '6': 'Six',
-              '7': 'Seven',
-              '8': 'Eight',
-              '9': 'Nine',
-              '10': 'Ten',
-              'J': 'Jack',
-              'Q': 'Queen',
-              'K': 'King',
-            }
-
-
-        return cardNames[this.rank] + ' of ' + suitnames[this.suit]
+        return this.card.readableName
       },
     },
   }
@@ -83,6 +55,7 @@
     font-size: 2.5rem;
     border: var(--color-black) solid 3px;
     border-radius: 0.5rem;
+    max-width: 200px;
   }
   .card:focus{
     outline: var(--color-focus) 3px solid;

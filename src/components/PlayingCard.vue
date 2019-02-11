@@ -79,6 +79,7 @@
 
   svg{
     pointer-events: none;
+    width:100%;
   }
 
   .black {

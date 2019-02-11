@@ -1,3 +1,4 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4e77986a-0eff-4906-965e-6fcc1f663bd7/deploy-status)](https://app.netlify.com/sites/vue-solitaire/deploys)
 # vue-solitaire
 
 ## Project setup

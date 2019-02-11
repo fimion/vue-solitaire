@@ -60,6 +60,7 @@
     border: var(--color-black) solid 3px;
     border-radius: 0.5rem;
     max-width: 200px;
+    cursor: pointer;
   }
   .card:focus{
     outline: var(--color-focus) 3px solid;

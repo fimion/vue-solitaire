@@ -1,3 +1,6 @@
+import {PUSH_CARD} from "./_common.js"
+
+
 export default {
   namespaced:true,
   state:{
@@ -5,9 +8,14 @@ export default {
   },
   getters:{},
   mutations:{
-    resetCards({cards}){
+    RESET_CARDS({cards}){
       cards.forEach(e=>{e.faceUp = false})
     },
+    PUSH_CARD,
   },
-  actions:{},
+  actions:{
+    flopCard({commit}, newCard){
+      commit('PUSH_CARD', newCard)
+    },
+  },
 }

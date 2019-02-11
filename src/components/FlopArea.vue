@@ -34,6 +34,6 @@
 
 <style scoped>
 .flop-area{
-  grid-column-start: span 2;
+  /*grid-column-start: span 2;*/
 }
 </style>

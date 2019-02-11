@@ -1,13 +1,7 @@
 import {CARD_RANKS, CARD_SUITS} from "../../constants.js"
 import Card from "../../classes/Card.js"
 import EmptyCard from "../../classes/EmptyCard.js"
-
-// Mutations
-const FLIP_CARD = 'FLIP_CARD'
-const SHUFFLE_DECK = 'SHUFFLE_DECK'
-const CONCAT_CARDS = 'CONCAT_CARDS'
-const PUSH_CARD = 'PUSH_CARD'
-
+import {PUSH_CARD, POP_CARD} from "./_common.js"
 
 function createPlayingDeck(){
   return CARD_SUITS.map((suit)=>{
@@ -28,25 +22,31 @@ export default {
     },
   },
   mutations:{
-    [SHUFFLE_DECK]({cards}) {
+    SHUFFLE_DECK({cards}) {
       cards = cards.sort(() => (Math.random() - 0.5))
     },
-    [FLIP_CARD](state,i){
+    FLIP_CARD(state,i){
       state.cards[i].faceUp = !state.cards[i].faceUp
     },
-    [CONCAT_CARDS](state,newCards){
+    FLIP_TOP_CARD(state){
+      let last = state.cards.length-1
+      state.cards[last].faceUp = !state.cards[last].faceUp
+    },
+    CONCAT_CARDS(state,newCards){
       state.cards = state.cards.concat(newCards)
     },
-    [PUSH_CARD](state,newCard){
-      state.cards.push(newCard)
-    },
+    PUSH_CARD,
+    POP_CARD,
   },
   actions:{
     shuffleDeck({commit}){
-      commit(SHUFFLE_DECK)
+      commit('SHUFFLE_DECK')
     },
-    flipCard({commit, dispatch}){
-      commit(FLIP_CARD)
+    flipCard({commit, dispatch, getters}){
+      commit('FLIP_TOP_CARD')
+      let top = getters.topCard
+      commit('POP_CARD')
+      dispatch('flop/flopCard', top, {root:true})
     },
   },
 }

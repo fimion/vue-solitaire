@@ -6,8 +6,8 @@
 </template>
 
 <script>
-  import DeckArea from "./components/DeckArea"
-  import FlopArea from "./components/FlopArea.vue"
+  import DeckArea from "@components/DeckArea"
+  import FlopArea from "@components/FlopArea.vue"
   import {createNamespacedHelpers} from "vuex"
 
   const {

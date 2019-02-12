@@ -1,21 +1,26 @@
-import {PUSH_CARD} from "./_common.js"
+import {CONCAT_CARDS} from "./_common.js"
 
 
 export default {
   namespaced:true,
   state:{
     cards:[],
+    flop:[],
   },
   getters:{},
   mutations:{
     RESET_CARDS({cards}){
       cards.forEach(e=>{e.faceUp = false})
     },
-    PUSH_CARD,
+    FLOP_CARDS(state,payload){
+      state.flop = payload
+    },
+    CONCAT_CARDS,
   },
   actions:{
-    flopCard({commit}, newCard){
-      commit('PUSH_CARD', newCard)
+    flopCards({commit,state}, newCards){
+      commit('CONCAT_CARDS', state.flop)
+      commit('FLOP_CARDS', newCards)
     },
   },
 }

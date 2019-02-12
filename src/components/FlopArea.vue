@@ -1,11 +1,11 @@
 <template>
   <div class="flop-area">
-    <card-stack class="card-stack">
-      <playing-card v-for="card in cardStack"
+    <card-stack class="card-stack" v-if="flop.length === 0">
+      <playing-card v-for="card in cards"
                     :key="card.card"
                     :card="card"/>
     </card-stack>
-    <playing-card v-for="card in cardFlop"
+    <playing-card v-for="card in flop"
                   class="card-flop"
                   :key="card.card"
                   :card="card"/>
@@ -13,9 +13,6 @@
 </template>
 
 <script>
-  import CardStack from './CardStack.vue'
-  import PlayingCard from './PlayingCard.vue'
-
   import {createNamespacedHelpers} from 'vuex'
 
   const {mapState:flopState,mapActions:flopActions} = createNamespacedHelpers('flop')
@@ -23,32 +20,11 @@
   export default {
     name: "FlopArea",
     computed:{
-      ...flopState(['cards']),
-      cardStack(){
-        if(this.cards.length < 2){
-          return this.cards
-        }else if(this.cards.length < 3){
-          return this.cards.slice(0,this.cards.length - 1)
-        }
-        return this.cards.slice(0,this.cards.length - 2)
-      },
-      cardFlop(){
-        if(this.cards.length < 2){
-          return []
-        }else if(this.cards.length < 3){
-          return this.cards.slice(this.cards.length - 1,this.cards.length)
-        }
-        return this.cards.slice(this.cards.length - 2,this.cards.length)
-      },
+      ...flopState(['cards','flop']),
     },
     methods:{
 
     },
-    components:{
-      CardStack,
-      PlayingCard,
-    },
-
   }
 </script>
 
@@ -66,15 +42,21 @@
     grid-row: 1/1;
   }
   .card-flop:first-of-type{
-    grid-column: 2/span 3;
+    grid-column: 1/span 3;
     z-index: 1;
     position: relative;
     grid-row: 1/1;
   }
   .card-flop:nth-of-type(2){
-    grid-column: 3/span 3;
+    grid-column: 2/span 3;
     position: relative;
     grid-row: 1/1;
     z-index: 2;
   }
+.card-flop:nth-of-type(3){
+  grid-column: 3/span 3;
+  position: relative;
+  grid-row: 1/1;
+  z-index: 2;
+}
 </style>

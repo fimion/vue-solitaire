@@ -1,34 +1,28 @@
 <template>
   <div class="deck">
     <card-stack>
-    <playing-card v-for="(card,i) in deck"
-                  @click="flipCard(i)"
-                  :card="card"
-                  :key="card.card"/>
+      <card-holder v-if='deckEmpty'/>
+      <playing-card v-else
+                    @click="flipCard"
+                    :card="topCard"
+                    :key="topCard.card"/>
     </card-stack>
   </div>
 </template>
 
 <script>
-  import PlayingCard from './PlayingCard'
-  import CardStack from './CardStack.vue'
   import {createNamespacedHelpers} from 'vuex'
-  const  {mapActions:deckActions,mapState:deckState}= createNamespacedHelpers('deck')
+
+  const {mapActions: deckActions, mapGetters: deckGetters} = createNamespacedHelpers('deck')
   export default {
     name: "Deck",
-    computed:{
-      ...deckState({
-        'deck': s=>s.cards,
-      }),
+    computed: {
+      ...deckGetters(['topCard', 'deckEmpty']),
     },
-    methods:{
+    methods: {
       ...deckActions([
-          'flipCard',
+        'flipCard',
       ]),
-    },
-    components: {
-      PlayingCard,
-      CardStack,
     },
   }
 </script>

@@ -58,5 +58,9 @@ export default {
 
       dispatch('flop/flopCards', flop, {root: true})
     },
+    async resetDeck({commit, dispatch}){
+      let deck = await dispatch('flop/returnDeckPromise', null, {root:true})
+      commit('CONCAT_CARDS', deck)
+    },
   },
 }

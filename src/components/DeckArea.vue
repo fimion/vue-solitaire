@@ -1,7 +1,8 @@
 <template>
   <div class="deck">
     <card-stack>
-      <card-holder v-if='deckEmpty'/>
+      <card-holder v-if='deckEmpty'
+                   @click="resetDeck"/>
       <playing-card v-else
                     @click="flipCard"
                     :card="topCard"
@@ -22,6 +23,7 @@
     methods: {
       ...deckActions([
         'flipCard',
+        'resetDeck',
       ]),
     },
   }

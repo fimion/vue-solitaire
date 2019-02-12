@@ -23,6 +23,7 @@
     max-width: 200px;
     cursor: pointer;
     background-color: transparent;
+    opacity:0.5;
   }
   svg{
     pointer-events: none;

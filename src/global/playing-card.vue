@@ -5,13 +5,31 @@
           :class="faceUp?'face-up':'face-down'"
           :aria-label="faceUp?name:'Face down card'">
     <svg viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
-      <text v-if="faceUp"
+      <g v-if="faceUp">
+        <text
+            x="5"
+            y="1em"
+            dy="0"
+            class="upper corner"
+            :class="color">
+          {{rank}}{{symbol}}
+        </text>
+        <text
             x="10"
             y="1em"
             dy="50"
             :class="color">
-        {{rank}} {{symbol}}
-      </text>
+          {{rank}} {{symbol}}
+        </text>
+        <text
+            x="5"
+            y="1em"
+            transform="rotate(-180 50 75)"
+            class="lower corner"
+            :class="color">
+          {{rank}}{{symbol}}
+        </text>
+      </g>
     </svg>
   </button>
 </template>
@@ -72,17 +90,17 @@
   .face-down{
     background-image: radial-gradient(circle, #1111aa, #111144);
   }
-
   .red {
     fill: var(--color-red);
   }
-
+  .black {
+    fill: var(--color-black);
+  }
   svg{
     pointer-events: none;
     width:100%;
   }
-
-  .black {
-    fill: var(--color-black);
+  .corner{
+    font-size:.25em;
   }
 </style>

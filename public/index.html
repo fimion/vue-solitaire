@@ -6,12 +6,51 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>vue-solitaire</title>
+    <style>
+      * {
+        --color-white: #e6e6e6;
+        --color-black: #121212;
+        --color-red: #ee1111;
+        --color-focus: #1111ee;
+        --playing-mat: #008800;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html, body {
+        background-color: var(--playing-mat)
+      }
+
+      #app {
+        width: 99vw;
+        min-height:100vh;
+        background-color: var(--playing-mat);
+        margin: 0;
+        padding: 10px;
+        display: grid;
+        grid-template-columns: repeat(7, minmax(20px, 200px));
+        grid-template-rows: minmax(30px,300px) 1fr;
+        grid-gap: 10px;
+      }
+      #flop{
+        grid-column: 2/span 2;
+        grid-row-start: 1;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr) 10px;
+        grid-template-rows: 1fr;
+        align-items: start;
+      }
+    </style>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but vue-solitaire doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
+    <div id="app">
+      <div id="deck"></div>
+      <div id="flop"></div>
+    </div>
     <!-- built files will be auto injected -->
   </body>
 </html>

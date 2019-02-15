@@ -1,5 +1,5 @@
 <template>
-  <div class="flop-area">
+  <div id="flop">
     <card-stack class="card-stack" v-if="flop.length === 0">
       <playing-card v-for="card in cards"
                     :key="card.card"
@@ -29,15 +29,6 @@
 </script>
 
 <style scoped>
-.flop-area{
-  grid-column: 2/span 2;
-  grid-row-start: 1;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr) 10px;
-  grid-template-rows: 1fr;
-  align-items: start;
-}
-
   .card-stack{
     grid-column: 1/span 3;
     grid-row-start: 1;

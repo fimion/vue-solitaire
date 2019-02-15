@@ -1,12 +1,35 @@
 import Vue from "vue"
-import App from "./App.vue"
 import store from "@store"
 import '@global'
 import "./registerServiceWorker"
 
-Vue.config.productionTip = false
+import DeckArea from "@components/DeckArea"
+import FlopArea from "@components/FlopArea"
 
-new Vue({
-  store,
-  render: h => h(App),
-}).$mount("#app")
+Vue.config.productionTip = false;
+
+
+
+
+(function(){
+
+  store.dispatch('deck/shuffleDeck')
+
+  let apps = [
+    {
+      el:"#deck",
+      store,
+      render: h => h(DeckArea),
+    },
+    {
+      el:"#flop",
+      store,
+      render: h => h(FlopArea),
+    },
+  ]
+  apps.forEach(e=>{
+    new Vue(e)
+  })
+})()
+
+

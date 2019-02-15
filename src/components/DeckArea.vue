@@ -1,5 +1,5 @@
 <template>
-  <div class="deck">
+  <div id="deck">
     <card-stack>
       <card-holder v-if='deckEmpty'
                    @click="resetDeck"/>

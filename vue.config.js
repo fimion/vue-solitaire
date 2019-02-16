@@ -17,6 +17,7 @@ module.exports = {
         '^assets': resolveSrc('./src/assets'),
         '^store': resolveSrc('./src/store'),
         '^global': resolveSrc('./src/global'),
+        '^classes': resolveSrc('./src/classes'),
       },
     },
   },

@@ -1,7 +1,7 @@
-import {CARD_SUITS} from "../../constants.js"
+import {CARD_SUITS} from "^/constants.js"
 function makeFinalSlots(){
-  let final = {}
-  CARD_SUITS.forEach(e=>final[e]=[])
+  let final = []
+  CARD_SUITS.forEach(e=>final.push(e))
   return final
 }
 export default {

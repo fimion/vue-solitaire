@@ -1,15 +1,22 @@
 <template>
   <div id="final">
-    <final-stack suit="C" />
-    <final-stack suit="D" />
-    <final-stack suit="H" />
-    <final-stack suit="S" />
+    <final-stack v-for="suit in stacks"
+                 :key="'final-stack-'+suit"
+                 :suit="suit" />
   </div>
 </template>
 <script>
   import FinalStack from './FinalStack.vue'
+  import {createNamespacedHelpers} from 'vuex'
+
+  const {mapState:finalState} = createNamespacedHelpers('final')
   export default {
     name: "FinalArea",
+    computed:{
+      ...finalState([
+          'stacks',
+      ]),
+    },
     components:{
       FinalStack,
     },

@@ -1,6 +1,6 @@
 <template>
   <div id="play">
-    <play-stack v-for="(val, i) in playStacks"
+    <play-stack v-for="(val, i) in stacks"
                      :stack="i"
                      :key="'play-stack'+i"/>
   </div>
@@ -8,15 +8,13 @@
 
 <script>
   import PlayStack from '^components/PlayStack.vue'
-  let PLAY_STACKS = []
-  PLAY_STACKS.length = 7
-  PLAY_STACKS.fill(null)
+  import {createNamespacedHelpers} from 'vuex'
+
+  const {mapState:playState} = createNamespacedHelpers('play')
   export default {
     name: "PlayArea",
     computed:{
-      playStacks(){
-        return PLAY_STACKS
-      },
+      ...playState(['stacks']),
     },
     components:{
       PlayStack,

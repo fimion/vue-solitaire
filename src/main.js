@@ -15,7 +15,7 @@ Vue.config.productionTip = false
 
 ;(function(){
 
-  store.dispatch('deck/shuffleDeck')
+  store.dispatch('preInit')
 
   let apps = [
     {
@@ -41,6 +41,8 @@ Vue.config.productionTip = false
       new Vue(e)
     }
   })
+
+  store.dispatch('postInit')
 })()
 
 

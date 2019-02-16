@@ -1,4 +1,4 @@
-import {CONCAT_CARDS} from "./_common.js"
+import {CONCAT_CARDS} from "^store/_common.js"
 import Vue from 'vue'
 
 export default {

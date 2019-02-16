@@ -1,13 +1,13 @@
-import {CARD_RANKS, CARD_SUITS} from "@/constants.js"
-import Card from "@/classes/Card.js"
-import EmptyCard from "@/classes/EmptyCard.js"
+import {CARD_RANKS, CARD_SUITS} from "^/constants.js"
+import Card from "^classes/Card.js"
+import EmptyCard from "^classes/EmptyCard.js"
 import {
   topCard,
   deckEmpty,
   PUSH_CARD,
   POP_CARD,
   CONCAT_CARDS,
-} from "./_common.js"
+} from "^store/_common.js"
 
 function createPlayingDeck() {
   return CARD_SUITS.map((suit) => {
@@ -45,6 +45,9 @@ export default {
   actions: {
     shuffleDeck({commit}) {
       commit('SHUFFLE_DECK')
+    },
+    popCard({commit}){
+      commit('POP_CARD')
     },
     flipCard({commit, dispatch, getters}) {
       let flop = []

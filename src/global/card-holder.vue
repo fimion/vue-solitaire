@@ -3,15 +3,19 @@
           aria-label="Empty Stack"
           v-on="$listeners"
           v-bind="$attrs">
-    <svg viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="75" r="25" />
-    </svg>
+    <slot>
+      <base-svg>
+        <circle cx="50" cy="75" r="25" />
+      </base-svg>
+    </slot>
   </button>
 </template>
 
 <script>
+  import BaseSvg from "./base-svg.vue"
   export default {
     name: "card-holder",
+    components: {BaseSvg},
   }
 </script>
 
@@ -24,12 +28,6 @@
     cursor: pointer;
     background-color: transparent;
     opacity:0.5;
-  }
-  svg{
-    pointer-events: none;
-    width:100%;
-    height:100%;
-    fill:transparent;
   }
   circle{
     stroke:var(--color-white);

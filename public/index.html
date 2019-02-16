@@ -30,16 +30,26 @@
         padding: 10px;
         display: grid;
         grid-template-columns: repeat(7, minmax(20px, 200px));
-        grid-template-rows: minmax(30px,300px) 1fr;
+        grid-template-rows: calc(21.42857vw - 15px) 1fr;
         grid-gap: 10px;
       }
       #flop{
         grid-column: 2/span 2;
         grid-row-start: 1;
-        display: grid;
-        grid-template-columns: repeat(6, 1fr) 10px;
-        grid-template-rows: 1fr;
-        align-items: start;
+      }
+      #final{
+        grid-column: 4/span 4;
+        grid-row-start: 1;
+      }
+      #play{
+        grid-column: 1/span 7;
+        grid-row-start: 2;
+      }
+
+      @media screen and (min-width:1500px) {
+        #app{
+          grid-template-rows: 305px 1fr;
+        }
       }
     </style>
   </head>
@@ -50,6 +60,8 @@
     <div id="app">
       <div id="deck"></div>
       <div id="flop"></div>
+      <div id="final"></div>
+      <div id="play"></div>
     </div>
     <!-- built files will be auto injected -->
   </body>

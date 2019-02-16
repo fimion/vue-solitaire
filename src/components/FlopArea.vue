@@ -29,6 +29,12 @@
 </script>
 
 <style scoped>
+  #flop{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr) 10px;
+    grid-template-rows: 1fr;
+    align-items: start;
+  }
   .card-stack{
     grid-column: 1/span 3;
     grid-row-start: 1;

@@ -4,7 +4,7 @@
           v-bind="$attrs"
           :class="faceUp?'face-up':'face-down'"
           :aria-label="faceUp?name:'Face down card'">
-    <svg viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
+    <base-svg>
       <g v-if="faceUp">
         <text
             x="5"
@@ -30,7 +30,7 @@
           {{rank}}{{symbol}}
         </text>
       </g>
-    </svg>
+    </base-svg>
   </button>
 </template>
 
@@ -95,10 +95,6 @@
   }
   .black {
     fill: var(--color-black);
-  }
-  svg{
-    pointer-events: none;
-    width:100%;
   }
   .corner{
     font-size:.25em;

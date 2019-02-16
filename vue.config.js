@@ -12,11 +12,11 @@ module.exports = {
   configureWebpack:{
     resolve:{
       alias:{
-        '@':resolveSrc('./src'),
-        '@components': resolveSrc('./src/components'),
-        '@assets': resolveSrc('./src/assets'),
-        '@store': resolveSrc('./src/store'),
-        '@global': resolveSrc('./src/global'),
+        '^':resolveSrc('./src'),
+        '^components': resolveSrc('./src/components'),
+        '^assets': resolveSrc('./src/assets'),
+        '^store': resolveSrc('./src/store'),
+        '^global': resolveSrc('./src/global'),
       },
     },
   },

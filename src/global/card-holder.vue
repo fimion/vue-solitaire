@@ -24,10 +24,14 @@
     font-size: 2.5rem;
     border: var(--color-white) solid 3px;
     border-radius: 0.5rem;
-    max-width: 200px;
+    max-width: 100px;
+    max-height:150px;
     cursor: pointer;
     background-color: transparent;
     opacity:0.5;
+  }
+  .card-holder:disabled{
+    cursor:default;
   }
   circle{
     stroke:var(--color-white);

@@ -2,10 +2,13 @@
   <div id="flop">
     <card-stack class="card-stack" v-if="flop.length === 0">
       <playing-card v-for="card in cards"
+                    :disabled="!isTopCard(card)"
                     :key="card.card"
                     :card="card"/>
     </card-stack>
     <playing-card v-for="card in flop"
+                  :disabled="!isTopCard(card)"
+                  @click="selectFlopCard(card)"
                   class="card-flop"
                   :key="card.card"
                   :card="card"/>
@@ -13,17 +16,25 @@
 </template>
 
 <script>
-  import {createNamespacedHelpers} from 'vuex'
+  import {createNamespacedHelpers,mapActions} from 'vuex'
+  import {FlopSelection} from "../class/Selections.js"
 
-  const {mapState:flopState,mapActions:flopActions} = createNamespacedHelpers('flop')
+  const {mapState:flopState, mapGetters:flopGetters} = createNamespacedHelpers('flop')
 
   export default {
     name: "FlopArea",
     computed:{
       ...flopState(['cards','flop']),
+      ...flopGetters(['topCard']),
     },
     methods:{
-
+      isTopCard(card){
+        return card.card === this.topCard.card
+      },
+      selectFlopCard(card){
+        this.selectCards(new FlopSelection(card))
+      },
+      ...mapActions(['selectCards']),
     },
   }
 </script>

@@ -1,6 +1,6 @@
 import {CARD_RANKS, CARD_SUITS} from "^/constants.js"
-import Card from "^classes/Card.js"
-import EmptyCard from "^classes/EmptyCard.js"
+import Card from "^class/Card.js"
+import EmptyCard from "^class/EmptyCard.js"
 import {
   topCard,
   deckEmpty,

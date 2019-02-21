@@ -1,11 +1,10 @@
 <template>
   <card-stack>
-    <card-holder >
+    <card-holder disabled>
       <base-svg>
         <text class="placeholder"
             x="20"
-            y="1em"
-            dy="10">
+            y="110">
           {{symbol}}
         </text>
       </base-svg>
@@ -34,6 +33,6 @@
 <style scoped>
 text.placeholder{
   fill:var(--color-white);
-  font-size: 2.5em;
+  font-size: 100px;
 }
 </style>

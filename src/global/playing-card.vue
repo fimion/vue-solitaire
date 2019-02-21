@@ -35,8 +35,9 @@
 </template>
 
 <script>
-  import Card from "../classes/Card.js"
-  import EmptyCard from "../classes/EmptyCard.js"
+  import Card from "../class/Card.js"
+  import EmptyCard from "../class/EmptyCard.js"
+  import {SUIT_RED, SUIT_BLACK} from "../constants.js"
 
   export default {
     name: "PlayingCard",
@@ -60,7 +61,7 @@
         return this.card.rank
       },
       color() {
-        return this.suit === 'H' || this.suit === 'D' ? 'red' : 'black'
+        return SUIT_RED.indexOf(this.suit)!==-1 ? 'red' : 'black'
       },
       symbol() {
         return this.card.symbol
@@ -77,8 +78,12 @@
     font-size: 2.5rem;
     border: var(--color-black) solid 3px;
     border-radius: 0.5rem;
-    max-width: 200px;
+    max-width: 100px;
+    max-height:150px;
     cursor: pointer;
+  }
+  .card[disabled]{
+    cursor:default;
   }
   .card:focus{
     outline: var(--color-focus) 3px solid;
@@ -97,6 +102,6 @@
     fill: var(--color-black);
   }
   .corner{
-    font-size:.25em;
+    font-size:15px;
   }
 </style>

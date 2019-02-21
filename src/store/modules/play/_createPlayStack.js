@@ -1,6 +1,7 @@
 import {
   CONCAT_CARDS,
   PUSH_CARD,
+    topCard,
 } from "^store/_common.js"
 
 export default function(){
@@ -10,7 +11,7 @@ export default function(){
       cards:[],
     },
     getters:{
-
+      topCard,
     },
     mutations:{
       PUSH_CARD,

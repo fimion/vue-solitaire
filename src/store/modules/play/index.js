@@ -36,7 +36,7 @@ export default {
           let stackLength = state[x].cards.length
           if(stackLength < x+1) {
             await new Promise((res, rej) => {
-              setTimeout(res, 100)
+              setTimeout(res, 0)
             })
             let newCard = rootGetters['deck/topCard']
             dispatch('deck/popCard',null,{root:true})

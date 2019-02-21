@@ -29,13 +29,16 @@
     grid-auto-rows: calc(calc(21.42857vw - 15px) / 8);
   }
 
+  @media screen and (min-width:768px){
+    .vertical-spread{
+      grid-auto-rows: 19px;
+    }
+  }
+
   .vertical-spread>*{
     grid-column: 1;
     grid-row-start: -6;
     grid-row-end: span 8;
     z-index: 1;
-  }
-  .vertical-spread>*:first-child{
-    grid-row-start: 1;
   }
 </style>

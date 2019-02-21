@@ -1,8 +1,8 @@
 <template>
   <div id="play">
     <play-stack v-for="(val, i) in stacks"
-                     :stack="i"
-                     :key="'play-stack'+i"/>
+                :stack="i"
+                :key="'play-stack'+i"/>
   </div>
 </template>
 

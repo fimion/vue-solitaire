@@ -29,7 +29,7 @@
         margin: 0;
         padding: 10px;
         display: grid;
-        grid-template-columns: repeat(7, minmax(20px, 200px));
+        grid-template-columns: repeat(7, minmax(20px, 100px));
         grid-template-rows: calc(21.42857vw - 15px) 1fr;
         grid-gap: 10px;
       }
@@ -46,9 +46,9 @@
         grid-row-start: 2;
       }
 
-      @media screen and (min-width:1500px) {
+      @media screen and (min-width:768px) {
         #app{
-          grid-template-rows: 305px 1fr;
+          grid-template-rows: 150px 1fr;
         }
       }
     </style>

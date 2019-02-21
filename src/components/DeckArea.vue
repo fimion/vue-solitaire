@@ -12,19 +12,24 @@
 </template>
 
 <script>
-  import {createNamespacedHelpers} from 'vuex'
+  import {createNamespacedHelpers, mapActions} from 'vuex'
 
-  const {mapActions: deckActions, mapGetters: deckGetters} = createNamespacedHelpers('deck')
+  import {CardFlopAction, DeckResetAction} from "../class/Actions.js"
+
+  const {mapGetters: deckGetters} = createNamespacedHelpers('deck')
   export default {
     name: "Deck",
     computed: {
       ...deckGetters(['topCard', 'deckEmpty']),
     },
     methods: {
-      ...deckActions([
-        'flipCard',
-        'resetDeck',
-      ]),
+      flipCard(){
+        this.moveCards(new CardFlopAction())
+      },
+      resetDeck(){
+        this.moveCards(new DeckResetAction())
+      },
+      ...mapActions(['moveCards']),
     },
   }
 </script>

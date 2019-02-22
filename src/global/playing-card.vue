@@ -194,12 +194,20 @@
 
 <style scoped>
   .card{
-    font-size: 2.5rem;
     border: var(--color-black) solid 3px;
     border-radius: 0.5rem;
     max-width: 100px;
-    max-height:150px;
+    max-height:var(--card-height);
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 0;
+  }
+  @media screen and (min-width:768px) {
+    .card{
+      max-height: 150px;
+    }
   }
   .card[disabled]{
     cursor:default;

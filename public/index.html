@@ -13,6 +13,7 @@
         --color-red: #ee1111;
         --color-focus: #1111ee;
         --playing-mat: #008800;
+        --card-height: calc(calc(calc(100vw - 122px) / 7) * 1.5);
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -30,7 +31,7 @@
         padding: 10px;
         display: grid;
         grid-template-columns: repeat(7, minmax(20px, 100px));
-        grid-template-rows: calc(21.42857vw - 15px) 1fr;
+        grid-template-rows: var(--card-height) 1fr;
         grid-gap: 10px;
       }
       #flop{

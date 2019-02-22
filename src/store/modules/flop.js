@@ -21,6 +21,9 @@ export default {
         return new EmptyCard()
       }
     },
+    getDeck({cards,flop}){
+      return [...cards, ...flop]
+    },
   },
   mutations:{
     SET_CARDS_FACE_DOWN({cards}){
@@ -31,6 +34,10 @@ export default {
     },
     RESET_CARDS(state){
       state.cards = []
+    },
+    RESET_DECK(state){
+      state.cards = []
+      state.flop = []
     },
     FLOP_CARDS(state,payload){
       state.flop = payload
@@ -46,8 +53,9 @@ export default {
   },
   actions:{
     flopCards({commit,state}, newCards){
+      let newFlop = newCards.reverse().map(e=>{e.faceUp = true; return e})
       commit('CONCAT_CARDS', state.flop)
-      commit('FLOP_CARDS', newCards)
+      commit('FLOP_CARDS', newFlop)
     },
     returnDeckPromise({commit, state}){
       commit('CONCAT_CARDS', state.flop)
@@ -57,6 +65,9 @@ export default {
       let deck = state.cards
       commit('RESET_CARDS')
       return Promise.resolve(deck)
+    },
+    resetDeck({commit}){
+      commit('RESET_DECK')
     },
     popCard({commit}){
       commit('POP_CARD')

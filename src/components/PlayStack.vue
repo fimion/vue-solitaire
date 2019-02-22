@@ -1,6 +1,7 @@
 <template>
   <div>
-    <card-holder v-if="cards.length === 0">
+    <card-holder v-if="cards.length === 0"
+                  @click="handleEmptyClick">
       <base-svg></base-svg>
     </card-holder>
     <vertical-spread v-else>
@@ -17,6 +18,8 @@
 
   import {mapActions, mapGetters} from 'vuex'
   import {PlayStackAction} from "../class/Actions.js"
+  import {PlaySelection} from "../class/Selections.js"
+  import EmptyCard from "../class/EmptyCard.js"
 
   export default {
     name: "PlayStack",
@@ -42,13 +45,23 @@
       cardDisabled(card){
         return !card.faceUp
       },
+      handleEmptyClick(){
+        if(this.selectedCard){
+          this.moveCards(new PlayStackAction(this.stack, new EmptyCard()))
+        }
+      },
       handleClick(card){
         if(this.selectedCard){
           if(card.card === this.bottomCard.card){
             this.moveCards(new PlayStackAction(this.stack, card))
           }
+        }else{
+          if(card.faceUp){
+            let index = this.cards.indexOf(card),
+                selection = this.cards.slice(index)
+            this.selectCards(new PlaySelection(this.stack, selection))
+          }
         }
-
       },
       ...mapActions([
           'moveCards',

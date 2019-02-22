@@ -24,6 +24,12 @@ export default {
   getters: {
     topCard,
     deckEmpty,
+    nextFlop(state){
+      if(state.cards.length>3){
+        return state.cards.slice(state.cards.length - 3)
+      }
+      return state.cards
+    },
   },
   mutations: {
     SHUFFLE_DECK({cards}) {
@@ -49,20 +55,14 @@ export default {
     popCard({commit}){
       commit('POP_CARD')
     },
-    flipCard({commit, dispatch, getters}) {
-      let flop = []
-      flop.length = 3
-      flop = flop.fill(undefined).map(() => {
-        commit('FLIP_TOP_CARD')
-        let top = getters.topCard
+    popFlop({commit, dispatch, getters}) {
+      let flop = [...getters.nextFlop]
+      flop.forEach(() => {
         commit('POP_CARD')
-        return top
-      }).filter((e) => !(e instanceof EmptyCard))
-
-      dispatch('flop/flopCards', flop, {root: true})
+      })
     },
-    async resetDeck({commit, dispatch}){
-      let deck = await dispatch('flop/returnDeckPromise', null, {root:true})
+    async resetDeck({commit, dispatch}, cards){
+      let deck = cards.reverse().map(e=>{e.faceUp = false; return e})
       commit('CONCAT_CARDS', deck)
     },
   },

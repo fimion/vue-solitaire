@@ -5,6 +5,20 @@ export class BaseSelection{
   }
 }
 
+export class DeckSelection extends BaseSelection{
+  constructor(cards){
+    super(cards)
+    this.cleanUp = 'deck/popFlop'
+  }
+}
+
+export class DeckResetSelection extends BaseSelection{
+  constructor(cards){
+    super(cards)
+    this.cleanUp = 'flop/resetDeck'
+  }
+}
+
 export class FlopSelection extends BaseSelection{
   constructor(card){
     super([card])
@@ -15,7 +29,7 @@ export class FlopSelection extends BaseSelection{
 export class PlaySelection extends BaseSelection{
   constructor(stack, cards){
     super(cards)
-    this.cleanUp = "play/"+stack+"/sliceCards"
+    this.cleanUp = "play/"+stack+"/spliceCards"
   }
 }
 

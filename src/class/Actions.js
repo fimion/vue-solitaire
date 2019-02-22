@@ -13,7 +13,7 @@ export class BaseAction{
 
 export class CardFlopAction extends BaseAction{
   constructor(){
-    super('deck/flipCard')
+    super('flop/flopCards')
   }
 }
 

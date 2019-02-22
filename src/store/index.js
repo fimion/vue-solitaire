@@ -47,11 +47,13 @@ export default new Vuex.Store({
       if(state.currentSelection){
         if(Action.validate(getters.selectedCard)){
           await dispatch(Action.action, state.currentSelection.cards)
-          await dispatch(state.currentSelection.cleanUp)
-          commit('SET_SELECTED_CARDS', null)
+          if(state.currentSelection.cleanUp){
+            await dispatch(state.currentSelection.cleanUp, state.currentSelection.cards)
+          }
         }
+        commit('SET_SELECTED_CARDS', null)
       }else{
-        await dispatch(Action.action)
+
       }
     },
   },

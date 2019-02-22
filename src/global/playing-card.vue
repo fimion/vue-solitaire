@@ -20,10 +20,9 @@
       <g v-if="faceUp">
         <g class="upper corner">
           <text
-              x="5"
+              x="10"
               y="15"
-              textLength="8"
-              lengthAdjust="spacingAndGlyphs"
+              text-anchor="middle"
               class="upper corner"
               :class="color">{{rank}}</text>
           <use v-bind:xlink:href="'#'+suit"
@@ -86,10 +85,9 @@
         <g class="lower-corner"
            transform="rotate(-180 50 75)">
           <text
-              x="5"
+              x="10"
               y="15"
-              textLength="8"
-              lengthAdjust="spacingAndGlyphs"
+              text-anchor="middle"
               class="lower corner"
               :class="color">
             {{rank}}

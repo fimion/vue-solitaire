@@ -18,46 +18,89 @@
         <path d="M0 -500C100 -250 355 -100 355 185A150 150 0 0 1 55 185A10 10 0 0 0 35 185C35 385 85 400 130 500L-130 500C-85 400 -35 385 -35 185A10 10 0 0 0 -55 185A150 150 0 0 1 -355 185C-355 -100 -100 -250 0 -500Z" fill="black"/>
       </symbol>
       <g v-if="faceUp">
-        <text
-            x="5"
-            y="15"
-            class="upper corner"
-            :class="color">
-          {{rank}}{{symbol}}
-        </text>
+        <g class="upper corner">
+          <text
+              x="5"
+              y="15"
+              textLength="8"
+              lengthAdjust="spacingAndGlyphs"
+              class="upper corner"
+              :class="color">{{rank}}</text>
+          <use v-bind:xlink:href="'#'+suit"
+               x="5"
+               y="20"
+               height="10"
+               width="10"></use>
+        </g>
         <g class="symbol-pattern">
-          <template v-for="(ys, x) in symbols">
-            <template v-for="(val, y) in ys">
-              <!--<text v-if="displaySymbol(val)"-->
-                  <!--:key="card.card+x+y+'symbol'"-->
-                  <!--textLength="20"-->
-                  <!--lengthAdjust="spacingAndGlyphs"-->
-                  <!--:x="Math.abs(x)"-->
-                  <!--:y="y"-->
-                  <!--:transform="upsideDown(x)"-->
-                  <!--:class="color">-->
+          <template v-if="isFaceCard">
+            <use v-bind:xlink:href="'#'+suit"
+                 x="5"
+                 y="30"
+                 height="90"
+                 width="90"></use>
+            <template v-if="suit==='C'">
+              <text
+                  x="40"
+                  y="60"
+                  textLength="20"
+                  lengthAdjust="spacingAndGlyphs"
+                  class="face-card club">
+                {{rank}}
+              </text>
+            </template>
+            <text v-else
+                x="40"
+                y="85"
+                textLength="20"
+                lengthAdjust="spacingAndGlyphs"
+                class="face-card">
+              {{rank}}
+            </text>
+          </template>
+          <template v-else>
+            <template v-for="(ys, x) in symbols">
+              <template v-for="(val, y) in ys">
+                <!--<text v-if="displaySymbol(val)"-->
+                <!--:key="card.card+x+y+'symbol'"-->
+                <!--textLength="20"-->
+                <!--lengthAdjust="spacingAndGlyphs"-->
+                <!--:x="Math.abs(x)"-->
+                <!--:y="y"-->
+                <!--:transform="upsideDown(x)"-->
+                <!--:class="color">-->
                 <!--{{symbol}}-->
-              <!--</text>-->
-              <use v-bind:xlink:href="'#'+suit"
-                   v-if="displaySymbol(val)"
-                   :key="card.card+x+y+'symbol-use'"
-                   :x="Math.abs(x)"
-                   :y="y"
-                   :transform="upsideDown(x)"
-                   height="20"
-                   width="20"></use>
+                <!--</text>-->
+                <use v-bind:xlink:href="'#'+suit"
+                     v-if="displaySymbol(val)"
+                     :key="card.card+x+y+'symbol-use'"
+                     :x="Math.abs(x)"
+                     :y="y"
+                     :transform="upsideDown(x)"
+                     height="20"
+                     width="20"></use>
+              </template>
             </template>
           </template>
-
         </g>
-        <text
-            x="5"
-            y="15"
-            transform="rotate(-180 50 75)"
-            class="lower corner"
-            :class="color">
-          {{rank}}{{symbol}}
-        </text>
+        <g class="lower-corner"
+           transform="rotate(-180 50 75)">
+          <text
+              x="5"
+              y="15"
+              textLength="8"
+              lengthAdjust="spacingAndGlyphs"
+              class="lower corner"
+              :class="color">
+            {{rank}}
+          </text>
+          <use v-bind:xlink:href="'#'+suit"
+               x="5"
+               y="20"
+               height="10"
+               width="10"></use>
+        </g>
+
       </g>
     </base-svg>
   </button>
@@ -112,6 +155,9 @@
       },
       isEmpty(){
         return this.card.isEmpty
+      },
+      isFaceCard(){
+        return ['J','Q','K'].indexOf(this.rank)!==-1
       },
       faceUp(){
         return this.card.faceUp
@@ -180,6 +226,13 @@
     fill: var(--color-black);
   }
   .corner{
-    font-size:15px;
+    font-size:12px;
+  }
+  .face-card{
+    fill:var(--color-white);
+    font-size:50px;
+  }
+  .face-card.club{
+    font-size: 30px;
   }
 </style>

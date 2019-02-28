@@ -1,7 +1,7 @@
 <template>
   <div id="flop">
     <card-stack class="card-stack" v-if="flop.length === 0">
-      <playing-card @click="selectFlopCard(card)"
+      <playing-card @click="selectFlopCard(topCard)"
                     :key="topCard.card"
                     :card="topCard"/>
     </card-stack>

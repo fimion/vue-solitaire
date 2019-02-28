@@ -21,10 +21,26 @@
         <g class="upper corner">
           <text
               x="10"
-              y="15"
+              y="17"
               text-anchor="middle"
               class="upper corner"
               :class="color">{{rank}}</text>
+          <use v-bind:xlink:href="'#'+suit"
+               x="5"
+               y="20"
+               height="10"
+               width="10"></use>
+        </g>
+        <g class="lower-corner"
+           transform="rotate(-180 50 75)">
+          <text
+              x="10"
+              y="17"
+              text-anchor="middle"
+              class="lower corner"
+              :class="color">
+            {{rank}}
+          </text>
           <use v-bind:xlink:href="'#'+suit"
                x="5"
                y="20"
@@ -50,7 +66,7 @@
             </template>
             <text v-else
                 x="40"
-                y="85"
+                y="90"
                 textLength="20"
                 lengthAdjust="spacingAndGlyphs"
                 class="face-card">
@@ -82,22 +98,7 @@
             </template>
           </template>
         </g>
-        <g class="lower-corner"
-           transform="rotate(-180 50 75)">
-          <text
-              x="10"
-              y="15"
-              text-anchor="middle"
-              class="lower corner"
-              :class="color">
-            {{rank}}
-          </text>
-          <use v-bind:xlink:href="'#'+suit"
-               x="5"
-               y="20"
-               height="10"
-               width="10"></use>
-        </g>
+
 
       </g>
     </base-svg>
@@ -232,7 +233,7 @@
     fill: var(--color-black);
   }
   .corner{
-    font-size:12px;
+    font-size:18px;
   }
   .face-card{
     fill:var(--color-white);

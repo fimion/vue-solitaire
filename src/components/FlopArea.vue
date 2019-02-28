@@ -1,10 +1,9 @@
 <template>
   <div id="flop">
     <card-stack class="card-stack" v-if="flop.length === 0">
-      <playing-card v-for="card in cards"
-                    :disabled="!isTopCard(card)"
-                    :key="card.card"
-                    :card="card"/>
+      <playing-card @click="selectFlopCard(card)"
+                    :key="topCard.card"
+                    :card="topCard"/>
     </card-stack>
     <playing-card v-for="card in flop"
                   :disabled="!isTopCard(card)"

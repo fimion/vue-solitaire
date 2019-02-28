@@ -3,6 +3,11 @@ export class BaseSelection{
     this.cards = cards
     this.cleanUp = null
   }
+
+  selectedCard(){
+    return this.cards[0]
+  }
+
 }
 
 export class DeckSelection extends BaseSelection{

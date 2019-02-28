@@ -6,7 +6,7 @@ export class BaseAction{
     this.target = null
   }
 
-  validate(selected){
+  validate(selection){
     return true
   }
 }
@@ -28,7 +28,8 @@ export class PlayStackAction extends BaseAction{
     super('play/'+stack+'/concatCards')
     this.target = target
   }
-  validate(selected){
+  validate(selection){
+    let selected = selection.selectedCard()
     if(selected.rank === 'K' && this.target.isEmpty){
       return true
     }
@@ -39,6 +40,30 @@ export class PlayStackAction extends BaseAction{
         isNext = targetIndex - selectedIndex === 1
 
     return isOpposite && isNext
+  }
+}
+
+export class FinalStackAction extends BaseAction{
+  constructor(stack,target){
+    super('final/'+stack+'/pushCard')
+    this.stack = stack
+    this.target = target
+  }
+
+  validate(selection){
+    if(selection.cards.length !== 1){
+      console.log("Cards Length not 1", selection.cards)
+      return false
+    }
+    let selected = selection.selectedCard()
+    if(selected.suit !== this.stack) {
+      console.log('Stacks do not match', selected.suit, this.stack)
+      return false
+    }
+    let targetRankIndex = CARD_RANKS.indexOf(this.target.rank),
+        selectedRankIndex = CARD_RANKS.indexOf(selected.rank)
+
+    return selectedRankIndex - targetRankIndex === 1
   }
 }
 

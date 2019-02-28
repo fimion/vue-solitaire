@@ -45,7 +45,7 @@ export default new Vuex.Store({
     },
     async moveCards({commit, dispatch, state, getters}, Action){
       if(state.currentSelection){
-        if(Action.validate(getters.selectedCard)){
+        if(Action.validate(state.currentSelection)){
           await dispatch(Action.action, state.currentSelection.cards)
           if(state.currentSelection.cleanUp){
             await dispatch(state.currentSelection.cleanUp, state.currentSelection.cards)

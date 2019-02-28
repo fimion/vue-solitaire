@@ -1,6 +1,7 @@
 <template>
   <card-stack>
-    <card-holder disabled>
+    <card-holder @click="handleClick"
+                 v-if="deckEmpty">
       <base-svg>
         <text class="placeholder"
             x="20"
@@ -9,22 +10,40 @@
         </text>
       </base-svg>
     </card-holder>
+    <playing-card v-else
+                  @click="handleClick"
+                  :card="topCard" />
   </card-stack>
 </template>
 
 <script>
   import {SUIT_SYMBOLS} from "^/constants.js"
+  import {FinalStackAction} from "../class/Actions.js"
+
   export default {
     name: "FinalStack",
     computed:{
       symbol(){
         return SUIT_SYMBOLS[this.suit]
       },
+      topCard(){
+        return this.$store.getters['final/'+this.suit+'/topCard']
+      },
+      deckEmpty(){
+        return this.$store.getters['final/'+this.suit+'/deckEmpty']
+      },
     },
     props:{
       suit:{
         type:String,
         required:true,
+      },
+    },
+    methods:{
+      handleClick(){
+        if(this.$store.getters.selectedCard){
+          this.$store.dispatch("moveCards", new FinalStackAction(this.suit, this.topCard))
+        }
       },
     },
   }

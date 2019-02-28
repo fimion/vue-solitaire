@@ -9,8 +9,11 @@
     name: "VerticalSpread",
     methods:{
       addSpread(){
-        this.$el.childNodes.forEach((e,i)=>{
-          e.style.gridRowStart = i+1
+        let spread = 1
+        this.$el.childNodes.forEach((e)=>{
+          e.style.gridRowStart = spread
+          spread++
+          if(e.classList.contains('face-up') && spread > 1) spread++
         })
       },
     },

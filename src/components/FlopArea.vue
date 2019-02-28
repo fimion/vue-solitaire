@@ -2,6 +2,7 @@
   <div id="flop">
     <card-stack class="card-stack" v-if="flop.length === 0">
       <playing-card @click="selectFlopCard(topCard)"
+                    v-if="isNotEmpty"
                     :key="topCard.card"
                     :card="topCard"/>
     </card-stack>
@@ -17,12 +18,16 @@
 <script>
   import {createNamespacedHelpers,mapActions} from 'vuex'
   import {FlopSelection} from "../class/Selections.js"
+  import EmptyCard from "^class/EmptyCard.js"
 
   const {mapState:flopState, mapGetters:flopGetters} = createNamespacedHelpers('flop')
 
   export default {
     name: "FlopArea",
     computed:{
+      isNotEmpty(){
+       return !(this.topCard instanceof EmptyCard)
+      },
       ...flopState(['cards','flop']),
       ...flopGetters(['topCard']),
     },

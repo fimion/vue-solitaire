@@ -13,6 +13,7 @@
 <style scoped>
   .card-stack {
     position: relative;
+    height:100%;
   }
 
   .card-stack > * {

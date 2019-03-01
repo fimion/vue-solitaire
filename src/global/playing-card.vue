@@ -199,6 +199,7 @@
     justify-content: center;
     align-items: center;
     line-height: 0;
+    height:100%;
   }
   @media screen and (min-width:768px) {
     .card{

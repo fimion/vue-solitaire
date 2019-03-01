@@ -2,9 +2,9 @@
   <button class="card"
           v-on="$listeners"
           v-bind="$attrs"
-          :class="faceUp?'face-up':'face-down'"
+          :class="{'face-up': faceUp, 'face-down':!faceUp,}"
           :aria-label="faceUp?name:'Face down card'">
-    <base-svg>
+    <base-svg :class="{'selected':isSelected}">
       <symbol id="C" viewBox="-500 -500 1000 1000" preserveAspectRatio="xMinYMid">
         <path d="M30 150C35 385 85 400 130 500L-130 500C-85 400 -35 385 -30 150A10 10 0 0 0 -50 150A210 210 0 1 1 -124 -51A10 10 0 0 0 -110 -65A230 230 0 1 1 110 -65A10 10 0 0 0 124 -51A210 210 0 1 1 50 150A10 10 0 0 0 30 150Z" fill="black"/>
       </symbol>
@@ -76,16 +76,6 @@
           <template v-else>
             <template v-for="(ys, x) in symbols">
               <template v-for="(val, y) in ys">
-                <!--<text v-if="displaySymbol(val)"-->
-                <!--:key="card.card+x+y+'symbol'"-->
-                <!--textLength="20"-->
-                <!--lengthAdjust="spacingAndGlyphs"-->
-                <!--:x="Math.abs(x)"-->
-                <!--:y="y"-->
-                <!--:transform="upsideDown(x)"-->
-                <!--:class="color">-->
-                <!--{{symbol}}-->
-                <!--</text>-->
                 <use v-bind:xlink:href="'#'+suit"
                      v-if="displaySymbol(val)"
                      :key="card.card+x+y+'symbol-use'"
@@ -158,6 +148,13 @@
       isFaceCard(){
         return ['J','Q','K'].indexOf(this.rank)!==-1
       },
+      isSelected(){
+        let selection = this.$store.state.currentSelection
+        if(selection){
+          return selection.cards.filter((c)=>c.card === this.card.card).length > 0
+        }
+        return false
+      },
       faceUp(){
         return this.card.faceUp
       },
@@ -218,6 +215,15 @@
   .symbol-pattern{
     font-size: 30px;
     line-height:30px;
+  }
+
+  svg.selected{
+    fill: var(--color-selected);
+    background-color: var(--color-selected);
+  }
+
+  text{
+    user-select: none;
   }
 
   .face-up{

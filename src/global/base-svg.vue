@@ -1,5 +1,7 @@
-<template functional>
+<template>
   <svg viewBox="0 0 100 150"
+       v-on="$listeners"
+       v-bind="$attrs"
        xmlns="http://www.w3.org/2000/svg">
     <slot></slot>
   </svg>

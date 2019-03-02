@@ -19,6 +19,7 @@ export default new Vuex.Store({
   },
   state: {
     currentSelection:null,
+    appUpdated:false,
   },
   getters:{
     selectedCard(state){
@@ -32,10 +33,17 @@ export default new Vuex.Store({
     SET_SELECTED_CARDS(state, payload){
       state.currentSelection = payload
     },
+    APP_UPDATED(state){
+      state.appUpdated = true
+    },
+    APP_LOADED(state){
+      state.appUpdated = false
+    },
   },
   actions: {
     preInit({commit, dispatch}){
       dispatch('deck/shuffleDeck')
+      commit('APP_LOADED')
     },
     postInit({commit, dispatch}){
       dispatch('play/initPlayArea')
@@ -55,6 +63,9 @@ export default new Vuex.Store({
       }else{
 
       }
+    },
+    appUpdated({commit}){
+      commit('APP_UPDATED')
     },
   },
 })

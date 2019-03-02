@@ -22,6 +22,8 @@
     color:var(--color-white);
     justify-content: space-between;
     padding: 5px;
+    max-width: 760px;
+    width:100%;
   }
   a, a:hover, a:visited, a:focus, a:active{
     color:var(--color-white);

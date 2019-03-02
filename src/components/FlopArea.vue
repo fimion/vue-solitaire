@@ -1,14 +1,14 @@
 <template>
   <div id="flop">
     <card-stack class="card-stack" v-if="flop.length === 0">
-      <playing-card @click="selectFlopCard(topCard)"
+      <playing-card @click="clickHandler(topCard)"
                     v-if="isNotEmpty"
                     :key="topCard.card"
                     :card="topCard"/>
     </card-stack>
     <playing-card v-for="card in flop"
                   :disabled="!isTopCard(card)"
-                  @click="selectFlopCard(card)"
+                  @click="clickHandler(card)"
                   class="card-flop"
                   :key="card.card"
                   :card="card"/>
@@ -18,6 +18,7 @@
 <script>
   import {createNamespacedHelpers,mapActions} from 'vuex'
   import {FlopSelection} from "../class/Selections.js"
+  import {ClearSelectionAction} from "../class/Actions.js"
   import EmptyCard from "^class/EmptyCard.js"
 
   const {mapState:flopState, mapGetters:flopGetters} = createNamespacedHelpers('flop')
@@ -35,10 +36,18 @@
       isTopCard(card){
         return card.card === this.topCard.card
       },
-      selectFlopCard(card){
-        this.selectCards(new FlopSelection(card))
+
+      clickHandler(card){
+        if(card === this.topCard){
+          if(this.$store.state.currentSelection){
+            this.moveCards(new ClearSelectionAction())
+          }
+          else{
+            this.selectCards(new FlopSelection(card))
+          }
+        }
       },
-      ...mapActions(['selectCards']),
+      ...mapActions(['selectCards','moveCards']),
     },
   }
 </script>

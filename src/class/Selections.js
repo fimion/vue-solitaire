@@ -2,6 +2,7 @@ export class BaseSelection{
   constructor(cards){
     this.cards = cards
     this.cleanUp = null
+    this.hasAction = false
   }
 
   selectedCard(){

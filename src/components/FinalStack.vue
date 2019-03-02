@@ -3,11 +3,12 @@
     <card-holder @click="handleClick"
                  v-if="deckEmpty">
       <base-svg>
-        <text class="placeholder"
-            x="20"
-            y="110">
-          {{symbol}}
-        </text>
+        <use v-bind:xlink:href="'#'+suit+'W'"
+             class="placeholder"
+             x="0"
+             y="25"
+             height="100"
+             width="100"></use>
       </base-svg>
     </card-holder>
     <playing-card v-else
@@ -50,8 +51,7 @@
 </script>
 
 <style scoped>
-text.placeholder{
-  fill:var(--color-white);
-  font-size: 100px;
+>>>symbol>.suit{
+  fill:var(--color-white)!important;
 }
 </style>

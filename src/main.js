@@ -28,22 +28,27 @@ store.dispatch('preInit')
 let apps = [
   {
     el:"#deck",
+    name:'deck-root',
     render: h => h(DeckArea),
   },
   {
     el:"#flop",
+    name:'flop-root',
     render: h => h(FlopArea),
   },
   {
     el:"#final",
+    name:'final-root',
     render: h => h(FinalArea),
   },
   {
     el:"#play",
+    name:'play-root',
     render: h => h(PlayArea),
   },
   {
     el:"#header",
+    name:'header-root',
     render: h => h(HeaderArea),
   },
 ]

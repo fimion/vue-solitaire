@@ -11,6 +11,16 @@ export class BaseAction{
   }
 }
 
+export class ClearSelectionAction extends BaseAction{
+  constructor(){
+    super(null)
+  }
+  validate(selection) {
+    return false
+  }
+}
+
+
 export class CardFlopAction extends BaseAction{
   constructor(){
     super('flop/flopCards')
@@ -52,12 +62,10 @@ export class FinalStackAction extends BaseAction{
 
   validate(selection){
     if(selection.cards.length !== 1){
-      console.log("Cards Length not 1", selection.cards)
       return false
     }
     let selected = selection.selectedCard()
     if(selected.suit !== this.stack) {
-      console.log('Stacks do not match', selected.suit, this.stack)
       return false
     }
     let targetRankIndex = CARD_RANKS.indexOf(this.target.rank),

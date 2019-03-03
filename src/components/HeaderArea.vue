@@ -1,16 +1,21 @@
 <template>
   <header id="header">
     <div class="github"><a href="https://github.com/fimion/vue-solitaire/">View this on Github</a></div>
+    <default-card-faces />
     <div v-if="appUpdated" class="app-updated">There is an update! Refresh to load the new version.</div>
   </header>
 </template>
 
 <script>
   import {mapState} from 'vuex'
+  import DefaultCardFaces from '^template/card-faces/default-card-faces.vue'
   export default {
     name: "HeaderArea",
     computed:{
       ...mapState(['appUpdated']),
+    },
+    components:{
+      DefaultCardFaces,
     },
   }
 </script>

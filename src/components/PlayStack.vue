@@ -1,13 +1,14 @@
 <template>
   <div>
     <card-holder v-if="cards.length === 0"
-                  @click="handleEmptyClick">
+                  @click="emptyClickHandler">
       <base-svg></base-svg>
     </card-holder>
     <vertical-spread v-else>
       <playing-card v-for="card in cards"
                     :disabled="cardDisabled(card)"
-                    @click="handleClick(card)"
+                    @click="clickHandler(card)"
+                    @dblclick="dblClickHandler(card)"
                     :key="card.card"
                     :card="card"/>
     </vertical-spread>
@@ -17,9 +18,10 @@
 <script>
 
   import {mapActions, mapGetters} from 'vuex'
-  import {PlayStackAction} from "../class/Actions.js"
-  import {PlaySelection} from "../class/Selections.js"
-  import EmptyCard from "../class/EmptyCard.js"
+  import {PlayStackAction, FinalStackAction, ClearSelectionAction} from "^class/Actions.js"
+  import {PlaySelection} from "^class/Selections.js"
+  import EmptyCard from "^class/EmptyCard.js"
+  import {finalStackTopCardMethod} from "./_common.js"
 
   export default {
     name: "PlayStack",
@@ -45,15 +47,18 @@
       cardDisabled(card){
         return !card.faceUp
       },
-      handleEmptyClick(){
+      finalStackTopCardMethod,
+      emptyClickHandler(){
         if(this.selectedCard){
           this.moveCards(new PlayStackAction(this.stack, new EmptyCard()))
         }
       },
-      handleClick(card){
+      clickHandler(card){
         if(this.selectedCard){
           if(card.card === this.bottomCard.card){
             this.moveCards(new PlayStackAction(this.stack, card))
+          }else{
+            this.moveCards(new ClearSelectionAction())
           }
         }else{
           if(card.faceUp){
@@ -61,6 +66,12 @@
                 selection = this.cards.slice(index)
             this.selectCards(new PlaySelection(this.stack, selection))
           }
+        }
+      },
+      dblClickHandler(card){
+        if(this.bottomCard.card === card.card){
+          this.selectCards(new PlaySelection(this.stack,[card]))
+          this.moveCards(new FinalStackAction(card.suit, this.finalStackTopCardMethod(card.suit)))
         }
       },
       ...mapActions([

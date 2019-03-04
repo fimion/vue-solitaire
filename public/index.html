@@ -15,6 +15,11 @@
         --playing-mat: #008800;
         --color-selected: rgba(100,100,255,0.4);
         --card-height: calc(calc(calc(100vw - 80px) / 7) * 1.5);
+        --box-height-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        --box-height-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        --box-height-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        --box-height-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+        --box-height-5: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -51,6 +56,11 @@
         grid-column: 1/span 7;
         grid-row-start: 2;
       }
+      #portal{
+        position:fixed;
+        top:0;
+        left:0;
+      }
 
       @media screen and (min-width:768px) {
         #app{
@@ -70,6 +80,7 @@
       <div id="final"></div>
       <div id="play"></div>
     </div>
+    <div id="portal"></div>
     <!-- built files will be auto injected -->
   </body>
 </html>

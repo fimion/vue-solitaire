@@ -1,14 +1,17 @@
 import Vue from "vue"
 import store from "^store"
 import '^global'
-import "./registerServiceWorker"
+import "./registerServiceWorker.js"
 
-import HeaderArea from "^components/HeaderArea"
+import HeaderArea from "^components/HeaderArea.vue"
+import PortalVue from 'portal-vue'
+import FixedArea from '^components/FixedArea.vue'
+Vue.use(PortalVue)
 
-const DeckArea = ()=>import("^components/DeckArea")
-const FlopArea = ()=>import("^components/FlopArea")
-const FinalArea = ()=>import("^components/FinalArea")
-const PlayArea = ()=>import("^components/PlayArea")
+const DeckArea = ()=>import("^components/DeckArea.vue")
+const FlopArea = ()=>import("^components/FlopArea.vue")
+const FinalArea = ()=>import("^components/FinalArea.vue")
+const PlayArea = ()=>import("^components/PlayArea.vue")
 
 /**
  *
@@ -50,6 +53,11 @@ let apps = [
     el:"#header",
     name:'header-root',
     render: h => h(HeaderArea),
+  },
+  {
+    el:"#portal",
+    name:'fixed-area',
+    render: h => h(FixedArea),
   },
 ]
 apps.forEach(e=>{

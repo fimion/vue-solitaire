@@ -9,10 +9,15 @@ import {
   CONCAT_CARDS,
 } from "^store/_common.js"
 
+
 function createPlayingDeck() {
-  return CARD_SUITS.map((suit) => {
-    return CARD_RANKS.map((rank) => new Card(rank, suit))
-  }).flat()
+
+  let deck = []
+
+  CARD_SUITS.forEach((suit) => {
+    return CARD_RANKS.forEach((rank) => deck.push(new Card(rank, suit)))
+  })
+  return deck
 }
 
 

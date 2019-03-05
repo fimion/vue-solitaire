@@ -9,10 +9,12 @@ import {
   CONCAT_CARDS,
 } from "^store/_common.js"
 
+import _flatten from "lodash/flatten.js"
+
 function createPlayingDeck() {
-  return CARD_SUITS.map((suit) => {
+  return _flatten(CARD_SUITS.map((suit) => {
     return CARD_RANKS.map((rank) => new Card(rank, suit))
-  }).flat()
+  }))
 }
 
 

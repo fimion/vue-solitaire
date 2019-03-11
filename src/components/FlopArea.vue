@@ -64,7 +64,7 @@
 <style scoped>
   #flop{
     display: grid;
-    grid-template-columns: repeat(6, 1fr) 10px;
+    grid-template-columns: repeat(6, 1fr) var(--grid-gap);
     grid-template-rows: 1fr;
     align-items: start;
   }

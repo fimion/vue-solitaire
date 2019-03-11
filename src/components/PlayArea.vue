@@ -26,7 +26,7 @@
   #play{
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    grid-column-gap: 10px;
+    grid-column-gap: var(--grid-gap);
     grid-template-rows: 1fr;
     align-items: start;
   }

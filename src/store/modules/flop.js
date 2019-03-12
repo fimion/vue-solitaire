@@ -71,7 +71,9 @@ export default {
     },
     popCard({commit}){
       commit('POP_CARD')
-
+    },
+    newGame({dispatch}){
+      dispatch('resetDeck')
     },
   },
 }

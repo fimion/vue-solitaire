@@ -1,5 +1,6 @@
 import {CARD_SUITS} from "^/constants.js"
 import createFinalStack from "./_createFinalStack.js"
+import {newGame} from "^store/_common.js"
 
 function makeFinalSlots(){
   let final = {}
@@ -14,5 +15,11 @@ export default {
   },
   getters:{},
   mutations:{},
-  actions:{},
+  actions:{
+    newGame({commit, state}){
+      state.stacks.forEach((e)=>{
+        commit(e+'/RESET_CARDS')
+      })
+    },
+  },
 }

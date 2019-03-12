@@ -2,6 +2,7 @@ import {
   CONCAT_CARDS,
   PUSH_CARD,
     topCard,
+    RESET_CARDS,
 } from "^store/_common.js"
 
 export default function(){
@@ -16,6 +17,7 @@ export default function(){
     mutations:{
       PUSH_CARD,
       CONCAT_CARDS,
+      RESET_CARDS,
       SPLICE_CARDS(state, card){
         let index = state.cards.indexOf(card)
         state.cards.splice(index)

@@ -1,5 +1,5 @@
 import createPlayStack from './_createPlayStack.js'
-
+import {newGame} from "^store/_common.js"
 
 function makePlayingField(){
   let play = []
@@ -31,6 +31,10 @@ export default {
   },
   actions:{
     async initPlayArea({dispatch, commit, state, rootGetters}){
+      state.stacks.forEach((e,i)=>{
+        commit('SET_STACK_POS',{pos:i,val:false})
+      })
+      commit('SET_READY',false)
       while(!state.ready){
         for(let x=0, len = state.stacks.length;x<len;x++){
           let stackLength = state[x].cards.length
@@ -52,6 +56,11 @@ export default {
           commit('SET_READY', true)
         }
       }
+    },
+    newGame({commit, state}){
+      state.stacks.forEach((e,i)=>{
+        commit(i+'/RESET_CARDS')
+      })
     },
   },
 }

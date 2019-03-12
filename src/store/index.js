@@ -1,5 +1,6 @@
 import Vue from "vue"
 import Vuex from "vuex"
+import VuexPersistence from "vuex-persist"
 import deck from './modules/deck.js'
 import flop from './modules/flop.js'
 import final from './modules/final/index.js'
@@ -20,6 +21,9 @@ export default new Vuex.Store({
   state: {
     currentSelection:null,
     appUpdated:false,
+    options:{
+      cardsDrawn:3,
+    },
   },
   getters:{
     selectedCard(state){
@@ -30,6 +34,9 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    SET_CARDS_DRAWN(state,value){
+      state.options.cardsDrawn = value
+    },
     SET_SELECTED_CARDS(state, payload){
       state.currentSelection = payload
     },
@@ -42,11 +49,9 @@ export default new Vuex.Store({
   },
   actions: {
     preInit({commit, dispatch}){
-      dispatch('deck/shuffleDeck')
       commit('APP_LOADED')
     },
     postInit({commit, dispatch}){
-      dispatch('play/initPlayArea')
     },
     selectCards({commit, dispatch}, Selection){
       commit('SET_SELECTED_CARDS', Selection)
@@ -67,5 +72,17 @@ export default new Vuex.Store({
     appUpdated({commit}){
       commit('APP_UPDATED')
     },
+    newGame({dispatch}){
+      dispatch('final/newGame')
+      dispatch('play/newGame')
+      dispatch('flop/newGame')
+      dispatch('deck/newGame')
+      dispatch('play/initPlayArea')
+    },
+    setCardsDrawn({commit, dispatch}, value){
+      commit('SET_CARDS_DRAWN', value)
+      dispatch('newGame')
+    },
   },
+  plugins:[new VuexPersistence().plugin],
 })

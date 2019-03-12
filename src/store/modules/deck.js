@@ -7,6 +7,7 @@ import {
   PUSH_CARD,
   POP_CARD,
   CONCAT_CARDS,
+    RESET_CARDS,
 } from "^store/_common.js"
 
 
@@ -24,19 +25,23 @@ function createPlayingDeck() {
 export default {
   namespaced: true,
   state: {
-    cards: createPlayingDeck(),
+    cards: [],
   },
   getters: {
     topCard,
     deckEmpty,
-    nextFlop(state){
-      if(state.cards.length>3){
-        return state.cards.slice(state.cards.length - 3)
+    nextFlop(state, getters, rootState){
+      let flopSize = rootState.options.cardsDrawn
+      if(state.cards.length>flopSize){
+        return state.cards.slice(state.cards.length - flopSize)
       }
       return state.cards
     },
   },
   mutations: {
+    CREATE_DECK(state){
+      state.cards = createPlayingDeck()
+    },
     SHUFFLE_DECK({cards}) {
       cards = cards.sort(() => (Math.random() - 0.5))
     },
@@ -52,8 +57,14 @@ export default {
     CONCAT_CARDS,
     PUSH_CARD,
     POP_CARD,
+    RESET_CARDS,
   },
   actions: {
+    newGame({commit}){
+      commit('RESET_CARDS')
+      commit('CREATE_DECK')
+      commit('SHUFFLE_DECK')
+    },
     shuffleDeck({commit}) {
       commit('SHUFFLE_DECK')
     },

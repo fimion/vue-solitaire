@@ -3,35 +3,80 @@
     <div class="github"><a href="https://github.com/fimion/vue-solitaire/">View this on Github</a></div>
     <default-card-faces />
     <div v-if="appUpdated" class="app-updated">There is an update! Refresh to load the new version.</div>
-    <!--<div class="buttons">
-      <button class="btn">New</button>
-      <button class="btn">Undo</button>
+    <div class="buttons">
+      <button class="btn" @click="showNewConfirm=true">
+        New
+        <portal to="fixed-area" v-if="showNewConfirm">
+          <pop-up>
+            <div>
+              Are you sure you want to start a new game?
+            </div>
+            <new-game-button @confirm="startGame" ></new-game-button>
+            <button @click="showNewConfirm=false">Do Not Start a New Game</button>
+            <button class="close"
+                    @click="showNewConfirm=false"
+                    aria-label="Close New Game Dialogue">
+              X
+            </button>
+          </pop-up>
+        </portal>
+      </button>
+      <!--<button class="btn">Undo</button>-->
       <button aria-label="Options" @click="showOptions=true" class="btn">Opts
         <portal to="fixed-area" v-if="showOptions">
           <pop-up>
             <div>
-              Coming Soon
+              <label for="cardsDrawn">Number of cards drawn at a time: </label>
+              <select name="cardsDrawn" id="cardsDrawn" v-model="cardsDrawn">
+                <option :value="1">One</option>
+                <option :value="3">Three</option>
+              </select>
             </div>
-            <button class="close" @click="showOptions=false" aria-label="Close Options">X</button>
+            <button class="close"
+                    @click="showOptions=false"
+                    aria-label="Close New Game Dialogue">
+              X
+            </button>
           </pop-up>
         </portal>
       </button>
-    </div>-->
+    </div>
   </header>
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+  import {mapState, mapActions} from 'vuex'
   import DefaultCardFaces from '^template/card-faces/default-card-faces.vue'
   export default {
     name: "HeaderArea",
     data(){
       return {
         showOptions:false,
+        showNewConfirm:false,
       }
     },
     computed:{
-      ...mapState(['appUpdated']),
+      cardsDrawn:{
+        get(){
+          return this.options.cardsDrawn
+        },
+        set(value){
+          let confirm = window.confirm('Changing this setting will deal a new game. Are you sure?')
+          if(confirm){
+            this.$store.dispatch('setCardsDrawn', value)
+          }else{
+            this.$store.commit('SET_CARDS_DRAWN', this.options.cardsDrawn)
+            this.$forceUpdate()
+          }
+        },
+      },
+      ...mapState(['appUpdated','options']),
+    },
+    methods:{
+      startGame(){
+        this.showNewConfirm = false
+      },
+      ...mapActions(['newGame']),
     },
     components:{
       DefaultCardFaces,

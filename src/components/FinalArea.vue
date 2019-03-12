@@ -5,7 +5,10 @@
                  :suit="suit" />
     <portal to="fixed-area" v-if="gameIsWon">
       <confetti/>
-      <pop-up><h1>You win!</h1></pop-up>
+      <pop-up>
+        <h1>You win!</h1>
+        <new-game-button />
+      </pop-up>
     </portal>
   </div>
 </template>
@@ -13,6 +16,7 @@
   import FinalStack from './FinalStack.vue'
   import {CARD_SUITS} from "../constants.js"
   import {createNamespacedHelpers} from 'vuex'
+  import NewGameButton from "../global/new-game-button.vue"
 
   const Confetti = ()=>import('./Victory/Confetti.vue')
 
@@ -29,6 +33,7 @@
       ]),
     },
     components:{
+      NewGameButton,
       FinalStack,
       Confetti,
     },

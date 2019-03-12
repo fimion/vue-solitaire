@@ -29,3 +29,9 @@ export function POP_CARD(state){
 export function CONCAT_CARDS(state,newCards) {
   state.cards = state.cards.concat(newCards)
 }
+
+export function RESET_CARDS(state){
+  state.cards = []
+}
+
+

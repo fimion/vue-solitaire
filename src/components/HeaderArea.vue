@@ -11,8 +11,10 @@
             <div>
               Are you sure you want to start a new game?
             </div>
-            <new-game-button @confirm="startGame" ></new-game-button>
-            <button @click="showNewConfirm=false">Do Not Start a New Game</button>
+            <new-game-button class="btn"
+                             @confirm="startGame" />
+            <button class="btn"
+                    @click="showNewConfirm=false">Do Not Start a New Game</button>
             <button class="close"
                     @click="showNewConfirm=false"
                     aria-label="Close New Game Dialogue">
@@ -90,8 +92,9 @@
     flex-flow:row-reverse nowrap;
     color:var(--color-white);
     justify-content: space-between;
+    align-items: center;
     padding: 5px 10px;
-    max-width: 760px;
+    max-width: 780px;
     width:100%;
   }
   a, a:hover, a:visited, a:focus, a:active{
@@ -101,7 +104,10 @@
 
   .btn{
     padding:5px;
-    margin:0 5px;
+    margin-right:5px;
+
+    background-color:var(--color-btn);
+    border-color:var(--color-btn-border);
   }
 
   .close{
@@ -119,8 +125,6 @@
   }
 
   .github{
-    align-self: flex-end;
-    justify-self: end;
   }
 
 </style>

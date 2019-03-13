@@ -51,7 +51,5 @@
 </script>
 
 <style scoped>
->>>symbol>.suit{
-  fill:var(--color-white)!important;
-}
+
 </style>

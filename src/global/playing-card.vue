@@ -2,9 +2,9 @@
   <button class="card"
           v-on="$listeners"
           v-bind="$attrs"
-          :class="{'face-up': faceUp, 'face-down':!faceUp,}"
+          :class="{'face-up': faceUp, 'face-down':!faceUp,'selected':isSelected}"
           :aria-label="faceUp?name:'Face down card'">
-    <base-svg :class="{'selected':isSelected}">
+    <base-svg>
       <g v-if="faceUp">
         <g class="upper corner">
           <text
@@ -178,7 +178,7 @@
 
 <style scoped>
   .card{
-    border: var(--color-black) solid 3px;
+    border: var(--color-card-border) solid 3px;
     border-radius: 0.5rem;
     max-width: 100px;
     max-height:var(--card-height);
@@ -188,6 +188,8 @@
     align-items: center;
     line-height: 0;
     height:100%;
+    position:relative;
+    transition: box-shadow 0.2s ease, filter 0.2s ease, border-color 0.2s ease;
   }
   @media screen and (min-width:768px) {
     .card{
@@ -199,16 +201,33 @@
   }
   .card:focus{
     outline: none;
-    box-shadow: 0 0 5px 3px var(--color-focus);
+    box-shadow: 0 0 3px 2px var(--color-focus);
   }
   .symbol-pattern{
     font-size: 30px;
     line-height:30px;
   }
 
-  svg.selected{
-    fill: var(--color-selected);
-    background-color: var(--color-selected);
+  .card.selected{
+    border-color: var(--color-selected-border);
+    box-shadow: var(--box-height-3);
+  }
+  .card::before{
+    display:block;
+    pointer-events: none;
+    z-index: 5;
+    background: var(--color-selected);
+    height:100%;
+    width:100%;
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    opacity:0;
+    transition: opacity 0.2s ease;
+  }
+  .card.selected::before{
+    opacity:1;
   }
 
   text{
@@ -216,10 +235,10 @@
   }
 
   .face-up{
-    background-color: var(--color-white);
+    background: var(--color-white);
   }
   .face-down{
-    background-image: radial-gradient(circle, #1111aa, #111144);
+    background: var(--card-back);
   }
   .red {
     fill: var(--color-red);

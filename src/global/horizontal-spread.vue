@@ -1,20 +1,19 @@
 <template>
-  <div class="vertical-spread">
+  <div class="horizontal-spread">
     <slot></slot>
   </div>
 </template>
 
 <script>
   export default {
-    name: "VerticalSpread",
+    name: "HorizontalSpread",
     methods:{
       addSpread(){
         let spread = 1
         this.$el.childNodes.forEach((e)=>{
           if(e.style) {
-            e.style.gridRowStart = spread
+            e.style.gridColumnStart = spread
             spread++
-            if (e.classList.contains('face-up') && spread > 1) spread++
           }
         })
       },
@@ -29,20 +28,20 @@
 </script>
 
 <style scoped>
-  .vertical-spread{
+  .horizontal-spread{
     display:grid;
-    grid-auto-rows: calc(var(--card-height) / 8);
+    grid-auto-columns: calc(var(--card-width) / 3);
   }
 
   @media screen and (min-width:768px){
-    .vertical-spread{
-      grid-auto-rows: 19px;
+    .horizontal-spread{
+      grid-auto-columns: 33.33333px;
     }
   }
 
-  .vertical-spread>*{
-    grid-column: 1;
-    grid-row-end: span 8;
+  .horizontal-spread>*{
+    grid-row: 1;
+    grid-column-end: span 3;
     z-index: 1;
   }
 </style>

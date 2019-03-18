@@ -14,7 +14,8 @@
     "vuex": "^3.1.0",
     "portal-vue": "^1.5.1",
     "confetti-js": "^0.0.14",
-    "vuex-persist": "^2.0.0"
+    "vuex-persist": "^2.0.0",
+    "vue-drag-drop": "^1.1.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",

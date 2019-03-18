@@ -24,6 +24,7 @@ export default new Vuex.Store({
     options:{
       cardsDrawn:3,
     },
+    dragging:false,
   },
   getters:{
     selectedCard(state){
@@ -45,6 +46,9 @@ export default new Vuex.Store({
     },
     APP_LOADED(state){
       state.appUpdated = false
+    },
+    SET_DRAGGING(state, value){
+      state.dragging = !!value
     },
   },
   actions: {

@@ -2,8 +2,9 @@
   <drag v-bind="$attrs" v-on="$listeners">
     <slot></slot>
     <template slot="image">
-      <vertical-spread v-if="currentSelection">
+      <vertical-spread v-if="currentSelection" class="selection-spread">
         <playing-card v-for="card in currentSelection.cards"
+                      class="selection-card"
                       :key="'DragSelection'+card.card"
                       :card="card"></playing-card>
       </vertical-spread>
@@ -26,5 +27,9 @@
 </script>
 
 <style scoped>
-
+.selection-spread>.selection-card{
+  transition:none;
+  opacity:1;
+  background:var(--color-white);
+}
 </style>

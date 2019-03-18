@@ -1,11 +1,16 @@
 <template>
   <horizontal-spread id="flop">
     <card-stack class="card-stack" v-if="flop.length === 0">
-      <playing-card @click="clickHandler(topCard)"
-                    @dblclick="dblClickHandler(topCard)"
-                    v-if="isNotEmpty"
-                    :key="topCard.card"
-                    :card="topCard"></playing-card>
+      <drag-wrapper @dragstart="dragStartHandler(topCard)"
+                    @dragend="dragEndHandler(topCard)"
+                    v-if="isNotEmpty">
+        <playing-card @click="clickHandler(topCard)"
+                      @dblclick="dblClickHandler(topCard)"
+                      v-if="isNotEmpty"
+                      :key="topCard.card"
+                      :card="topCard"></playing-card>
+      </drag-wrapper>
+
     </card-stack>
     <template v-for="card in flop">
       <drag-wrapper v-if="isTopCard(card)"

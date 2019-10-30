@@ -8,7 +8,7 @@ const requireComponent = require.context(
     '.',
     // Do not look in subdirectories
     false,
-    /[\w-]+\.vue$/
+    /[\w-]+\.vue$/,
 )
 
 // For each matching file name...
@@ -22,8 +22,8 @@ requireComponent.keys().forEach((fileName) => {
           // Remove the "./_" from the beginning
               .replace(/^\.\/_/, '')
               // Remove the file extension from the end
-              .replace(/\.\w+$/, '')
-      )
+              .replace(/\.\w+$/, ''),
+      ),
   )
   // Globally register the component
   Vue.component(componentName, componentConfig.default || componentConfig)

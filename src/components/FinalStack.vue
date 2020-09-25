@@ -18,8 +18,8 @@
 </template>
 
 <script>
-  import {SUIT_SYMBOLS} from "^/constants.js"
-  import {FinalStackAction} from "../class/Actions.js"
+  import {SUIT_SYMBOLS} from "@/constants.js"
+  import {FinalStackAction} from "@class/Actions.js"
 
   export default {
     name: "FinalStack",

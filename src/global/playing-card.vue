@@ -84,9 +84,9 @@
 </template>
 
 <script>
-  import Card from "../class/Card.js"
-  import EmptyCard from "../class/EmptyCard.js"
-  import {SUIT_RED, SUIT_BLACK} from "../constants.js"
+  import Card from "@class/Card.js"
+  import EmptyCard from "@class/EmptyCard.js"
+  import {SUIT_RED} from "@/constants.js"
 
   export default {
     name: "PlayingCard",
@@ -153,7 +153,7 @@
         return this.card.rank
       },
       color() {
-        return SUIT_RED.indexOf(this.suit)!==-1 ? 'red' : 'black'
+        return SUIT_RED.has(this.suit) ? 'red' : 'black'
       },
       symbol() {
         return this.card.symbol
@@ -170,7 +170,7 @@
         return ""
       },
       displaySymbol(arr){
-        return arr.indexOf(this.rank)!=-1
+        return arr.indexOf(this.rank)!==-1
       },
     },
   }

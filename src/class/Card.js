@@ -1,4 +1,4 @@
-import {SUIT_NAMES,RANK_NAMES, SUIT_SYMBOLS} from '../constants'
+import {SUIT_NAMES,RANK_NAMES, SUIT_SYMBOLS} from '@/constants'
 
 export default class Card{
   constructor(rank, suit){

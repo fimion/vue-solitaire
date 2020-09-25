@@ -1,4 +1,4 @@
-import EmptyCard from "^class/EmptyCard.js"
+import EmptyCard from "@class/EmptyCard.js"
 
 
 /**

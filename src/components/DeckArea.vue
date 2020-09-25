@@ -14,8 +14,8 @@
 <script>
   import {createNamespacedHelpers, mapActions} from 'vuex'
 
-  import {CardFlopAction, DeckResetAction} from "../class/Actions.js"
-  import {DeckSelection, DeckResetSelection} from "../class/Selections.js"
+  import {CardFlopAction, DeckResetAction} from "@class/Actions.js"
+  import {DeckSelection, DeckResetSelection} from "@class/Selections.js"
 
   const {mapGetters: deckGetters} = createNamespacedHelpers('deck')
   const {mapGetters:flopGetters} = createNamespacedHelpers('flop')

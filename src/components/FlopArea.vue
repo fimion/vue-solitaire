@@ -19,9 +19,9 @@
 
 <script>
   import {createNamespacedHelpers,mapActions} from 'vuex'
-  import {FlopSelection} from "../class/Selections.js"
-  import {ClearSelectionAction, FinalStackAction} from "../class/Actions.js"
-  import EmptyCard from "^class/EmptyCard.js"
+  import {FlopSelection} from "@class/Selections.js"
+  import {ClearSelectionAction, FinalStackAction} from "@class/Actions.js"
+  import EmptyCard from "@class/EmptyCard.js"
   import {finalStackTopCardMethod} from "./_common.js"
 
   const {mapState:flopState, mapGetters:flopGetters} = createNamespacedHelpers('flop')

@@ -48,7 +48,7 @@
 
 <script>
   import {mapState, mapActions} from 'vuex'
-  import DefaultCardFaces from '^template/card-faces/default-card-faces.vue'
+  import DefaultCardFaces from '@template/card-faces/default-card-faces.vue'
   export default {
     name: "HeaderArea",
     data(){

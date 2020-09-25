@@ -18,9 +18,9 @@
 <script>
 
   import {mapActions, mapGetters} from 'vuex'
-  import {PlayStackAction, FinalStackAction, ClearSelectionAction} from "^class/Actions.js"
-  import {PlaySelection} from "^class/Selections.js"
-  import EmptyCard from "^class/EmptyCard.js"
+  import {PlayStackAction, FinalStackAction, ClearSelectionAction} from "@class/Actions.js"
+  import {PlaySelection} from "@class/Selections.js"
+  import EmptyCard from "@class/EmptyCard.js"
   import {finalStackTopCardMethod} from "./_common.js"
 
   export default {

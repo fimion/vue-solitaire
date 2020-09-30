@@ -76,16 +76,14 @@
             </template>
           </template>
         </g>
-
-
       </g>
     </base-svg>
   </button>
 </template>
 
 <script>
-  import Card from "@class/Card.js"
-  import EmptyCard from "@class/EmptyCard.js"
+  import Card from "@/class/Card.js"
+  import EmptyCard from "@/class/EmptyCard.js"
   import {SUIT_RED} from "@/constants.js"
 
   export default {
@@ -95,38 +93,42 @@
         type: [Card,EmptyCard],
         required: true,
       },
+      isSelected:{
+        type: Boolean,
+        required: true,
+      },
     },
     computed: {
       symbols(){
         return {
           15:{
-            20:[4,5,6,7,8,9,10],
-            50:[9,10],
-            65:[6,7,8],
+            20:['4','5','6','7','8','9','10'],
+            50:['9','10'],
+            65:['6','7','8'],
           },
           40:{
-            20:[2,3],
-            35:[10],
-            45:[7,8],
-            65:['A',3,5,9],
+            20:['2','3'],
+            35:['10'],
+            45:['7','8'],
+            65:['A','3','5','9'],
           },
           65:{
-            20:[4,5,6,7,8,9,10],
-            50:[9,10],
-            65:[6,7,8],
+            20:['4','5','6','7','8','9','10'],
+            50:['9','10'],
+            65:['6','7','8'],
           },
           "-15":{
-            20:[4,5,6,7,8,9,10],
-            50:[9,10],
+            20:['4','5','6','7','8','9','10'],
+            50:['9','10'],
           },
           '-40':{
-            20:[2,3],
-            35:[10],
-            45:[8],
+            20:['2','3'],
+            35:['10'],
+            45:['8'],
           },
           '-65':{
-            20:[4,5,6,7,8,9,10],
-            50:[9,10],
+            20:['4','5','6','7','8','9','10'],
+            50:['9','10'],
           },
         }
       },
@@ -135,13 +137,6 @@
       },
       isFaceCard(){
         return ['J','Q','K'].indexOf(this.rank)!==-1
-      },
-      isSelected(){
-        let selection = this.$store.state.currentSelection
-        if(selection){
-          return selection.cards.filter((c)=>c.card === this.card.card).length > 0
-        }
-        return false
       },
       faceUp(){
         return this.card.faceUp

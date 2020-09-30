@@ -12,17 +12,21 @@
       </base-svg>
     </card-holder>
     <playing-card v-else
+                  :card="topCard"
+                  :is-selected="isSelected(topCard)"
                   @click="handleClick"
-                  :card="topCard" />
+    />
   </card-stack>
 </template>
 
 <script>
   import {SUIT_SYMBOLS} from "@/constants.js"
   import {FinalStackAction} from "@class/Actions.js"
+  import {isSelectedMixin} from "@/components/_common.js"
 
   export default {
     name: "FinalStack",
+    mixins:[isSelectedMixin],
     computed:{
       symbol(){
         return SUIT_SYMBOLS[this.suit]

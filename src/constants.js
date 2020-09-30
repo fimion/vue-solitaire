@@ -3,15 +3,35 @@
  */
 
 /**
+ * @typedef {'A'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'|'10'|'J'|'Q'|'K'} CardRank
+ * @description allowed card ranks in a standard 52 card deck
+ */
+
+/**
+ * @typedef {'C'|'D'|'H'|'S'} CardSuit
+ * @description allowed suits in a standard 52 card deck
+ */
+
+/**
+ * the way to set something read only
+ * @type {PropertyDescriptor}
+ * @constant
+ */
+export const READ_ONLY = Object.freeze({
+  writable: false,
+  configurable: false,
+})
+
+/**
  * @description A list of card ranks for a standard 52 card playing deck.
- * @type {string[]}
+ * @type {CardRank[]}
  * @constant
  */
 export const CARD_RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
 
 /**
  * @description A list of card suits for a standard 52 card playing deck.
- * @type {string[]}
+ * @type {CardSuit[]}
  * @constant
  */
 export const CARD_SUITS = ['C', 'D', 'H', 'S']
@@ -32,7 +52,7 @@ export const SUIT_BLACK = new Set(['C', 'S'])
 
 /**
  * @description An object used to look up which suits are opposite the keyed suit.
- * @type {Map.<string,Set.<string>>}
+ * @type {Map.<CardSuit,Set.<string>>}
  * @constant
  */
 export const SUIT_OPPOSITES = new Map([
@@ -45,7 +65,7 @@ export const SUIT_OPPOSITES = new Map([
 
 /**
  * A Map of the symbols for the suits.
- * @type {object.<string,string>}
+ * @type {object.<CardSuit,string>}
  * @constant
  */
 export const SUIT_SYMBOLS = {
@@ -56,7 +76,7 @@ export const SUIT_SYMBOLS = {
 }
 /**
  * A map of the suits to their names
- * @type {object.<string,string>}
+ * @type {object.<CardSuit,string>}
  * @constant
  */
 export const SUIT_NAMES = {
@@ -68,7 +88,7 @@ export const SUIT_NAMES = {
 
 /**
  * A map of the ranks to their names.
- * @type {object.<string,string>}
+ * @type {object.<CardRank,string>}
  * @constant
  */
 export const RANK_NAMES = {

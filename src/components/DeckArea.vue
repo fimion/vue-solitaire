@@ -6,6 +6,7 @@
       <playing-card v-else
                     @click="flipCard"
                     :card="topCard"
+                    :is-selected="false"
                     :key="topCard.card"/>
     </card-stack>
   </div>

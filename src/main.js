@@ -1,17 +1,15 @@
-import Vue from "vue"
+import {createApp} from "vue"
 import store from "@store"
-import '@global'
+import addGlobalComponents from '@global'
 import "@/registerServiceWorker.js"
 
 import HeaderArea from "@components/HeaderArea.vue"
-import PortalVue from 'portal-vue'
 import FixedArea from '@components/FixedArea.vue'
-Vue.use(PortalVue)
 
-const DeckArea = ()=>import("@components/DeckArea.vue")
-const FlopArea = ()=>import("@components/FlopArea.vue")
-const FinalArea = ()=>import("@components/FinalArea.vue")
-const PlayArea = ()=>import("@components/PlayArea.vue")
+import DeckArea from "@components/DeckArea.vue"
+import FlopArea from "@components/FlopArea.vue"
+import FinalArea from "@components/FinalArea.vue"
+import PlayArea from "@components/PlayArea.vue"
 
 /**
  *
@@ -24,46 +22,36 @@ const PlayArea = ()=>import("@components/PlayArea.vue")
  *
  */
 
-Vue.config.productionTip = false
-
 store.dispatch('preInit')
 
 let apps = [
   {
     el:"#deck",
-    name:'deck-root',
-    render: h => h(DeckArea),
+    component: DeckArea,
   },
   {
     el:"#flop",
-    name:'flop-root',
-    render: h => h(FlopArea),
+    component: FlopArea,
   },
   {
     el:"#final",
-    name:'final-root',
-    render: h => h(FinalArea),
+    component: FinalArea,
   },
   {
     el:"#play",
-    name:'play-root',
-    render: h => h(PlayArea),
+    component: PlayArea,
   },
   {
     el:"#header",
-    name:'header-root',
-    render: h => h(HeaderArea),
-  },
-  {
-    el:"#portal",
-    name:'fixed-area',
-    render: h => h(FixedArea),
+    component: HeaderArea,
   },
 ]
-apps.forEach(e=>{
-  if(document.querySelector(e.el)){
-    e.store = store
-    new Vue(e)
+apps.forEach(({el, component})=>{
+  if(document.querySelector(el)){
+    const app = createApp(component)
+    addGlobalComponents(app)
+    app.use(store)
+    app.mount(el)
   }
 })
 

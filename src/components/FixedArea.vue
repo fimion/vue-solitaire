@@ -1,6 +1,5 @@
 <template>
   <div id="portal">
-    <portal-target name="fixed-area"></portal-target>
   </div>
 </template>
 

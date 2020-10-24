@@ -3,13 +3,13 @@
     <final-stack v-for="suit in stacks"
                  :key="'final-stack-'+suit"
                  :suit="suit" />
-    <portal to="fixed-area" v-if="gameIsWon">
+    <teleport to="#portal" v-if="gameIsWon">
       <confetti/>
       <pop-up>
         <h1>You win!</h1>
         <new-game-button />
       </pop-up>
-    </portal>
+    </teleport>
   </div>
 </template>
 <script>

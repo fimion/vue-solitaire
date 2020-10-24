@@ -6,7 +6,7 @@
     <div class="buttons">
       <button class="btn" @click="showNewConfirm=true">
         New
-        <portal to="fixed-area" v-if="showNewConfirm">
+        <teleport to="#portal" v-if="showNewConfirm">
           <pop-up>
             <div>
               Are you sure you want to start a new game?
@@ -21,11 +21,11 @@
               X
             </button>
           </pop-up>
-        </portal>
+        </teleport>
       </button>
       <!--<button class="btn">Undo</button>-->
       <button aria-label="Options" @click="showOptions=true" class="btn">Opts
-        <portal to="fixed-area" v-if="showOptions">
+        <teleport to="#portal" v-if="showOptions">
           <pop-up>
             <div>
               <label for="cardsDrawn">Number of cards drawn at a time: </label>
@@ -40,7 +40,7 @@
               X
             </button>
           </pop-up>
-        </portal>
+        </teleport>
       </button>
     </div>
   </header>

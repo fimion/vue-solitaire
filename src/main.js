@@ -1,15 +1,29 @@
-import {createApp} from "vue"
+import {createApp, defineAsyncComponent} from "vue"
 import store from "@store"
 import addGlobalComponents from '@global'
 import "@/registerServiceWorker.js"
 
 import HeaderArea from "@components/HeaderArea.vue"
-import FixedArea from '@components/FixedArea.vue'
 
-import DeckArea from "@components/DeckArea.vue"
-import FlopArea from "@components/FlopArea.vue"
-import FinalArea from "@components/FinalArea.vue"
-import PlayArea from "@components/PlayArea.vue"
+/**
+ *
+ * @param {string} name - component name for dev tools
+ * @param {function} loader - function that returns a promise that resolves to a component
+ * @returns {object} a component definition that will allow for async loading.
+ */
+function asyncComponent(name, loader){
+  const component = defineAsyncComponent({
+    loader,
+  })
+  component.name = `Async${name}`
+  return component
+}
+
+
+const DeckApp = asyncComponent('DeckApp', ()=>import("@components/DeckArea.vue"))
+const FlopApp = asyncComponent("FlopApp",()=>import("@components/FlopArea.vue"))
+const FinalApp = asyncComponent("FinalApp", ()=>import("@components/FinalArea.vue"))
+const PlayApp = asyncComponent("PlayApp",()=>import("@components/PlayArea.vue"))
 
 /**
  *
@@ -27,19 +41,19 @@ store.dispatch('preInit')
 let apps = [
   {
     el:"#deck",
-    component: DeckArea,
+    component: DeckApp,
   },
   {
     el:"#flop",
-    component: FlopArea,
+    component: FlopApp,
   },
   {
     el:"#final",
-    component: FinalArea,
+    component: FinalApp,
   },
   {
     el:"#play",
-    component: PlayArea,
+    component: PlayApp,
   },
   {
     el:"#header",

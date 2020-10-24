@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import 'confetti-js'
+  import ConfettiGenerator from 'confetti-js'
   let confetti = null
 
   export default {
@@ -38,7 +38,7 @@
     updated(){
       this.$nextTick(this.confetti)
     },
-    beforeDestroy() {
+    beforeUnmount() {
       this.clear()
     },
   }

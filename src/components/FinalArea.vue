@@ -13,12 +13,13 @@
   </div>
 </template>
 <script>
+import { defineAsyncComponent } from 'vue'
   import FinalStack from '@components/FinalStack.vue'
   import {CARD_SUITS} from "@/constants.js"
   import {createNamespacedHelpers} from 'vuex'
   import NewGameButton from "@global/new-game-button.vue"
 
-  const Confetti = ()=>import('./Victory/Confetti.vue')
+  const Confetti = defineAsyncComponent(()=>import('./Victory/Confetti.vue'))
 
   const {mapState:finalState} = createNamespacedHelpers('final')
   export default {

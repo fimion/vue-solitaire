@@ -72,4 +72,8 @@ apps.forEach(({el, component})=>{
 store.dispatch('postInit')
 
 
+if(process.env.NODE_ENV !== 'production'){
+  import('./devHelpers.js')
+}
+
 

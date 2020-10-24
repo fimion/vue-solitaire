@@ -1,6 +1,6 @@
-import {CARD_RANKS, CARD_SUITS} from "^/constants.js"
-import Card from "^class/Card.js"
-import EmptyCard from "^class/EmptyCard.js"
+import {CARD_RANKS, CARD_SUITS} from "@/constants.js"
+import Card from "@class/Card.js"
+import EmptyCard from "@class/EmptyCard.js"
 import {
   topCard,
   deckEmpty,
@@ -8,7 +8,7 @@ import {
   POP_CARD,
   CONCAT_CARDS,
     RESET_CARDS,
-} from "^store/_common.js"
+} from "@store/_common.js"
 
 
 function createPlayingDeck() {

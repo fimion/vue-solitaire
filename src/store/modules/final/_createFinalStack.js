@@ -4,7 +4,7 @@ import {
   topCard,
     deckEmpty,
     RESET_CARDS,
-} from "^store/_common.js"
+} from "@store/_common.js"
 
 export default function(){
   return {

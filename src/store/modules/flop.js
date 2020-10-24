@@ -1,6 +1,6 @@
-import {CONCAT_CARDS} from "^store/_common.js"
-import EmptyCard from '^class/EmptyCard.js'
-import {FlopSelection} from "^class/Selections.js"
+import {CONCAT_CARDS} from "@store/_common.js"
+import EmptyCard from '@class/EmptyCard.js'
+import {FlopSelection} from "@class/Selections.js"
 import Vue from 'vue'
 
 export default {

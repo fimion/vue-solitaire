@@ -6,11 +6,13 @@
     </card-holder>
     <vertical-spread v-else>
       <playing-card v-for="card in cards"
+                    :card="card"
+                    :isSelected="isSelected(card, currentSelection)"
                     :disabled="cardDisabled(card)"
+                    :key="card.card"
                     @click="clickHandler(card)"
                     @dblclick="dblClickHandler(card)"
-                    :key="card.card"
-                    :card="card"/>
+      />
     </vertical-spread>
   </div>
 </template>
@@ -18,13 +20,16 @@
 <script>
 
   import {mapActions, mapGetters} from 'vuex'
-  import {PlayStackAction, FinalStackAction, ClearSelectionAction} from "^class/Actions.js"
-  import {PlaySelection} from "^class/Selections.js"
-  import EmptyCard from "^class/EmptyCard.js"
-  import {finalStackTopCardMethod} from "./_common.js"
+  import {PlayStackAction, FinalStackAction, ClearSelectionAction} from "@class/Actions.js"
+  import {PlaySelection} from "@class/Selections.js"
+  import EmptyCard from "@class/EmptyCard.js"
+  import {finalStackTopCardMethod, isSelectedMixin} from "./_common.js"
+
+  /** @typedef {import('@/class/Card')} Card */
 
   export default {
     name: "PlayStack",
+    mixins:[isSelectedMixin],
     props:{
       stack:{
         type:Number,
@@ -32,6 +37,10 @@
       },
     },
     computed:{
+      /**
+       *
+       * @returns {Card[]}
+       */
       cards(){
         return this.$store.state.play[this.stack].cards
       },
@@ -44,6 +53,11 @@
       ...mapGetters(['selectedCard']),
     },
     methods:{
+      /**
+       *
+       * @param {Card} card
+       * @returns {boolean}
+       */
       cardDisabled(card){
         return !card.faceUp
       },

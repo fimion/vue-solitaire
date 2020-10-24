@@ -62,31 +62,72 @@
             </text>
           </template>
           <template v-else>
-            <template v-for="(ys, x) in symbols">
-              <template v-for="(val, y) in ys">
-                <use v-bind:xlink:href="'#'+suit"
-                     v-if="displaySymbol(val)"
-                     :key="card.card+x+y+'symbol-use'"
-                     :x="Math.abs(x)"
-                     :y="y"
-                     :transform="upsideDown(x)"
-                     height="20"
-                     width="20"></use>
-              </template>
-            </template>
+            <use v-bind:xlink:href="'#'+suit"
+                 v-for="pos in symbols"
+                 :key="card.card+pos.x+pos.y+pos.transform+'symbol-use'"
+                 :x="pos.x"
+                 :y="pos.y"
+                 :transform="pos.transform"
+                 height="20"
+                 width="20"></use>
           </template>
         </g>
-
-
       </g>
     </base-svg>
   </button>
 </template>
 
 <script>
-  import Card from "../class/Card.js"
-  import EmptyCard from "../class/EmptyCard.js"
-  import {SUIT_RED, SUIT_BLACK} from "../constants.js"
+  import Card from "@/class/Card.js"
+  import EmptyCard from "@/class/EmptyCard.js"
+  import {SUIT_RED} from "@/constants.js"
+
+  function Pos(x,y,flip) {
+    return {
+      x,
+      y,
+      transform: flip ? "rotate(-180 50 75)" : "",
+    }
+  }
+
+  const L ={
+      A:Pos(15,20),
+      D:Pos(15, 50),
+      E:Pos(15,65),
+      F:Pos(65, 50, true),
+      I:Pos(65, 20, true),
+    },
+    C = {
+      A:Pos(40, 20),
+      B:Pos(40, 35),
+      C:Pos(40, 45),
+      E:Pos(40, 65),
+      G:Pos(40, 45, true),
+      H:Pos(40, 35, true),
+      I:Pos(40, 20, true),
+    },
+    R = {
+      A:Pos(65, 20),
+      D:Pos(65, 50),
+      E:Pos(65, 65),
+      F:Pos(15, 50, true),
+      I:Pos(15, 20, true),
+    }
+
+
+const DISPLAY_PATTERNS = {
+    "A": [C.E],
+    "2": [C.A, C.I],
+    "3": [C.A, C.E, C.I],
+    "4": [L.A, L.I, R.A, R.I],
+    "5": [L.A, L.I, C.E, R.A, R.I],
+    "6": [L.A, L.E, L.I, R.A, R.E, R.I],
+    "7": [L.A, L.E, L.I, C.C, R.A, R.E, R.I],
+    "8": [L.A, L.E, L.I, C.C, C.G, R.A, R.E, R.I],
+    "9": [L.A, L.D, L.F, L.I, C.E, R.A, R.D, R.F, R.I],
+    "10":[L.A, L.D, L.F, L.I,C.B, C.H, R.A, R.D, R.F, R.I],
+
+  }
 
   export default {
     name: "PlayingCard",
@@ -95,53 +136,20 @@
         type: [Card,EmptyCard],
         required: true,
       },
+      isSelected:{
+        type: Boolean,
+        required: true,
+      },
     },
     computed: {
       symbols(){
-        return {
-          15:{
-            20:[4,5,6,7,8,9,10],
-            50:[9,10],
-            65:[6,7,8],
-          },
-          40:{
-            20:[2,3],
-            35:[10],
-            45:[7,8],
-            65:['A',3,5,9],
-          },
-          65:{
-            20:[4,5,6,7,8,9,10],
-            50:[9,10],
-            65:[6,7,8],
-          },
-          "-15":{
-            20:[4,5,6,7,8,9,10],
-            50:[9,10],
-          },
-          '-40':{
-            20:[2,3],
-            35:[10],
-            45:[8],
-          },
-          '-65':{
-            20:[4,5,6,7,8,9,10],
-            50:[9,10],
-          },
-        }
+        return DISPLAY_PATTERNS[this.card.rank]
       },
       isEmpty(){
         return this.card.isEmpty
       },
       isFaceCard(){
         return ['J','Q','K'].indexOf(this.rank)!==-1
-      },
-      isSelected(){
-        let selection = this.$store.state.currentSelection
-        if(selection){
-          return selection.cards.filter((c)=>c.card === this.card.card).length > 0
-        }
-        return false
       },
       faceUp(){
         return this.card.faceUp
@@ -153,7 +161,7 @@
         return this.card.rank
       },
       color() {
-        return SUIT_RED.indexOf(this.suit)!==-1 ? 'red' : 'black'
+        return SUIT_RED.has(this.suit) ? 'red' : 'black'
       },
       symbol() {
         return this.card.symbol
@@ -170,7 +178,7 @@
         return ""
       },
       displaySymbol(arr){
-        return arr.indexOf(this.rank)!=-1
+        return arr.indexOf(this.rank)!==-1
       },
     },
   }

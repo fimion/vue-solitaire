@@ -5,7 +5,9 @@
                     @dblclick="dblClickHandler(topCard)"
                     v-if="isNotEmpty"
                     :key="topCard.card"
-                    :card="topCard"/>
+                    :card="topCard"
+                    :is-selected="isSelected(topCard, currentSelection)"
+      />
     </card-stack>
     <playing-card v-for="card in flop"
                   :disabled="!isTopCard(card)"
@@ -13,21 +15,24 @@
                   @click="clickHandler(card)"
                   class="card-flop"
                   :key="card.card"
-                  :card="card"/>
+                  :card="card"
+                  :is-selected="isSelected(card, currentSelection)"
+    />
   </div>
 </template>
 
 <script>
   import {createNamespacedHelpers,mapActions} from 'vuex'
-  import {FlopSelection} from "../class/Selections.js"
-  import {ClearSelectionAction, FinalStackAction} from "../class/Actions.js"
-  import EmptyCard from "^class/EmptyCard.js"
-  import {finalStackTopCardMethod} from "./_common.js"
+  import {FlopSelection} from "@class/Selections.js"
+  import {ClearSelectionAction, FinalStackAction} from "@class/Actions.js"
+  import EmptyCard from "@class/EmptyCard.js"
+  import {finalStackTopCardMethod,isSelectedMixin} from "./_common.js"
 
   const {mapState:flopState, mapGetters:flopGetters} = createNamespacedHelpers('flop')
 
   export default {
     name: "FlopArea",
+    mixins:[isSelectedMixin],
     computed:{
       isNotEmpty(){
        return !(this.topCard instanceof EmptyCard)
@@ -42,7 +47,7 @@
       finalStackTopCardMethod,
       clickHandler(card){
         if(this.isTopCard(card)){
-          if(this.$store.state.currentSelection){
+          if(this.currentSelection){
             this.moveCards(new ClearSelectionAction())
           }
           else{

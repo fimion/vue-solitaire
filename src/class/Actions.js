@@ -1,4 +1,4 @@
-import {CARD_RANKS, SUIT_OPPOSITES} from "../constants.js"
+import {CARD_RANKS, SUIT_OPPOSITES} from "@/constants.js"
 
 export class BaseAction{
   constructor(action){
@@ -46,7 +46,7 @@ export class PlayStackAction extends BaseAction{
 
     let selectedIndex = CARD_RANKS.indexOf(selected.rank),
         targetIndex = CARD_RANKS.indexOf(this.target.rank),
-        isOpposite = SUIT_OPPOSITES[selected.suit].indexOf(this.target.suit)!==-1,
+        isOpposite = SUIT_OPPOSITES.get(selected.suit).has(this.target.suit),
         isNext = targetIndex - selectedIndex === 1
 
     return isOpposite && isNext

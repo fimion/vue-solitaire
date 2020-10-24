@@ -1,5 +1,5 @@
 import createPlayStack from './_createPlayStack.js'
-import {newGame} from "^store/_common.js"
+import {newGame} from "@store/_common.js"
 
 function makePlayingField(){
   let play = []

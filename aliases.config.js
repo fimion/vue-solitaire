@@ -5,13 +5,12 @@ function resolveSrc(_path) {
 }
 
 const aliases = {
-  '^': './src',
-  '^components': 'src/components',
-  '^assets': 'src/assets',
-  '^store': 'src/store',
-  '^global': 'src/global',
-  '^class': 'src/class',
-  '^template': 'src/template',
+  '@components': 'src/components',
+  '@assets': 'src/assets',
+  '@store': 'src/store',
+  '@global': 'src/global',
+  '@class': 'src/class',
+  '@template': 'src/template',
 }
 
 

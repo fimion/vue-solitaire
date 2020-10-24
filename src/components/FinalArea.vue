@@ -13,10 +13,10 @@
   </div>
 </template>
 <script>
-  import FinalStack from './FinalStack.vue'
-  import {CARD_SUITS} from "../constants.js"
+  import FinalStack from '@components/FinalStack.vue'
+  import {CARD_SUITS} from "@/constants.js"
   import {createNamespacedHelpers} from 'vuex'
-  import NewGameButton from "../global/new-game-button.vue"
+  import NewGameButton from "@global/new-game-button.vue"
 
   const Confetti = ()=>import('./Victory/Confetti.vue')
 

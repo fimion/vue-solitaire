@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import PlayStack from '^components/PlayStack.vue'
+  import PlayStack from '@components/PlayStack.vue'
   import {createNamespacedHelpers} from 'vuex'
 
   const {mapState:playState} = createNamespacedHelpers('play')

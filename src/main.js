@@ -1,17 +1,17 @@
 import Vue from "vue"
-import store from "^store"
-import '^global'
-import "./registerServiceWorker.js"
+import store from "@store"
+import '@global'
+import "@/registerServiceWorker.js"
 
-import HeaderArea from "^components/HeaderArea.vue"
+import HeaderArea from "@components/HeaderArea.vue"
 import PortalVue from 'portal-vue'
-import FixedArea from '^components/FixedArea.vue'
+import FixedArea from '@components/FixedArea.vue'
 Vue.use(PortalVue)
 
-const DeckArea = ()=>import("^components/DeckArea.vue")
-const FlopArea = ()=>import("^components/FlopArea.vue")
-const FinalArea = ()=>import("^components/FinalArea.vue")
-const PlayArea = ()=>import("^components/PlayArea.vue")
+const DeckArea = ()=>import("@components/DeckArea.vue")
+const FlopArea = ()=>import("@components/FlopArea.vue")
+const FinalArea = ()=>import("@components/FinalArea.vue")
+const PlayArea = ()=>import("@components/PlayArea.vue")
 
 /**
  *

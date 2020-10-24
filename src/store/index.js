@@ -84,5 +84,9 @@ export default new Vuex.Store({
       dispatch('newGame')
     },
   },
-  plugins:[new VuexPersistence().plugin],
+  plugins:[new VuexPersistence({
+    restoreState(key, storage){
+      return JSON.parse(storage.getItem(key))
+    },
+  }).plugin],
 })

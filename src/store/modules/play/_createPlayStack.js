@@ -3,7 +3,7 @@ import {
   PUSH_CARD,
     topCard,
     RESET_CARDS,
-} from "^store/_common.js"
+} from "@store/_common.js"
 
 export default function(){
   return {

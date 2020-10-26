@@ -1,7 +1,6 @@
 <template>
   <button class="card-holder"
           aria-label="Empty Stack"
-          v-on="$listeners"
           v-bind="$attrs">
     <slot>
       <base-svg>

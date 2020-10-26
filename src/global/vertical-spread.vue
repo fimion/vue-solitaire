@@ -1,5 +1,5 @@
 <template>
-  <div class="vertical-spread">
+  <div :class="$style['vertical-spread']">
     <slot></slot>
   </div>
 </template>
@@ -11,9 +11,11 @@
       addSpread(){
         let spread = 1
         this.$el.childNodes.forEach((e)=>{
-          e.style.gridRowStart = spread
-          spread++
-          if(e.classList.contains('face-up') && spread > 1) spread++
+          if(e.style){
+            e.style.gridRow = `${spread}/${spread+8}`
+            spread++
+            if(e.classList.contains('face-up') && spread > 1) spread++
+          }
         })
       },
     },
@@ -26,7 +28,7 @@
   }
 </script>
 
-<style scoped>
+<style module>
   .vertical-spread{
     display:grid;
     grid-auto-rows: calc(var(--card-height) / 8);
@@ -38,7 +40,7 @@
     }
   }
 
-  .vertical-spread>*{
+  .vertical-spread>*:global{
     grid-column: 1;
     grid-row-end: span 8;
     z-index: 1;

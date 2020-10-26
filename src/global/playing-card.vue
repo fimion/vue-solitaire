@@ -1,6 +1,5 @@
 <template>
   <button class="card"
-          v-on="$listeners"
           v-bind="$attrs"
           :class="{'face-up': faceUp, 'face-down':!faceUp,'selected':isSelected}"
           :aria-label="faceUp?name:'Face down card'">

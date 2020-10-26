@@ -1,17 +1,29 @@
-import Vue from "vue"
+import {createApp, defineAsyncComponent} from "vue"
 import store from "@store"
-import '@global'
+import addGlobalComponents from '@global'
 import "@/registerServiceWorker.js"
 
 import HeaderArea from "@components/HeaderArea.vue"
-import PortalVue from 'portal-vue'
-import FixedArea from '@components/FixedArea.vue'
-Vue.use(PortalVue)
 
-const DeckArea = ()=>import("@components/DeckArea.vue")
-const FlopArea = ()=>import("@components/FlopArea.vue")
-const FinalArea = ()=>import("@components/FinalArea.vue")
-const PlayArea = ()=>import("@components/PlayArea.vue")
+/**
+ *
+ * @param {string} name - component name for dev tools
+ * @param {function} loader - function that returns a promise that resolves to a component
+ * @returns {object} a component definition that will allow for async loading.
+ */
+function asyncComponent(name, loader){
+  const component = defineAsyncComponent({
+    loader,
+  })
+  component.name = `Async${name}`
+  return component
+}
+
+
+const DeckApp = asyncComponent('DeckApp', ()=>import("@components/DeckArea.vue"))
+const FlopApp = asyncComponent("FlopApp",()=>import("@components/FlopArea.vue"))
+const FinalApp = asyncComponent("FinalApp", ()=>import("@components/FinalArea.vue"))
+const PlayApp = asyncComponent("PlayApp",()=>import("@components/PlayArea.vue"))
 
 /**
  *
@@ -24,50 +36,44 @@ const PlayArea = ()=>import("@components/PlayArea.vue")
  *
  */
 
-Vue.config.productionTip = false
-
 store.dispatch('preInit')
 
 let apps = [
   {
     el:"#deck",
-    name:'deck-root',
-    render: h => h(DeckArea),
+    component: DeckApp,
   },
   {
     el:"#flop",
-    name:'flop-root',
-    render: h => h(FlopArea),
+    component: FlopApp,
   },
   {
     el:"#final",
-    name:'final-root',
-    render: h => h(FinalArea),
+    component: FinalApp,
   },
   {
     el:"#play",
-    name:'play-root',
-    render: h => h(PlayArea),
+    component: PlayApp,
   },
   {
     el:"#header",
-    name:'header-root',
-    render: h => h(HeaderArea),
-  },
-  {
-    el:"#portal",
-    name:'fixed-area',
-    render: h => h(FixedArea),
+    component: HeaderArea,
   },
 ]
-apps.forEach(e=>{
-  if(document.querySelector(e.el)){
-    e.store = store
-    new Vue(e)
+apps.forEach(({el, component})=>{
+  if(document.querySelector(el)){
+    const app = createApp(component)
+    addGlobalComponents(app)
+    app.use(store)
+    app.mount(el)
   }
 })
 
 store.dispatch('postInit')
 
+
+if(process.env.NODE_ENV !== 'production'){
+  import('./devHelpers.js')
+}
 
 

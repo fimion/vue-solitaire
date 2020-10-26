@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
 
@@ -10,6 +9,8 @@ const requireComponent = require.context(
     false,
     /[\w-]+\.vue$/,
 )
+
+const globalComponents = []
 
 // For each matching file name...
 requireComponent.keys().forEach((fileName) => {
@@ -26,5 +27,11 @@ requireComponent.keys().forEach((fileName) => {
       ),
   )
   // Globally register the component
-  Vue.component(componentName, componentConfig.default || componentConfig)
+  globalComponents.push({name:componentName, component: (componentConfig.default || componentConfig)})
 })
+
+export default function addGlobalComponents(app){
+  globalComponents.forEach(({name, component})=>{
+    app.component(name, component)
+  })
+}

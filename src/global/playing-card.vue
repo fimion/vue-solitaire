@@ -6,6 +6,7 @@
     :aria-label="faceUp?name:'Face down card'"
   >
     <base-svg>
+      <!-- eslint-disable vue/attribute-hyphenation -->
       <g v-if="faceUp">
         <g class="upper corner">
           <text
@@ -55,23 +56,22 @@
               height="90"
               width="90"
             />
-            <template v-if="suit==='C'">
-              <text
-                x="40"
-                y="60"
-                text-length="20"
-                length-adjust="spacingAndGlyphs"
-                class="face-card club"
-              >
-                {{ rank }}
-              </text>
-            </template>
+            <text
+              v-if="suit==='C'"
+              x="40"
+              y="60"
+              textLength="20"
+              lengthAdjust="spacingAndGlyphs"
+              class="face-card club"
+            >
+              {{ rank }}
+            </text>
             <text
               v-else
               x="40"
               y="90"
-              text-length="20"
-              length-adjust="spacingAndGlyphs"
+              textLength="20"
+              lengthAdjust="spacingAndGlyphs"
               class="face-card"
             >
               {{ rank }}

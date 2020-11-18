@@ -171,16 +171,9 @@ export default {
 
     const color = computed(() => SUIT_RED.has(suit.value) ? 'red' : 'black')
 
-    const upsideDown = (x) => {
-      if (x < 0) {
-        return "rotate(-180 50 75)"
-      }
-      return ""
-    }
+    const upsideDown = (x) => (x < 0 ? "rotate(-180 50 75)" : "" )
 
-    const displaySymbol = (arr) => {
-      return arr.indexOf(rank.value) !== -1
-    }
+    const displaySymbol = (arr) => arr.indexOf(rank.value) !== -1
 
     return {
       symbols,

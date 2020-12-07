@@ -99,7 +99,8 @@
 import Card from "@/class/Card.js"
 import EmptyCard from "@/class/EmptyCard.js"
 import {SUIT_RED} from "@/constants.js"
-import {computed, toRefs} from 'vue'
+import {computed} from 'vue'
+import {toComputed} from "@/utils/toComputed.js"
 
 function Pos(x, y, flip) {
   return {
@@ -145,14 +146,13 @@ const DISPLAY_PATTERNS = {
   "8": [L.A, L.E, L.I, C.C, C.G, R.A, R.E, R.I],
   "9": [L.A, L.D, L.F, L.I, C.E, R.A, R.D, R.F, R.I],
   "10": [L.A, L.D, L.F, L.I, C.B, C.H, R.A, R.D, R.F, R.I],
-
 }
 
 export default {
   name: "PlayingCard",
   props: {
     card: {
-      type: [Card, EmptyCard],
+      type: [Card, EmptyCard, Object],
       required: true,
     },
     isSelected: {
@@ -161,9 +161,7 @@ export default {
     },
   },
   setup(props) {
-    const {card} = toRefs(props)
-
-    const {rank, suit, faceUp, isEmpty, symbol, readableName: name} = toRefs(card.value)
+    const {rank, suit, faceUp, isEmpty, symbol, readableName: name} = toComputed(props,'card')
 
     const symbols = computed(() => DISPLAY_PATTERNS[rank.value])
 

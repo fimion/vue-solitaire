@@ -1,4 +1,4 @@
-import {CARD_RANKS, CARD_SUITS} from "@/constants.js"
+import {CARD_RANKS, CARD_SUITS} from "@src/constants.js"
 import Card from "@class/Card.js"
 import EmptyCard from "@class/EmptyCard.js"
 import {

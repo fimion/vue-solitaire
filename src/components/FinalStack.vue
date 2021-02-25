@@ -1,32 +1,43 @@
 <template>
   <card-stack>
-    <card-holder @click="handleClick"
-                 v-if="deckEmpty">
+    <card-holder
+      v-if="deckEmpty"
+      @click="handleClick"
+    >
       <base-svg>
-        <use v-bind:xlink:href="'#'+suit+'W'"
-             class="placeholder"
-             x="0"
-             y="25"
-             height="100"
-             width="100"></use>
+        <use
+          :xlink:href="'#'+suit+'W'"
+          class="placeholder"
+          x="0"
+          y="25"
+          height="100"
+          width="100"
+        />
       </base-svg>
     </card-holder>
-    <playing-card v-else
-                  :card="topCard"
-                  :is-selected="isSelected(topCard)"
-                  @click="handleClick"
+    <playing-card
+      v-else
+      :card="topCard"
+      :is-selected="isSelected(topCard)"
+      @click="handleClick"
     />
   </card-stack>
 </template>
 
 <script>
-  import {SUIT_SYMBOLS} from "@/constants.js"
+  import {SUIT_SYMBOLS} from "@src/constants.js"
   import {FinalStackAction} from "@class/Actions.js"
-  import {isSelectedMixin} from "@/components/_common.js"
+  import {isSelectedMixin} from "@components/_common.js"
 
   export default {
     name: "FinalStack",
     mixins:[isSelectedMixin],
+    props:{
+      suit:{
+        type:String,
+        required:true,
+      },
+    },
     computed:{
       symbol(){
         return SUIT_SYMBOLS[this.suit]
@@ -36,12 +47,6 @@
       },
       deckEmpty(){
         return this.$store.getters['final/'+this.suit+'/deckEmpty']
-      },
-    },
-    props:{
-      suit:{
-        type:String,
-        required:true,
       },
     },
     methods:{

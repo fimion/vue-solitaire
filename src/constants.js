@@ -1,5 +1,5 @@
 /**
- * @module @/constants.js
+ * @module @src/constants.js
  */
 
 /**

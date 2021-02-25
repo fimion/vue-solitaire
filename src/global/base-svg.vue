@@ -1,17 +1,17 @@
+<script>
+export default {
+  name: "BaseSvg",
+}
+</script>
 <template>
-  <svg viewBox="0 0 100 150"
-       v-bind="$attrs"
-       xmlns="http://www.w3.org/2000/svg">
-    <slot></slot>
+  <svg
+    viewBox="0 0 100 150"
+    v-bind="$attrs"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <slot />
   </svg>
 </template>
-
-<script>
-  export default {
-    name: "base-svg",
-  }
-</script>
-
 <style scoped>
   svg{
     pointer-events: none;

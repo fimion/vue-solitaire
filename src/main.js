@@ -1,7 +1,7 @@
 import {createApp, defineAsyncComponent} from "vue"
-import store from "@store"
-import addGlobalComponents from '@global'
-import "@/registerServiceWorker.js"
+import store from "@store/index.js"
+import addGlobalComponents from '@global/index.js'
+import "./registerServiceWorker.js"
 
 import HeaderArea from "@components/HeaderArea.vue"
 

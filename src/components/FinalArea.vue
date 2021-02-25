@@ -18,7 +18,7 @@
 <script>
 import {defineAsyncComponent} from 'vue'
 import FinalStack from '@components/FinalStack.vue'
-import {CARD_SUITS} from "@/constants.js"
+import {CARD_SUITS} from "@src/constants.js"
 import {createNamespacedHelpers} from 'vuex'
 import NewGameButton from "@global/new-game-button.vue"
 

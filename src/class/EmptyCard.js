@@ -1,7 +1,7 @@
 /**
  * @module @class/EmptyCard.js
  */
-import {READ_ONLY} from "@/constants.js"
+import {READ_ONLY} from "@src/constants.js"
 
 /**
  * @class EmptyCard

@@ -1,6 +1,5 @@
-import {CARD_SUITS} from "@/constants.js"
+import {CARD_SUITS} from "@src/constants.js"
 import createFinalStack from "./_createFinalStack.js"
-import {newGame} from "@store/_common.js"
 
 function makeFinalSlots(){
   let final = {}

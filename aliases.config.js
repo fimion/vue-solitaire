@@ -11,6 +11,7 @@ const aliases = {
   '@global': 'src/global',
   '@class': 'src/class',
   '@template': 'src/template',
+  '@src': 'src',
 }
 
 

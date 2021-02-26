@@ -1,4 +1,4 @@
-import {CARD_RANKS, SUIT_OPPOSITES} from "@/constants.js"
+import {CARD_RANKS, SUIT_OPPOSITES} from "@src/constants.js"
 
 export class BaseAction{
   constructor(action){

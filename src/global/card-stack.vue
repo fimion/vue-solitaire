@@ -1,15 +1,13 @@
+<script>
+export default {
+  name: "CardStack",
+}
+</script>
 <template>
   <div class="card-stack">
-    <slot></slot>
+    <slot />
   </div>
 </template>
-
-<script>
-  export default {
-    name: "CardStack",
-  }
-</script>
-
 <style scoped>
   .card-stack {
     position: relative;

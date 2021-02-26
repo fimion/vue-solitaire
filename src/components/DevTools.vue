@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import {CARD_RANKS, CARD_SUITS} from "@/constants.js"
+import {CARD_RANKS, CARD_SUITS} from "@src/constants.js"
 import Card from "@class/Card.js"
 
 export default {

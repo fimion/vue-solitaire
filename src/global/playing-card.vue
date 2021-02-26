@@ -1,3 +1,97 @@
+<script>
+import {computed} from 'vue'
+import Card from "@class/Card.js"
+import EmptyCard from "@class/EmptyCard.js"
+import {SUIT_RED} from "@src/constants.js"
+import {toComputed} from "@src/utils/toComputed.js"
+
+function Pos(x, y, flip) {
+  return {
+    x,
+    y,
+    transform: flip ? "rotate(-180 50 75)" : "",
+  }
+}
+
+const L = {
+      A: Pos(15, 20),
+      D: Pos(15, 50),
+      E: Pos(15, 65),
+      F: Pos(65, 50, true),
+      I: Pos(65, 20, true),
+    },
+    C = {
+      A: Pos(40, 20),
+      B: Pos(40, 35),
+      C: Pos(40, 45),
+      E: Pos(40, 65),
+      G: Pos(40, 45, true),
+      H: Pos(40, 35, true),
+      I: Pos(40, 20, true),
+    },
+    R = {
+      A: Pos(65, 20),
+      D: Pos(65, 50),
+      E: Pos(65, 65),
+      F: Pos(15, 50, true),
+      I: Pos(15, 20, true),
+    }
+
+
+const DISPLAY_PATTERNS = {
+  "A": [C.E],
+  "2": [C.A, C.I],
+  "3": [C.A, C.E, C.I],
+  "4": [L.A, L.I, R.A, R.I],
+  "5": [L.A, L.I, C.E, R.A, R.I],
+  "6": [L.A, L.E, L.I, R.A, R.E, R.I],
+  "7": [L.A, L.E, L.I, C.C, R.A, R.E, R.I],
+  "8": [L.A, L.E, L.I, C.C, C.G, R.A, R.E, R.I],
+  "9": [L.A, L.D, L.F, L.I, C.E, R.A, R.D, R.F, R.I],
+  "10": [L.A, L.D, L.F, L.I, C.B, C.H, R.A, R.D, R.F, R.I],
+}
+
+export default {
+  name: "PlayingCard",
+  props: {
+    card: {
+      type: [Card, EmptyCard, Object],
+      required: true,
+    },
+    isSelected: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  setup(props) {
+    const {rank, suit, faceUp, isEmpty, symbol, readableName: name} = toComputed(props,'card')
+
+    const symbols = computed(() => DISPLAY_PATTERNS[rank.value])
+
+    const isFaceCard = computed(() => ['J', 'Q', 'K'].indexOf(rank.value) !== -1)
+
+    const color = computed(() => SUIT_RED.has(suit.value) ? 'red' : 'black')
+
+    const upsideDown = (x) => (x < 0 ? "rotate(-180 50 75)" : "" )
+
+    const displaySymbol = (arr) => arr.indexOf(rank.value) !== -1
+
+    return {
+      symbols,
+      rank,
+      suit,
+      faceUp,
+      isEmpty,
+      symbol,
+      name,
+      isFaceCard,
+      color,
+      upsideDown,
+      displaySymbol,
+    }
+  },
+}
+</script>
 <template>
   <button
     class="card"
@@ -94,102 +188,6 @@
     </base-svg>
   </button>
 </template>
-
-<script>
-import Card from "@/class/Card.js"
-import EmptyCard from "@/class/EmptyCard.js"
-import {SUIT_RED} from "@/constants.js"
-import {computed} from 'vue'
-import {toComputed} from "@/utils/toComputed.js"
-
-function Pos(x, y, flip) {
-  return {
-    x,
-    y,
-    transform: flip ? "rotate(-180 50 75)" : "",
-  }
-}
-
-const L = {
-      A: Pos(15, 20),
-      D: Pos(15, 50),
-      E: Pos(15, 65),
-      F: Pos(65, 50, true),
-      I: Pos(65, 20, true),
-    },
-    C = {
-      A: Pos(40, 20),
-      B: Pos(40, 35),
-      C: Pos(40, 45),
-      E: Pos(40, 65),
-      G: Pos(40, 45, true),
-      H: Pos(40, 35, true),
-      I: Pos(40, 20, true),
-    },
-    R = {
-      A: Pos(65, 20),
-      D: Pos(65, 50),
-      E: Pos(65, 65),
-      F: Pos(15, 50, true),
-      I: Pos(15, 20, true),
-    }
-
-
-const DISPLAY_PATTERNS = {
-  "A": [C.E],
-  "2": [C.A, C.I],
-  "3": [C.A, C.E, C.I],
-  "4": [L.A, L.I, R.A, R.I],
-  "5": [L.A, L.I, C.E, R.A, R.I],
-  "6": [L.A, L.E, L.I, R.A, R.E, R.I],
-  "7": [L.A, L.E, L.I, C.C, R.A, R.E, R.I],
-  "8": [L.A, L.E, L.I, C.C, C.G, R.A, R.E, R.I],
-  "9": [L.A, L.D, L.F, L.I, C.E, R.A, R.D, R.F, R.I],
-  "10": [L.A, L.D, L.F, L.I, C.B, C.H, R.A, R.D, R.F, R.I],
-}
-
-export default {
-  name: "PlayingCard",
-  props: {
-    card: {
-      type: [Card, EmptyCard, Object],
-      required: true,
-    },
-    isSelected: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  setup(props) {
-    const {rank, suit, faceUp, isEmpty, symbol, readableName: name} = toComputed(props,'card')
-
-    const symbols = computed(() => DISPLAY_PATTERNS[rank.value])
-
-    const isFaceCard = computed(() => ['J', 'Q', 'K'].indexOf(rank.value) !== -1)
-
-    const color = computed(() => SUIT_RED.has(suit.value) ? 'red' : 'black')
-
-    const upsideDown = (x) => (x < 0 ? "rotate(-180 50 75)" : "" )
-
-    const displaySymbol = (arr) => arr.indexOf(rank.value) !== -1
-
-    return {
-      symbols,
-      rank,
-      suit,
-      faceUp,
-      isEmpty,
-      symbol,
-      name,
-      isFaceCard,
-      color,
-      upsideDown,
-      displaySymbol,
-    }
-  },
-}
-</script>
-
 <style scoped>
 .card {
   border: var(--color-card-border) solid 3px;

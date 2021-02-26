@@ -1,17 +1,15 @@
+<script>
+export default {
+  name: "PopUp",
+}
+</script>
 <template>
   <div class="background">
     <div class="pop-up">
-      <slot></slot>
+      <slot />
     </div>
   </div>
 </template>
-
-<script>
-  export default {
-    name: "pop-up",
-  }
-</script>
-
 <style scoped>
   .background{
     height:100vh;

@@ -2,7 +2,7 @@
  * @module @class/Card.js
  */
 
-import {SUIT_NAMES,RANK_NAMES, SUIT_SYMBOLS, READ_ONLY} from '@/constants.js'
+import {SUIT_NAMES,RANK_NAMES, SUIT_SYMBOLS, READ_ONLY} from '@src/constants.js'
 
 /** @typedef {import('@/constants').CardRank} CardRank*/
 

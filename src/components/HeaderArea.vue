@@ -1,3 +1,44 @@
+<script>
+
+import {mapState, mapActions} from 'vuex'
+import DefaultCardFaces from '@template/card-faces/default-card-faces.vue'
+
+export default {
+  name: "HeaderArea",
+  components: {
+    DefaultCardFaces,
+  },
+  data() {
+    return {
+      showOptions: false,
+      showNewConfirm: false,
+    }
+  },
+  computed: {
+    cardsDrawn: {
+      get() {
+        return this.options.cardsDrawn
+      },
+      set(value) {
+        let confirm = window.confirm('Changing this setting will deal a new game. Are you sure?')
+        if (confirm) {
+          this.$store.dispatch('setCardsDrawn', value)
+        } else {
+          this.$store.commit('SET_CARDS_DRAWN', this.options.cardsDrawn)
+          this.$forceUpdate()
+        }
+      },
+    },
+    ...mapState(['appUpdated', 'options']),
+  },
+  methods: {
+    startGame() {
+      this.showNewConfirm = false
+    },
+    ...mapActions(['newGame']),
+  },
+}
+</script>
 <template>
   <div class="github">
     <a href="https://github.com/fimion/vue-solitaire/">View this on Github</a>
@@ -82,47 +123,6 @@
     </button>
   </div>
 </template>
-
-<script>
-import {mapState, mapActions} from 'vuex'
-import DefaultCardFaces from '@template/card-faces/default-card-faces.vue'
-
-export default {
-  name: "HeaderArea",
-  data() {
-    return {
-      showOptions: false,
-      showNewConfirm: false,
-    }
-  },
-  computed: {
-    cardsDrawn: {
-      get() {
-        return this.options.cardsDrawn
-      },
-      set(value) {
-        let confirm = window.confirm('Changing this setting will deal a new game. Are you sure?')
-        if (confirm) {
-          this.$store.dispatch('setCardsDrawn', value)
-        } else {
-          this.$store.commit('SET_CARDS_DRAWN', this.options.cardsDrawn)
-          this.$forceUpdate()
-        }
-      },
-    },
-    ...mapState(['appUpdated', 'options']),
-  },
-  methods: {
-    startGame() {
-      this.showNewConfirm = false
-    },
-    ...mapActions(['newGame']),
-  },
-  components: {
-    DefaultCardFaces,
-  },
-}
-</script>
 <style>
 #header {
   display: flex;

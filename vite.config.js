@@ -7,5 +7,5 @@ export default defineConfig({
   resolve:{
     alias,
   },
-  plugins:[vue(),VitePWA()],
+  plugins:[vue(),VitePWA({injectRegister:null,filename:'service-worker.js'})],
 })

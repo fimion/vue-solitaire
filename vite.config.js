@@ -1,5 +1,6 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
+import {VitePWA} from 'vite-plugin-pwa'
 import path from 'path'
 import requireContext from 'rollup-plugin-require-context'
 
@@ -21,5 +22,5 @@ export default defineConfig({
       {find: /@src/, replacement:makePath('src')},
     ],
   },
-  plugins:[requireContext(),vue()],
+  plugins:[requireContext(),vue(),VitePWA()],
 })

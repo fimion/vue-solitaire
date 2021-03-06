@@ -2,6 +2,7 @@
 import {mapActions} from 'vuex'
 export default {
   name: "NewGameButton",
+  emits:['confirm'],
   methods:{
     startGame(){
       this.$emit('confirm')

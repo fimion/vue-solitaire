@@ -1,5 +1,5 @@
 <template>
-    <canvas id="confetti"></canvas>
+  <canvas id="confetti" />
 </template>
 
 <script>
@@ -8,6 +8,18 @@
 
   export default {
     name: "Confetti",
+    mounted() {
+      this.$nextTick(this.confetti)
+    },
+    beforeUpdate(){
+      this.clear()
+    },
+    updated(){
+      this.$nextTick(this.confetti)
+    },
+    beforeUnmount() {
+      this.clear()
+    },
     methods: {
       confetti() {
         confetti = new ConfettiGenerator({
@@ -28,18 +40,6 @@
       clear(){
         confetti.clear()
       },
-    },
-    mounted() {
-      this.$nextTick(this.confetti)
-    },
-    beforeUpdate(){
-      this.clear()
-    },
-    updated(){
-      this.$nextTick(this.confetti)
-    },
-    beforeUnmount() {
-      this.clear()
     },
   }
 </script>

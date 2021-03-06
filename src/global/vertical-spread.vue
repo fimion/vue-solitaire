@@ -1,12 +1,18 @@
 <template>
   <div :class="$style['vertical-spread']">
-    <slot></slot>
+    <slot />
   </div>
 </template>
 
 <script>
   export default {
     name: "VerticalSpread",
+    mounted(){
+      this.$nextTick(this.addSpread)
+    },
+    updated(){
+      this.$nextTick(this.addSpread)
+    },
     methods:{
       addSpread(){
         let spread = 1
@@ -18,12 +24,6 @@
           }
         })
       },
-    },
-    mounted(){
-      this.$nextTick(this.addSpread)
-    },
-    updated(){
-      this.$nextTick(this.addSpread)
     },
   }
 </script>

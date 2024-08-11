@@ -10,69 +10,68 @@
  * This class defines the basic things all Selections will contain.
  * @class BaseSelection
  */
-class BaseSelection{
+class BaseSelection {
   /**
    * @constructor
    * @param {Card[]} cards - the cards that are selected.
    */
-  constructor(cards){
+  constructor(cards) {
     /**
      * Our card selection
      * @type {Card[]}
      */
-    this.cards = cards
+    this.cards = cards;
 
     /**
      * Our clean up action we want to dispatch.
      * @type {string|null}
      */
-    this.cleanUp = null
+    this.cleanUp = null;
 
     /**
      *
      * @type {boolean}
      */
-    this.hasAction = false
+    this.hasAction = false;
   }
 
-  selectedCard(){
-    return this.cards[0]
-  }
-
-}
-
-class DeckSelection extends BaseSelection{
-  constructor(cards){
-    super(cards)
-    this.cleanUp = 'deck/popFlop'
+  selectedCard() {
+    return this.cards[0];
   }
 }
 
-class DeckResetSelection extends BaseSelection{
-  constructor(cards){
-    super(cards)
-    this.cleanUp = 'flop/resetDeck'
+class DeckSelection extends BaseSelection {
+  constructor(cards) {
+    super(cards);
+    this.cleanUp = "deck/popFlop";
   }
 }
 
-class FlopSelection extends BaseSelection{
-  constructor(card){
-    super([card])
-    this.cleanUp = "flop/popCard"
+class DeckResetSelection extends BaseSelection {
+  constructor(cards) {
+    super(cards);
+    this.cleanUp = "flop/resetDeck";
   }
 }
 
-class PlaySelection extends BaseSelection{
-  constructor(stack, cards){
-    super(cards)
-    this.cleanUp = "play/"+stack+"/spliceCards"
+class FlopSelection extends BaseSelection {
+  constructor(card) {
+    super([card]);
+    this.cleanUp = "flop/popCard";
   }
 }
 
-class FinalSelection extends BaseSelection{
-  constructor(stack, card){
-    super([card])
-    this.cleanUp = "final/"+stack+"/popCard"
+class PlaySelection extends BaseSelection {
+  constructor(stack, cards) {
+    super(cards);
+    this.cleanUp = "play/" + stack + "/spliceCards";
+  }
+}
+
+class FinalSelection extends BaseSelection {
+  constructor(stack, card) {
+    super([card]);
+    this.cleanUp = "final/" + stack + "/popCard";
   }
 }
 
@@ -83,4 +82,4 @@ export {
   FlopSelection,
   PlaySelection,
   FinalSelection,
-}
+};

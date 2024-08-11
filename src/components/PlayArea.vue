@@ -1,26 +1,22 @@
-<template>
-  <play-stack
-    v-for="(val, i) in stacks"
-    :key="'play-stack'+i"
-    :stack="i"
-  />
-</template>
-
 <script>
-import PlayStack from '@components/PlayStack.vue'
-import {createNamespacedHelpers} from 'vuex'
+import PlayStack from "@components/PlayStack.vue";
+import { createNamespacedHelpers } from "vuex";
 
-const {mapState: playState} = createNamespacedHelpers('play')
+const { mapState: playState } = createNamespacedHelpers("play");
 export default {
   name: "PlayArea",
   components: {
     PlayStack,
   },
   computed: {
-    ...playState(['stacks']),
+    ...playState(["stacks"]),
   },
-}
+};
 </script>
+
+<template>
+  <play-stack v-for="(val, i) in stacks" :key="'play-stack' + i" :stack="i" />
+</template>
 
 <style>
 #play {

@@ -1,9 +1,9 @@
-import {createApp, defineAsyncComponent} from "vue"
-import store from "@store/index.js"
-import addGlobalComponents from '@global/index.js'
-import "./registerServiceWorker.js"
+import { createApp, defineAsyncComponent } from "vue";
+import store from "@store/index.js";
+import addGlobalComponents from "@global/index.js";
+import "./registerServiceWorker.js";
 
-import HeaderArea from "@components/HeaderArea.vue"
+import HeaderArea from "@components/HeaderArea.vue";
 
 /**
  *
@@ -11,19 +11,30 @@ import HeaderArea from "@components/HeaderArea.vue"
  * @param {function} loader - function that returns a promise that resolves to a component
  * @returns {object} a component definition that will allow for async loading.
  */
-function asyncComponent(name, loader){
+function asyncComponent(name, loader) {
   const component = defineAsyncComponent({
     loader,
-  })
-  component.name = `Async${name}`
-  return component
+  });
+  component.name = `Async${name}`;
+  return component;
 }
 
-
-const DeckApp = asyncComponent('DeckApp', ()=>import("@components/DeckArea.vue"))
-const FlopApp = asyncComponent("FlopApp",()=>import("@components/FlopArea.vue"))
-const FinalApp = asyncComponent("FinalApp", ()=>import("@components/FinalArea.vue"))
-const PlayApp = asyncComponent("PlayApp",()=>import("@components/PlayArea.vue"))
+const DeckApp = asyncComponent(
+  "DeckApp",
+  () => import("@components/DeckArea.vue"),
+);
+const FlopApp = asyncComponent(
+  "FlopApp",
+  () => import("@components/FlopArea.vue"),
+);
+const FinalApp = asyncComponent(
+  "FinalApp",
+  () => import("@components/FinalArea.vue"),
+);
+const PlayApp = asyncComponent(
+  "PlayApp",
+  () => import("@components/PlayArea.vue"),
+);
 
 /**
  *
@@ -36,44 +47,41 @@ const PlayApp = asyncComponent("PlayApp",()=>import("@components/PlayArea.vue"))
  *
  */
 
-store.dispatch('preInit')
+store.dispatch("preInit");
 
 let apps = [
   {
-    el:"#deck",
+    el: "#deck",
     component: DeckApp,
   },
   {
-    el:"#flop",
+    el: "#flop",
     component: FlopApp,
   },
   {
-    el:"#final",
+    el: "#final",
     component: FinalApp,
   },
   {
-    el:"#play",
+    el: "#play",
     component: PlayApp,
   },
   {
-    el:"#header",
+    el: "#header",
     component: HeaderArea,
   },
-]
-apps.forEach(({el, component})=>{
-  if(document.querySelector(el)){
-    const app = createApp(component)
-    addGlobalComponents(app)
-    app.use(store)
-    app.mount(el)
+];
+apps.forEach(({ el, component }) => {
+  if (document.querySelector(el)) {
+    const app = createApp(component);
+    addGlobalComponents(app);
+    app.use(store);
+    app.mount(el);
   }
-})
+});
 
-store.dispatch('postInit')
+store.dispatch("postInit");
 
-
-if(process.env.NODE_ENV !== 'production'){
-  import('./devHelpers.js')
+if (process.env.NODE_ENV !== "production") {
+  import("./devHelpers.js");
 }
-
-

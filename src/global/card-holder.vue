@@ -1,24 +1,16 @@
 <script>
-import BaseSvg from "./base-svg.vue"
+import BaseSvg from "./base-svg.vue";
 
 export default {
   name: "CardHolder",
-  components: {BaseSvg},
-}
+  components: { BaseSvg },
+};
 </script>
 <template>
-  <button
-    class="card-holder"
-    aria-label="Empty Stack"
-    v-bind="$attrs"
-  >
+  <button class="card-holder" aria-label="Empty Stack" v-bind="$attrs">
     <slot>
       <base-svg>
-        <circle
-          cx="50"
-          cy="75"
-          r="25"
-        />
+        <circle cx="50" cy="75" r="25" />
       </base-svg>
     </slot>
   </button>

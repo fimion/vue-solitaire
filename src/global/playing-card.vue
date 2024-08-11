@@ -1,55 +1,54 @@
 <script>
-import {computed} from 'vue'
-import Card from "@class/Card.js"
-import EmptyCard from "@class/EmptyCard.js"
-import {SUIT_RED} from "@src/constants.js"
-import {toComputed} from "@src/utils/toComputed.js"
+import { computed } from "vue";
+import Card from "@class/Card.js";
+import EmptyCard from "@class/EmptyCard.js";
+import { SUIT_RED } from "@src/constants.js";
+import { toComputed } from "@src/utils/toComputed.js";
 
 function Pos(x, y, flip) {
   return {
     x,
     y,
     transform: flip ? "rotate(-180 50 75)" : "",
-  }
+  };
 }
 
 const L = {
-      A: Pos(15, 20),
-      D: Pos(15, 50),
-      E: Pos(15, 65),
-      F: Pos(65, 50, true),
-      I: Pos(65, 20, true),
-    },
-    C = {
-      A: Pos(40, 20),
-      B: Pos(40, 35),
-      C: Pos(40, 45),
-      E: Pos(40, 65),
-      G: Pos(40, 45, true),
-      H: Pos(40, 35, true),
-      I: Pos(40, 20, true),
-    },
-    R = {
-      A: Pos(65, 20),
-      D: Pos(65, 50),
-      E: Pos(65, 65),
-      F: Pos(15, 50, true),
-      I: Pos(15, 20, true),
-    }
-
+    A: Pos(15, 20),
+    D: Pos(15, 50),
+    E: Pos(15, 65),
+    F: Pos(65, 50, true),
+    I: Pos(65, 20, true),
+  },
+  C = {
+    A: Pos(40, 20),
+    B: Pos(40, 35),
+    C: Pos(40, 45),
+    E: Pos(40, 65),
+    G: Pos(40, 45, true),
+    H: Pos(40, 35, true),
+    I: Pos(40, 20, true),
+  },
+  R = {
+    A: Pos(65, 20),
+    D: Pos(65, 50),
+    E: Pos(65, 65),
+    F: Pos(15, 50, true),
+    I: Pos(15, 20, true),
+  };
 
 const DISPLAY_PATTERNS = {
-  "A": [C.E],
-  "2": [C.A, C.I],
-  "3": [C.A, C.E, C.I],
-  "4": [L.A, L.I, R.A, R.I],
-  "5": [L.A, L.I, C.E, R.A, R.I],
-  "6": [L.A, L.E, L.I, R.A, R.E, R.I],
-  "7": [L.A, L.E, L.I, C.C, R.A, R.E, R.I],
-  "8": [L.A, L.E, L.I, C.C, C.G, R.A, R.E, R.I],
-  "9": [L.A, L.D, L.F, L.I, C.E, R.A, R.D, R.F, R.I],
-  "10": [L.A, L.D, L.F, L.I, C.B, C.H, R.A, R.D, R.F, R.I],
-}
+  A: [C.E],
+  2: [C.A, C.I],
+  3: [C.A, C.E, C.I],
+  4: [L.A, L.I, R.A, R.I],
+  5: [L.A, L.I, C.E, R.A, R.I],
+  6: [L.A, L.E, L.I, R.A, R.E, R.I],
+  7: [L.A, L.E, L.I, C.C, R.A, R.E, R.I],
+  8: [L.A, L.E, L.I, C.C, C.G, R.A, R.E, R.I],
+  9: [L.A, L.D, L.F, L.I, C.E, R.A, R.D, R.F, R.I],
+  10: [L.A, L.D, L.F, L.I, C.B, C.H, R.A, R.D, R.F, R.I],
+};
 
 export default {
   name: "PlayingCard",
@@ -64,17 +63,26 @@ export default {
     },
   },
   setup(props) {
-    const {rank, suit, faceUp, isEmpty, symbol, readableName: name} = toComputed(props,'card')
+    const {
+      rank,
+      suit,
+      faceUp,
+      isEmpty,
+      symbol,
+      readableName: name,
+    } = toComputed(props, "card");
 
-    const symbols = computed(() => DISPLAY_PATTERNS[rank.value])
+    const symbols = computed(() => DISPLAY_PATTERNS[rank.value]);
 
-    const isFaceCard = computed(() => ['J', 'Q', 'K'].indexOf(rank.value) !== -1)
+    const isFaceCard = computed(
+      () => ["J", "Q", "K"].indexOf(rank.value) !== -1,
+    );
 
-    const color = computed(() => SUIT_RED.has(suit.value) ? 'red' : 'black')
+    const color = computed(() => (SUIT_RED.has(suit.value) ? "red" : "black"));
 
-    const upsideDown = (x) => (x < 0 ? "rotate(-180 50 75)" : "" )
+    const upsideDown = (x) => (x < 0 ? "rotate(-180 50 75)" : "");
 
-    const displaySymbol = (arr) => arr.indexOf(rank.value) !== -1
+    const displaySymbol = (arr) => arr.indexOf(rank.value) !== -1;
 
     return {
       symbols,
@@ -88,16 +96,16 @@ export default {
       color,
       upsideDown,
       displaySymbol,
-    }
+    };
   },
-}
+};
 </script>
 <template>
   <button
     class="card"
     v-bind="$attrs"
-    :class="{'face-up': faceUp, 'face-down':!faceUp,'selected':isSelected}"
-    :aria-label="faceUp?name:'Face down card'"
+    :class="{ 'face-up': faceUp, 'face-down': !faceUp, selected: isSelected }"
+    :aria-label="faceUp ? name : 'Face down card'"
   >
     <base-svg>
       <!-- eslint-disable vue/attribute-hyphenation -->
@@ -112,18 +120,9 @@ export default {
           >
             {{ rank }}
           </text>
-          <use
-            :xlink:href="'#'+suit"
-            x="5"
-            y="20"
-            height="10"
-            width="10"
-          />
+          <use :xlink:href="'#' + suit" x="5" y="20" height="10" width="10" />
         </g>
-        <g
-          class="lower-corner"
-          transform="rotate(-180 50 75)"
-        >
+        <g class="lower-corner" transform="rotate(-180 50 75)">
           <text
             x="10"
             y="17"
@@ -133,25 +132,13 @@ export default {
           >
             {{ rank }}
           </text>
-          <use
-            :xlink:href="'#'+suit"
-            x="5"
-            y="20"
-            height="10"
-            width="10"
-          />
+          <use :xlink:href="'#' + suit" x="5" y="20" height="10" width="10" />
         </g>
         <g class="symbol-pattern">
           <template v-if="isFaceCard">
-            <use
-              :xlink:href="'#'+suit"
-              x="5"
-              y="30"
-              height="90"
-              width="90"
-            />
+            <use :xlink:href="'#' + suit" x="5" y="30" height="90" width="90" />
             <text
-              v-if="suit==='C'"
+              v-if="suit === 'C'"
               x="40"
               y="60"
               textLength="20"
@@ -174,8 +161,8 @@ export default {
           <template v-else>
             <use
               v-for="pos in symbols"
-              :key="card.card+pos.x+pos.y+pos.transform+'symbol-use'"
-              :xlink:href="'#'+suit"
+              :key="card.card + pos.x + pos.y + pos.transform + 'symbol-use'"
+              :xlink:href="'#' + suit"
               :x="pos.x"
               :y="pos.y"
               :transform="pos.transform"
@@ -201,7 +188,10 @@ export default {
   line-height: 0;
   height: 100%;
   position: relative;
-  transition: box-shadow 0.2s ease, filter 0.2s ease, border-color 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    filter 0.2s ease,
+    border-color 0.2s ease;
 }
 
 @media screen and (min-width: 768px) {
@@ -236,7 +226,7 @@ export default {
   background: var(--color-selected);
   height: 100%;
   width: 100%;
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;

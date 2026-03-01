@@ -17,12 +17,20 @@ import {
  * A standard representation of a playing card in our app.
  */
 class Card {
+  faceUp: boolean;
+  card: string;
+  rank: string;
+  suit: string;
+  symbol: string;
+  readableName: string;
+  isEmpty: boolean;
+
   /**
    * @constructor
    * @param {String.<CardRank>} rank
    * @param {String.<CardSuit>} suit
    */
-  constructor(rank, suit) {
+  constructor(rank: string, suit: string) {
     /**
      * @description this card is face up of face down
      * @type {boolean}

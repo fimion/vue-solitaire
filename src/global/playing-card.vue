@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import Card from "@class/Card.js";
 import EmptyCard from "@class/EmptyCard.js";
 import { SUIT_RED } from "@src/constants.js";
 import { toComputed } from "@src/utils/toComputed.js";
 
-function Pos(x, y, flip) {
+function Pos(x: number, y: number, flip?: boolean) {
   return {
     x,
     y,
@@ -142,7 +142,7 @@ const displaySymbol = (arr) => arr.indexOf(rank.value) !== -1;
           <template v-else>
             <use
               v-for="pos in symbols"
-              :key="card.card + pos.x + pos.y + pos.transform + 'symbol-use'"
+              :key="(card as any).card + pos.x + pos.y + pos.transform + 'symbol-use'"
               :xlink:href="'#' + suit"
               :x="pos.x"
               :y="pos.y"

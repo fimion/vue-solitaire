@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import BaseSvg from "./base-svg.vue";
 </script>
 <template>

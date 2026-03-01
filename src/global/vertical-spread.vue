@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, onUpdated, ref, nextTick } from "vue";
 
 defineOptions({

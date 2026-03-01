@@ -7,6 +7,8 @@ import { READ_ONLY } from "@src/constants.js";
  * @class EmptyCard
  */
 class EmptyCard {
+  isEmpty: boolean;
+
   constructor() {
     /**
      * This is always true.

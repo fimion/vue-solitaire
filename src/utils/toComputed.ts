@@ -12,8 +12,8 @@ import _get from "lodash/get";
  * @param {Object|Array} obj
  * @param {string|string[]} findThing
  */
-export const toComputed = (obj, findThing) => {
-  const myComputedValues = {};
+export const toComputed = (obj: any, findThing: string | string[]): any => {
+  const myComputedValues: any = {};
   Object.keys(_get(obj, findThing, {})).forEach((key) => {
     myComputedValues[key] = computed(() => _get(obj, [findThing, key]));
   });

@@ -11,11 +11,10 @@ import HeaderArea from "@components/HeaderArea.vue";
  * @param {function} loader - function that returns a promise that resolves to a component
  * @returns {object} a component definition that will allow for async loading.
  */
-function asyncComponent(name, loader) {
+function asyncComponent(name: string, loader: any) {
   const component = defineAsyncComponent({
     loader,
   });
-  component.name = `Async${name}`;
   return component;
 }
 
@@ -49,7 +48,7 @@ const PlayApp = asyncComponent(
 
 store.dispatch("preInit");
 
-let apps = [
+const apps = [
   {
     el: "#deck",
     component: DeckApp,

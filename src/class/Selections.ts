@@ -11,11 +11,15 @@
  * @class BaseSelection
  */
 class BaseSelection {
+  cards: any[];
+  cleanUp: string | null;
+  hasAction: boolean;
+
   /**
    * @constructor
    * @param {Card[]} cards - the cards that are selected.
    */
-  constructor(cards) {
+  constructor(cards: any[]) {
     /**
      * Our card selection
      * @type {Card[]}

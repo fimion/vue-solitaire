@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { computed, defineAsyncComponent } from "vue";
 import { useStore } from "vuex";
 import FinalStack from "@components/FinalStack.vue";
 import { CARD_SUITS } from "@src/constants.js";
 import NewGameButton from "@global/new-game-button.vue";
 
-const Confetti = defineAsyncComponent(
+const WinningConfetti = defineAsyncComponent(
   () => import("./Victory/WinningConfetti.vue"),
 );
 
@@ -27,7 +27,7 @@ const gameIsWon = computed(() => {
     :suit="suit"
   />
   <teleport v-if="gameIsWon" to="#portal">
-    <confetti />
+    <winning-confetti />
     <pop-up>
       <h1>You win!</h1>
       <new-game-button />

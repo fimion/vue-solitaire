@@ -11,7 +11,7 @@ import {
 } from "@store/_common.js";
 
 function createPlayingDeck() {
-  let deck = [];
+  const deck = [];
 
   CARD_SUITS.forEach((suit) => {
     return CARD_RANKS.forEach((rank) => deck.push(new Card(rank, suit)));
@@ -28,7 +28,7 @@ export default {
     topCard,
     deckEmpty,
     nextFlop(state, getters, rootState) {
-      let flopSize = rootState.options.cardsDrawn;
+      const flopSize = rootState.options.cardsDrawn;
       if (state.cards.length > flopSize) {
         return state.cards.slice(state.cards.length - flopSize);
       }
@@ -46,7 +46,7 @@ export default {
       state.cards[i].faceUp = !state.cards[i].faceUp;
     },
     FLIP_TOP_CARD(state) {
-      let last = state.cards.length - 1;
+      const last = state.cards.length - 1;
       if (last >= 0) {
         state.cards[last].faceUp = !state.cards[last].faceUp;
       }
@@ -69,13 +69,13 @@ export default {
       commit("POP_CARD");
     },
     popFlop({ commit, dispatch, getters }) {
-      let flop = [...getters.nextFlop];
+      const flop = [...getters.nextFlop];
       flop.forEach(() => {
         commit("POP_CARD");
       });
     },
     async resetDeck({ commit, dispatch }, cards) {
-      let deck = cards.reverse().map((e) => {
+      const deck = cards.reverse().map((e) => {
         e.faceUp = false;
         return e;
       });

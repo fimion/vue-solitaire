@@ -19,7 +19,7 @@ export default function () {
       CONCAT_CARDS,
       RESET_CARDS,
       SPLICE_CARDS(state, card) {
-        let index = state.cards.indexOf(card);
+        const index = state.cards.indexOf(card);
         state.cards.splice(index);
       },
       TOP_CARD_FACE_UP(state) {

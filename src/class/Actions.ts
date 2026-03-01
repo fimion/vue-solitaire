@@ -1,7 +1,10 @@
 import { CARD_RANKS, SUIT_OPPOSITES } from "@src/constants.js";
 
 export class BaseAction {
-  constructor(action) {
+  action: string | null;
+  target: any;
+
+  constructor(action: string | null) {
     this.action = action;
     this.target = null;
   }
@@ -33,17 +36,17 @@ export class DeckResetAction extends BaseAction {
 }
 
 export class PlayStackAction extends BaseAction {
-  constructor(stack, target) {
+  constructor(stack: number, target: any) {
     super("play/" + stack + "/concatCards");
     this.target = target;
   }
   validate(selection) {
-    let selected = selection.selectedCard();
+    const selected = selection.selectedCard();
     if (selected.rank === "K" && this.target.isEmpty) {
       return true;
     }
 
-    let selectedIndex = CARD_RANKS.indexOf(selected.rank),
+    const selectedIndex = CARD_RANKS.indexOf(selected.rank),
       targetIndex = CARD_RANKS.indexOf(this.target.rank),
       isOpposite = SUIT_OPPOSITES.get(selected.suit).has(this.target.suit),
       isNext = targetIndex - selectedIndex === 1;
@@ -53,7 +56,9 @@ export class PlayStackAction extends BaseAction {
 }
 
 export class FinalStackAction extends BaseAction {
-  constructor(stack, target) {
+  stack: string;
+
+  constructor(stack: string, target: any) {
     super("final/" + stack + "/pushCard");
     this.stack = stack;
     this.target = target;
@@ -63,11 +68,11 @@ export class FinalStackAction extends BaseAction {
     if (selection.cards.length !== 1) {
       return false;
     }
-    let selected = selection.selectedCard();
+    const selected = selection.selectedCard();
     if (selected.suit !== this.stack) {
       return false;
     }
-    let targetRankIndex = CARD_RANKS.indexOf(this.target.rank),
+    const targetRankIndex = CARD_RANKS.indexOf(this.target.rank),
       selectedRankIndex = CARD_RANKS.indexOf(selected.rank);
 
     return selectedRankIndex - targetRankIndex === 1;

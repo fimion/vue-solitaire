@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import { useStore } from "vuex";
 import { SUIT_SYMBOLS } from "@src/constants.js";

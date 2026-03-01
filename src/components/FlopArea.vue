@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import { useStore } from "vuex";
 import { FlopSelection } from "@class/Selections.js";
 import { ClearSelectionAction, FinalStackAction } from "@class/Actions.js";
 import EmptyCard from "@class/EmptyCard.js";
-import { useFinalStackTopCard, useSelection } from "./_common.js";
+import { useSelection } from "./_common.js";
 
 const store = useStore();
 const { isSelected: checkIsSelected, currentSelection } = useSelection();
@@ -27,10 +27,8 @@ function isTopCard(card) {
   return card.card === topCard.value.card;
 }
 
-const { finalStackTopCardMethod } = useFinalStackTopCard();
-
-function getFinalStackTopCard(suit) {
-  return finalStackTopCardMethod(suit);
+function getFinalStackTopCard(suit: string) {
+  return store.getters["final/" + suit + "/topCard"];
 }
 
 function clickHandler(card) {
@@ -50,7 +48,7 @@ function dblClickHandler(card) {
   }
 }
 
-function isSelected(card) {
+function isSelected(card: any, selection?: any) {
   return checkIsSelected(card);
 }
 </script>

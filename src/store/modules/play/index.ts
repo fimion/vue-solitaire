@@ -1,13 +1,13 @@
 import createPlayStack from "./_createPlayStack.js";
 
 function makePlayingField() {
-  let play = [];
+  const play = [];
   play.length = 7;
   play.fill(false);
   return play;
 }
 
-let modules = {};
+const modules = {};
 makePlayingField().forEach((e, i) => {
   modules[i] = createPlayStack();
 });
@@ -36,12 +36,12 @@ export default {
       commit("SET_READY", false);
       while (!state.ready) {
         for (let x = 0, len = state.stacks.length; x < len; x++) {
-          let stackLength = state[x].cards.length;
+          const stackLength = state[x].cards.length;
           if (stackLength < x + 1) {
             await new Promise((res, rej) => {
               setTimeout(res, 0);
             });
-            let newCard = rootGetters["deck/topCard"];
+            const newCard = rootGetters["deck/topCard"];
             dispatch("deck/popCard", null, { root: true });
             if (stackLength === x) {
               newCard.faceUp = true;
@@ -50,7 +50,7 @@ export default {
             dispatch(x + "/concatCards", [newCard]);
           }
         }
-        let ready = state.stacks.findIndex((e) => !e);
+        const ready = state.stacks.findIndex((e) => !e);
         if (ready === -1) {
           commit("SET_READY", true);
         }

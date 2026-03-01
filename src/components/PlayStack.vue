@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import { useStore } from "vuex";
 import {
@@ -8,7 +8,7 @@ import {
 } from "@class/Actions.js";
 import { PlaySelection } from "@class/Selections.js";
 import EmptyCard from "@class/EmptyCard.js";
-import { useFinalStackTopCard, useSelection } from "./_common.js";
+import { useSelection } from "./_common.js";
 
 const props = defineProps({
   stack: {
@@ -30,22 +30,20 @@ const bottomCard = computed(() => {
 
 const selectedCard = computed(() => store.getters.selectedCard);
 
-function moveCards(action) {
+function moveCards(action: any) {
   store.dispatch("moveCards", action);
 }
 
-function selectCards(selection) {
+function selectCards(selection: any) {
   store.dispatch("selectCards", selection);
 }
 
-function cardDisabled(card) {
+function cardDisabled(card: any) {
   return !card.faceUp;
 }
 
-const { finalStackTopCardMethod } = useFinalStackTopCard();
-
-function getFinalStackTopCard(suit) {
-  return finalStackTopCardMethod(suit);
+function getFinalStackTopCard(suit: string) {
+  return store.getters["final/" + suit + "/topCard"];
 }
 
 function emptyClickHandler() {
@@ -77,7 +75,7 @@ function dblClickHandler(card) {
   }
 }
 
-function isSelected(card) {
+function isSelected(card: any, selection?: any) {
   return checkIsSelected(card);
 }
 </script>

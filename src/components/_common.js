@@ -1,13 +1,22 @@
-import { mapState } from "vuex";
+import { computed } from "vue";
+import { useStore } from "vuex";
+
 /** @typedef {import('@/class/Card')} Card */
 /** @typedef {import('@/class/Selections').BaseSelection} BaseSelection */
-/**
- *
- * @param stack
- * @returns {Card}
- */
-export function finalStackTopCardMethod(stack) {
-  return this.$store.getters["final/" + stack + "/topCard"];
+
+export function useFinalStackTopCard() {
+  const store = useStore();
+
+  /**
+   *
+   * @param stack
+   * @returns {Card}
+   */
+  function finalStackTopCardMethod(stack) {
+    return store.getters["final/" + stack + "/topCard"];
+  }
+
+  return { finalStackTopCardMethod };
 }
 
 /**
@@ -23,15 +32,13 @@ export function isSelected(card, selection) {
   return false;
 }
 
-export const isSelectedMixin = {
-  computed: {
-    ...mapState({
-      currentSelection: (state) => state.currentSelection,
-    }),
-  },
-  methods: {
-    isSelected(card) {
-      return isSelected(card, this.currentSelection);
-    },
-  },
-};
+export function useSelection() {
+  const store = useStore();
+  const currentSelection = computed(() => store.state.currentSelection);
+
+  function isCardSelected(card) {
+    return isSelected(card, currentSelection.value);
+  }
+
+  return { currentSelection, isSelected: isCardSelected };
+}

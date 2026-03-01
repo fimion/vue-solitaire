@@ -1,10 +1,5 @@
-<script>
+<script setup>
 import BaseSvg from "./base-svg.vue";
-
-export default {
-  name: "CardHolder",
-  components: { BaseSvg },
-};
 </script>
 <template>
   <button class="card-holder" aria-label="Empty Stack" v-bind="$attrs">

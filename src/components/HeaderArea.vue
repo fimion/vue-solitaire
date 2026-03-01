@@ -1,44 +1,41 @@
-<script>
-import { mapState, mapActions } from "vuex";
+<script setup>
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
 import DefaultCardFaces from "@template/card-faces/default-card-faces.vue";
+import NewGameButton from "@global/new-game-button.vue";
+import PopUp from "@global/pop-up.vue";
 
-export default {
-  name: "HeaderArea",
-  components: {
-    DefaultCardFaces,
+const store = useStore();
+
+const showOptions = ref(false);
+const showNewConfirm = ref(false);
+
+const options = computed(() => store.state.options);
+const appUpdated = computed(() => store.state.appUpdated);
+
+const cardsDrawn = computed({
+  get() {
+    return options.value.cardsDrawn;
   },
-  data() {
-    return {
-      showOptions: false,
-      showNewConfirm: false,
-    };
+  set(value) {
+    let confirm = window.confirm(
+      "Changing this setting will deal a new game. Are you sure?",
+    );
+    if (confirm) {
+      store.dispatch("setCardsDrawn", value);
+    } else {
+      store.commit("SET_CARDS_DRAWN", options.value.cardsDrawn);
+      // Removed this.$forceUpdate() as computed properties handle reactivity correctly.
+    }
   },
-  computed: {
-    cardsDrawn: {
-      get() {
-        return this.options.cardsDrawn;
-      },
-      set(value) {
-        let confirm = window.confirm(
-          "Changing this setting will deal a new game. Are you sure?",
-        );
-        if (confirm) {
-          this.$store.dispatch("setCardsDrawn", value);
-        } else {
-          this.$store.commit("SET_CARDS_DRAWN", this.options.cardsDrawn);
-          this.$forceUpdate();
-        }
-      },
-    },
-    ...mapState(["appUpdated", "options"]),
-  },
-  methods: {
-    startGame() {
-      this.showNewConfirm = false;
-    },
-    ...mapActions(["newGame"]),
-  },
-};
+});
+
+function startGame() {
+  showNewConfirm.value = false;
+  // wait, wait... missing newGame. Let's export it or mapAction manually.
+  // Actually, newGame was a mapped action but not used in the template here? Wait, `new-game-button` emts `confirm`.
+  // It triggers `@confirm="startGame"`. startGame sets showNewConfirm = false;
+}
 </script>
 <template>
   <div class="github">

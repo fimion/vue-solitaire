@@ -1,51 +1,58 @@
-<script>
-import { createNamespacedHelpers, mapActions } from "vuex";
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
 import { FlopSelection } from "@class/Selections.js";
 import { ClearSelectionAction, FinalStackAction } from "@class/Actions.js";
 import EmptyCard from "@class/EmptyCard.js";
-import { finalStackTopCardMethod, isSelectedMixin } from "./_common.js";
+import { useFinalStackTopCard, useSelection } from "./_common.js";
 
-const { mapState: flopState, mapGetters: flopGetters } =
-  createNamespacedHelpers("flop");
+const store = useStore();
+const { isSelected: checkIsSelected, currentSelection } = useSelection();
 
-export default {
-  name: "FlopArea",
-  mixins: [isSelectedMixin],
-  computed: {
-    isNotEmpty() {
-      return !(this.topCard instanceof EmptyCard);
-    },
-    ...flopState(["cards", "flop"]),
-    ...flopGetters(["topCard"]),
-  },
-  methods: {
-    isTopCard(card) {
-      return card.card === this.topCard.card;
-    },
-    finalStackTopCardMethod,
-    clickHandler(card) {
-      if (this.isTopCard(card)) {
-        if (this.currentSelection) {
-          this.moveCards(new ClearSelectionAction());
-        } else {
-          this.selectCards(new FlopSelection(card));
-        }
-      }
-    },
-    dblClickHandler(card) {
-      if (this.isTopCard(card)) {
-        this.selectCards(new FlopSelection(card));
-        this.moveCards(
-          new FinalStackAction(
-            card.suit,
-            this.finalStackTopCardMethod(card.suit),
-          ),
-        );
-      }
-    },
-    ...mapActions(["selectCards", "moveCards"]),
-  },
-};
+const cards = computed(() => store.state.flop.cards);
+const flop = computed(() => store.state.flop.flop);
+const topCard = computed(() => store.getters["flop/topCard"]);
+
+const isNotEmpty = computed(() => !(topCard.value instanceof EmptyCard));
+
+function moveCards(action) {
+  store.dispatch("moveCards", action);
+}
+
+function selectCards(selection) {
+  store.dispatch("selectCards", selection);
+}
+
+function isTopCard(card) {
+  return card.card === topCard.value.card;
+}
+
+const { finalStackTopCardMethod } = useFinalStackTopCard();
+
+function getFinalStackTopCard(suit) {
+  return finalStackTopCardMethod(suit);
+}
+
+function clickHandler(card) {
+  if (isTopCard(card)) {
+    if (currentSelection.value) {
+      moveCards(new ClearSelectionAction());
+    } else {
+      selectCards(new FlopSelection(card));
+    }
+  }
+}
+
+function dblClickHandler(card) {
+  if (isTopCard(card)) {
+    selectCards(new FlopSelection(card));
+    moveCards(new FinalStackAction(card.suit, getFinalStackTopCard(card.suit)));
+  }
+}
+
+function isSelected(card) {
+  return checkIsSelected(card);
+}
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-<script>
+<script setup>
 import { computed } from "vue";
 import Card from "@class/Card.js";
 import EmptyCard from "@class/EmptyCard.js";
@@ -50,55 +50,36 @@ const DISPLAY_PATTERNS = {
   10: [L.A, L.D, L.F, L.I, C.B, C.H, R.A, R.D, R.F, R.I],
 };
 
-export default {
-  name: "PlayingCard",
-  props: {
-    card: {
-      type: [Card, EmptyCard, Object],
-      required: true,
-    },
-    isSelected: {
-      type: Boolean,
-      required: true,
-    },
+const props = defineProps({
+  card: {
+    type: [Card, EmptyCard, Object],
+    required: true,
   },
-  setup(props) {
-    const {
-      rank,
-      suit,
-      faceUp,
-      isEmpty,
-      symbol,
-      readableName: name,
-    } = toComputed(props, "card");
-
-    const symbols = computed(() => DISPLAY_PATTERNS[rank.value]);
-
-    const isFaceCard = computed(
-      () => ["J", "Q", "K"].indexOf(rank.value) !== -1,
-    );
-
-    const color = computed(() => (SUIT_RED.has(suit.value) ? "red" : "black"));
-
-    const upsideDown = (x) => (x < 0 ? "rotate(-180 50 75)" : "");
-
-    const displaySymbol = (arr) => arr.indexOf(rank.value) !== -1;
-
-    return {
-      symbols,
-      rank,
-      suit,
-      faceUp,
-      isEmpty,
-      symbol,
-      name,
-      isFaceCard,
-      color,
-      upsideDown,
-      displaySymbol,
-    };
+  isSelected: {
+    type: Boolean,
+    required: true,
   },
-};
+});
+
+const {
+  rank,
+  suit,
+  faceUp,
+  isEmpty,
+  symbol,
+  readableName: name,
+} = toComputed(props, "card");
+
+const symbols = computed(() => DISPLAY_PATTERNS[rank.value]);
+
+const isFaceCard = computed(() => ["J", "Q", "K"].indexOf(rank.value) !== -1);
+
+const color = computed(() => (SUIT_RED.has(suit.value) ? "red" : "black"));
+
+// Keep unused functions if they were defined and returned before (upsideDown/displaySymbol)
+const upsideDown = (x) => (x < 0 ? "rotate(-180 50 75)" : "");
+
+const displaySymbol = (arr) => arr.indexOf(rank.value) !== -1;
 </script>
 <template>
   <button

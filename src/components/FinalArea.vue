@@ -1,30 +1,25 @@
-<script>
-import { defineAsyncComponent } from "vue";
+<script setup>
+import { computed, defineAsyncComponent } from "vue";
+import { useStore } from "vuex";
 import FinalStack from "@components/FinalStack.vue";
 import { CARD_SUITS } from "@src/constants.js";
-import { createNamespacedHelpers } from "vuex";
 import NewGameButton from "@global/new-game-button.vue";
 
-const Confetti = defineAsyncComponent(() => import("./Victory/Confetti.vue"));
+const Confetti = defineAsyncComponent(
+  () => import("./Victory/WinningConfetti.vue"),
+);
 
-const { mapState: finalState } = createNamespacedHelpers("final");
-export default {
-  name: "FinalArea",
-  components: {
-    NewGameButton,
-    FinalStack,
-    Confetti,
-  },
-  computed: {
-    gameIsWon() {
-      return CARD_SUITS.map(
-        (e) => this.$store.state.final[e].cards.length === 13,
-      ).reduce((a, b) => b && a);
-    },
-    ...finalState(["stacks"]),
-  },
-};
+const store = useStore();
+
+const stacks = computed(() => store.state.final.stacks);
+
+const gameIsWon = computed(() => {
+  return CARD_SUITS.map((e) => store.state.final[e].cards.length === 13).reduce(
+    (a, b) => b && a,
+  );
+});
 </script>
+
 <template>
   <final-stack
     v-for="suit in stacks"

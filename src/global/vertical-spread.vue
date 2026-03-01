@@ -1,29 +1,35 @@
-<script>
-export default {
+<script setup>
+import { onMounted, onUpdated, ref, nextTick } from "vue";
+
+defineOptions({
   name: "VerticalSpread",
-  mounted() {
-    this.$nextTick(this.addSpread);
-  },
-  updated() {
-    this.$nextTick(this.addSpread);
-  },
-  methods: {
-    addSpread() {
-      let spread = 1;
-      this.$el.childNodes.forEach((e) => {
-        if (e.style) {
-          e.style.gridRow = `${spread}/${spread + 8}`;
-          spread++;
-          if (e.classList.contains("face-up") && spread > 1) spread++;
-        }
-      });
-    },
-  },
-};
+});
+
+const spreadContainer = ref(null);
+
+function addSpread() {
+  let spread = 1;
+  if (!spreadContainer.value) return;
+  spreadContainer.value.childNodes.forEach((e) => {
+    if (e.style) {
+      e.style.gridRow = `${spread}/${spread + 8}`;
+      spread++;
+      if (e.classList.contains("face-up") && spread > 1) spread++;
+    }
+  });
+}
+
+onMounted(() => {
+  nextTick(addSpread);
+});
+
+onUpdated(() => {
+  nextTick(addSpread);
+});
 </script>
 
 <template>
-  <div :class="$style['vertical-spread']">
+  <div ref="spreadContainer" :class="$style['vertical-spread']">
     <slot />
   </div>
 </template>

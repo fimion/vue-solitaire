@@ -1,7 +1,7 @@
-<script>
-export default {
+<script setup>
+defineOptions({
   name: "CardStack",
-};
+});
 </script>
 <template>
   <div class="card-stack">

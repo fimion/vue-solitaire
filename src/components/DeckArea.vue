@@ -1,31 +1,37 @@
-<script>
-import { createNamespacedHelpers, mapActions } from "vuex";
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
 
 import { CardFlopAction, DeckResetAction } from "@class/Actions.js";
 import { DeckSelection, DeckResetSelection } from "@class/Selections.js";
 
-const { mapGetters: deckGetters } = createNamespacedHelpers("deck");
-const { mapGetters: flopGetters } = createNamespacedHelpers("flop");
-export default {
-  name: "DeckOfCards",
-  computed: {
-    ...deckGetters(["topCard", "deckEmpty", "nextFlop"]),
-    ...flopGetters(["getDeck"]),
-  },
-  methods: {
-    flipCard() {
-      let flop = this.nextFlop;
-      this.selectCards(new DeckSelection(flop));
-      this.moveCards(new CardFlopAction());
-    },
-    resetDeck() {
-      let deck = this.getDeck;
-      this.selectCards(new DeckResetSelection(deck));
-      this.moveCards(new DeckResetAction());
-    },
-    ...mapActions(["moveCards", "selectCards"]),
-  },
-};
+const store = useStore();
+
+const topCard = computed(() => store.getters["deck/topCard"]);
+const deckEmpty = computed(() => store.getters["deck/deckEmpty"]);
+const nextFlop = computed(() => store.getters["deck/nextFlop"]);
+
+const getDeck = computed(() => store.getters["flop/getDeck"]);
+
+function moveCards(action) {
+  store.dispatch("moveCards", action);
+}
+
+function selectCards(selection) {
+  store.dispatch("selectCards", selection);
+}
+
+function flipCard() {
+  let flop = nextFlop.value;
+  selectCards(new DeckSelection(flop));
+  moveCards(new CardFlopAction());
+}
+
+function resetDeck() {
+  let deck = getDeck.value;
+  selectCards(new DeckResetSelection(deck));
+  moveCards(new DeckResetAction());
+}
 </script>
 
 <template>

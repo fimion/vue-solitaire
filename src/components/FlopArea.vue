@@ -1,15 +1,16 @@
-<script setup lang="ts">
+<script setup vapor lang="ts">
 import { computed } from "vue";
 import { useStore } from "vuex";
 import { FlopSelection } from "@class/Selections.js";
 import { ClearSelectionAction, FinalStackAction } from "@class/Actions.js";
 import EmptyCard from "@class/EmptyCard.js";
 import { useSelection } from "./_common.js";
+import Card from "@class/Card.ts";
 
 const store = useStore();
 const { isSelected: checkIsSelected, currentSelection } = useSelection();
 
-const cards = computed(() => store.state.flop.cards);
+//const cards = computed(() => store.state.flop.cards);
 const flop = computed(() => store.state.flop.flop);
 const topCard = computed(() => store.getters["flop/topCard"]);
 
@@ -48,7 +49,7 @@ function dblClickHandler(card) {
   }
 }
 
-function isSelected(card: any, selection?: any) {
+function isSelected(card: Card) {
   return checkIsSelected(card);
 }
 </script>
@@ -59,7 +60,7 @@ function isSelected(card: any, selection?: any) {
       v-if="isNotEmpty"
       :key="topCard.card"
       :card="topCard"
-      :is-selected="isSelected(topCard, currentSelection)"
+      :is-selected="isSelected(topCard)"
       @dblclick="dblClickHandler(topCard)"
       @click="clickHandler(topCard)"
     />
@@ -70,7 +71,7 @@ function isSelected(card: any, selection?: any) {
     :disabled="!isTopCard(card)"
     class="card-flop"
     :card="card"
-    :is-selected="isSelected(card, currentSelection)"
+    :is-selected="isSelected(card)"
     @dblclick="dblClickHandler(card)"
     @click="clickHandler(card)"
   />

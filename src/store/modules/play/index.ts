@@ -38,7 +38,7 @@ export default {
         for (let x = 0, len = state.stacks.length; x < len; x++) {
           const stackLength = state[x].cards.length;
           if (stackLength < x + 1) {
-            await new Promise((res, rej) => {
+            await new Promise((res) => {
               setTimeout(res, 0);
             });
             const newCard = rootGetters["deck/topCard"];

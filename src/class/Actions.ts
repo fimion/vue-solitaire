@@ -1,15 +1,19 @@
 import { CARD_RANKS, SUIT_OPPOSITES } from "@src/constants.js";
+import type Card from "@class/Card.ts";
+import { type BaseSelection } from "@class/Selections.ts";
+import EmptyCard from "@class/EmptyCard.ts";
 
 export class BaseAction {
   action: string | null;
-  target: any;
+  target: Card | EmptyCard | null;
 
   constructor(action: string | null) {
     this.action = action;
     this.target = null;
   }
 
-  validate(selection) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  validate(_: BaseSelection) {
     return true;
   }
 }
@@ -18,7 +22,8 @@ export class ClearSelectionAction extends BaseAction {
   constructor() {
     super(null);
   }
-  validate(selection) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  validate(_: BaseSelection) {
     return false;
   }
 }
@@ -36,19 +41,21 @@ export class DeckResetAction extends BaseAction {
 }
 
 export class PlayStackAction extends BaseAction {
-  constructor(stack: number, target: any) {
+  constructor(stack: number, target: Card | EmptyCard | null) {
     super("play/" + stack + "/concatCards");
     this.target = target;
   }
-  validate(selection) {
+  validate(selection: BaseSelection) {
     const selected = selection.selectedCard();
-    if (selected.rank === "K" && this.target.isEmpty) {
-      return true;
+    if(!this.target) return false;
+    if(this.target.isEmpty){
+      return selected.rank === "K";
     }
 
+    const card = (<Card>this.target);
     const selectedIndex = CARD_RANKS.indexOf(selected.rank),
-      targetIndex = CARD_RANKS.indexOf(this.target.rank),
-      isOpposite = SUIT_OPPOSITES.get(selected.suit).has(this.target.suit),
+      targetIndex = CARD_RANKS.indexOf(card.rank),
+      isOpposite = SUIT_OPPOSITES.get(selected.suit).has(card.suit),
       isNext = targetIndex - selectedIndex === 1;
 
     return isOpposite && isNext;
@@ -58,13 +65,13 @@ export class PlayStackAction extends BaseAction {
 export class FinalStackAction extends BaseAction {
   stack: string;
 
-  constructor(stack: string, target: any) {
+  constructor(stack: string, target: Card) {
     super("final/" + stack + "/pushCard");
     this.stack = stack;
     this.target = target;
   }
 
-  validate(selection) {
+  validate(selection: BaseSelection) {
     if (selection.cards.length !== 1) {
       return false;
     }
@@ -72,7 +79,8 @@ export class FinalStackAction extends BaseAction {
     if (selected.suit !== this.stack) {
       return false;
     }
-    const targetRankIndex = CARD_RANKS.indexOf(this.target.rank),
+    const card = (<Card>this.target);
+    const targetRankIndex = CARD_RANKS.indexOf(card.rank),
       selectedRankIndex = CARD_RANKS.indexOf(selected.rank);
 
     return selectedRankIndex - targetRankIndex === 1;

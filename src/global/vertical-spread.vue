@@ -1,16 +1,19 @@
-<script setup lang="ts">
-import { onMounted, onUpdated, ref, nextTick } from "vue";
+<script setup vapor lang="ts">
+import { useTemplateRef, watch } from "vue";
 
 defineOptions({
   name: "VerticalSpread",
 });
 
-const spreadContainer = ref(null);
+const spreadContainer = useTemplateRef<HTMLDivElement>("spread");
 
+watch(spreadContainer, () => {
+  addSpread()
+}, {deep: true})
 function addSpread() {
   let spread = 1;
   if (!spreadContainer.value) return;
-  spreadContainer.value.childNodes.forEach((e) => {
+  Array.from(spreadContainer.value.children).forEach((e: HTMLElement) => {
     if (e.style) {
       e.style.gridRow = `${spread}/${spread + 8}`;
       spread++;
@@ -18,23 +21,15 @@ function addSpread() {
     }
   });
 }
-
-onMounted(() => {
-  nextTick(addSpread);
-});
-
-onUpdated(() => {
-  nextTick(addSpread);
-});
 </script>
 
 <template>
-  <div ref="spreadContainer" :class="$style['vertical-spread']">
+  <div ref="spread" class="vertical-spread">
     <slot />
   </div>
 </template>
 
-<style module>
+<style scoped>
 .vertical-spread {
   display: grid;
   grid-auto-rows: calc(var(--card-height) / 8);
@@ -46,8 +41,9 @@ onUpdated(() => {
   }
 }
 
-.vertical-spread > *:global {
+.vertical-spread:deep( > *) {
   grid-column: 1;
+  grid-row-start: span 1;
   grid-row-end: span 8;
   z-index: 1;
 }

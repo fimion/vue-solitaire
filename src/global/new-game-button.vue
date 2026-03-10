@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup vapor  lang="ts">
 import { useStore } from "vuex";
 
 const emit = defineEmits(["confirm"]);

@@ -1,6 +1,5 @@
 import { CARD_RANKS, CARD_SUITS } from "@src/constants.js";
 import Card from "@class/Card.js";
-import EmptyCard from "@class/EmptyCard.js";
 import {
   topCard,
   deckEmpty,
@@ -39,8 +38,8 @@ export default {
     CREATE_DECK(state) {
       state.cards = createPlayingDeck();
     },
-    SHUFFLE_DECK({ cards }) {
-      cards = cards.sort(() => Math.random() - 0.5);
+    SHUFFLE_DECK(state) {
+      state.cards = state.cards.sort(() => Math.random() - 0.5);
     },
     FLIP_CARD(state, i) {
       state.cards[i].faceUp = !state.cards[i].faceUp;
@@ -68,13 +67,13 @@ export default {
     popCard({ commit }) {
       commit("POP_CARD");
     },
-    popFlop({ commit, dispatch, getters }) {
+    popFlop({ commit, getters }) {
       const flop = [...getters.nextFlop];
       flop.forEach(() => {
         commit("POP_CARD");
       });
     },
-    async resetDeck({ commit, dispatch }, cards) {
+    async resetDeck({ commit }, cards) {
       const deck = cards.reverse().map((e) => {
         e.faceUp = false;
         return e;

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup vapor lang="ts">
 import { computed, defineAsyncComponent } from "vue";
 import { useStore } from "vuex";
 import FinalStack from "@components/FinalStack.vue";

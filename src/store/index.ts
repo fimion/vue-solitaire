@@ -4,6 +4,7 @@ import deck from "./modules/deck.js";
 import flop from "./modules/flop.js";
 import final from "./modules/final/index.js";
 import play from "./modules/play/index.js";
+import {BaseAction} from "@class/Actions.ts";
 
 export default createStore({
   modules: {
@@ -42,14 +43,14 @@ export default createStore({
     },
   },
   actions: {
-    preInit({ commit, dispatch }) {
+    preInit({ commit }) {
       commit("APP_LOADED");
     },
-    postInit({ commit, dispatch }) {},
-    selectCards({ commit, dispatch }, Selection) {
+    postInit() {},
+    selectCards({ commit }, Selection) {
       commit("SET_SELECTED_CARDS", Selection);
     },
-    async moveCards({ commit, dispatch, state, getters }, Action) {
+    async moveCards({ commit, dispatch, state }, Action: BaseAction) {
       if (state.currentSelection) {
         if (Action.validate(state.currentSelection)) {
           await dispatch(Action.action, state.currentSelection.cards);
@@ -61,7 +62,6 @@ export default createStore({
           }
         }
         commit("SET_SELECTED_CARDS", null);
-      } else {
       }
     },
     appUpdated({ commit }) {

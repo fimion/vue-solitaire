@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup vapor lang="ts">
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import DefaultCardFaces from "@template/card-faces/default-card-faces.vue";
@@ -18,7 +18,7 @@ const cardsDrawn = computed({
     return options.value.cardsDrawn;
   },
   set(value) {
-    let confirm = window.confirm(
+    const confirm = globalThis.confirm(
       "Changing this setting will deal a new game. Are you sure?",
     );
     if (confirm) {

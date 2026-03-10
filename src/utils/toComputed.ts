@@ -1,4 +1,4 @@
-import { computed } from "vue";
+import { computed, type ComputedRef } from "vue";
 import _get from "lodash/get";
 /**
  * @callback getObject
@@ -12,8 +12,11 @@ import _get from "lodash/get";
  * @param {Object|Array} obj
  * @param {string|string[]} findThing
  */
-export const toComputed = (obj: any, findThing: string | string[]): any => {
-  const myComputedValues: any = {};
+export const toComputed = (
+  obj: Record<string | number, unknown>,
+  findThing: string | string[],
+): Record<string | number, ComputedRef<unknown>> => {
+  const myComputedValues: Record<string | number, ComputedRef<unknown>> = {};
   Object.keys(_get(obj, findThing, {})).forEach((key) => {
     myComputedValues[key] = computed(() => _get(obj, [findThing, key]));
   });

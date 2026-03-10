@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup vapor lang="ts">
 import { computed } from "vue";
 import { useStore } from "vuex";
 import PlayStack from "@components/PlayStack.vue";

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup vapor lang="ts">
 import { useStore } from "vuex";
 import { CARD_RANKS, CARD_SUITS } from "@src/constants.js";
 import Card from "@class/Card.js";

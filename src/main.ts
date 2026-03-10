@@ -1,4 +1,4 @@
-import { createApp, defineAsyncComponent } from "vue";
+import { type VaporComponent, createVaporApp, defineVaporAsyncComponent } from "vue";
 import store from "@store/index.js";
 import addGlobalComponents from "@global/index.js";
 import "./registerServiceWorker.js";
@@ -11,28 +11,28 @@ import HeaderArea from "@components/HeaderArea.vue";
  * @param {function} loader - function that returns a promise that resolves to a component
  * @returns {object} a component definition that will allow for async loading.
  */
-function asyncComponent(name: string, loader: any) {
-  const component = defineAsyncComponent({
+function asyncComponent(name: string, loader: () => Promise<VaporComponent>) {
+  const component = defineVaporAsyncComponent({
     loader,
   });
   return component;
 }
 
 const DeckApp = asyncComponent(
-  "DeckApp",
-  () => import("@components/DeckArea.vue"),
+  "DeckArea",
+  () => import("@components/DeckArea.vue") as Promise<VaporComponent>,
 );
 const FlopApp = asyncComponent(
-  "FlopApp",
-  () => import("@components/FlopArea.vue"),
+  "FlopArea",
+  () => import("@components/FlopArea.vue") as Promise<VaporComponent>,
 );
 const FinalApp = asyncComponent(
-  "FinalApp",
-  () => import("@components/FinalArea.vue"),
+  "FinalArea",
+  () => import("@components/FinalArea.vue") as Promise<VaporComponent>,
 );
 const PlayApp = asyncComponent(
-  "PlayApp",
-  () => import("@components/PlayArea.vue"),
+  "PlayArea",
+  () => import("@components/PlayArea.vue") as Promise<VaporComponent>,
 );
 
 /**
@@ -51,28 +51,33 @@ store.dispatch("preInit");
 const apps = [
   {
     el: "#deck",
+    name: "DeckApp",
     component: DeckApp,
   },
   {
     el: "#flop",
+    name: "FlopApp",
     component: FlopApp,
   },
   {
     el: "#final",
+    name: "FinalApp",
     component: FinalApp,
   },
   {
     el: "#play",
+    name: "PlayApp",
     component: PlayApp,
   },
   {
     el: "#header",
+    name: "HeaderApp",
     component: HeaderArea,
   },
 ];
 apps.forEach(({ el, component }) => {
   if (document.querySelector(el)) {
-    const app = createApp(component);
+    const app = createVaporApp(component as VaporComponent);
     addGlobalComponents(app);
     app.use(store);
     app.mount(el);
@@ -81,6 +86,6 @@ apps.forEach(({ el, component }) => {
 
 store.dispatch("postInit");
 
-if (process.env.NODE_ENV !== "production") {
+if (!import.meta.env.PROD) {
   import("./devHelpers.js");
 }

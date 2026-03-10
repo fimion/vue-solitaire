@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup vapor lang="ts">
 import { computed } from "vue";
 import { useStore } from "vuex";
 
@@ -22,13 +22,13 @@ function selectCards(selection) {
 }
 
 function flipCard() {
-  let flop = nextFlop.value;
+  const flop = nextFlop.value;
   selectCards(new DeckSelection(flop));
   moveCards(new CardFlopAction());
 }
 
 function resetDeck() {
-  let deck = getDeck.value;
+  const deck = getDeck.value;
   selectCards(new DeckResetSelection(deck));
   moveCards(new DeckResetAction());
 }

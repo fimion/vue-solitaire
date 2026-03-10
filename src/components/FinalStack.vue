@@ -1,7 +1,6 @@
-<script setup lang="ts">
+<script setup vapor lang="ts">
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { SUIT_SYMBOLS } from "@src/constants.js";
 import { FinalStackAction } from "@class/Actions.js";
 import { useSelection } from "@components/_common.js";
 
@@ -15,7 +14,7 @@ const props = defineProps({
 const store = useStore();
 const { isSelected: checkIsSelected } = useSelection();
 
-const symbol = computed(() => SUIT_SYMBOLS[props.suit]);
+//const symbol = computed(() => SUIT_SYMBOLS[props.suit]);
 const topCard = computed(
   () => store.getters["final/" + props.suit + "/topCard"],
 );

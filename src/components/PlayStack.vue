@@ -1,14 +1,15 @@
-<script setup lang="ts">
+<script setup vapor lang="ts">
 import { computed } from "vue";
 import { useStore } from "vuex";
 import {
   PlayStackAction,
   FinalStackAction,
-  ClearSelectionAction,
+  ClearSelectionAction, BaseAction,
 } from "@class/Actions.js";
-import { PlaySelection } from "@class/Selections.js";
+import {BaseSelection, PlaySelection} from "@class/Selections.js";
 import EmptyCard from "@class/EmptyCard.js";
 import { useSelection } from "./_common.js";
+import Card from "@class/Card.ts";
 
 const props = defineProps({
   stack: {
@@ -30,15 +31,15 @@ const bottomCard = computed(() => {
 
 const selectedCard = computed(() => store.getters.selectedCard);
 
-function moveCards(action: any) {
+function moveCards(action: BaseAction) {
   store.dispatch("moveCards", action);
 }
 
-function selectCards(selection: any) {
+function selectCards(selection: BaseSelection) {
   store.dispatch("selectCards", selection);
 }
 
-function cardDisabled(card: any) {
+function cardDisabled(card: Card) {
   return !card.faceUp;
 }
 
@@ -61,7 +62,7 @@ function clickHandler(card) {
     }
   } else {
     if (card.faceUp) {
-      let index = cards.value.indexOf(card),
+      const index = cards.value.indexOf(card),
         selection = cards.value.slice(index);
       selectCards(new PlaySelection(props.stack, selection));
     }
@@ -75,7 +76,7 @@ function dblClickHandler(card) {
   }
 }
 
-function isSelected(card: any, selection?: any) {
+function isSelected(card: Card) {
   return checkIsSelected(card);
 }
 </script>
@@ -90,7 +91,7 @@ function isSelected(card: any, selection?: any) {
         v-for="card in cards"
         :key="card.card"
         :card="card"
-        :is-selected="isSelected(card, currentSelection)"
+        :is-selected="isSelected(card)"
         :disabled="cardDisabled(card)"
         @click="clickHandler(card)"
         @dblclick="dblClickHandler(card)"

@@ -21,6 +21,6 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    VitePWA({ injectRegister: null, filename: "service-worker.js" }),
+    VitePWA({ injectRegister: null, filename: "service-worker.js", registerType: "autoUpdate" }),
   ],
 });

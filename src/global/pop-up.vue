@@ -1,7 +1,7 @@
-<script>
-export default {
+<script setup vapor lang="ts">
+defineOptions({
   name: "PopUp",
-};
+});
 </script>
 <template>
   <div class="background">

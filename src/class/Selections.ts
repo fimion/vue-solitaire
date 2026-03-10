@@ -6,16 +6,22 @@
 
 /** @typedef {import('@/class/Card')} Card */
 
+import type Card from "@class/Card.ts";
+
 /**
  * This class defines the basic things all Selections will contain.
  * @class BaseSelection
  */
 class BaseSelection {
+  cards: Card[];
+  cleanUp: string | null;
+  hasAction: boolean;
+
   /**
    * @constructor
    * @param {Card[]} cards - the cards that are selected.
    */
-  constructor(cards) {
+  constructor(cards: Card[]) {
     /**
      * Our card selection
      * @type {Card[]}
@@ -41,21 +47,21 @@ class BaseSelection {
 }
 
 class DeckSelection extends BaseSelection {
-  constructor(cards) {
+  constructor(cards: Card[]) {
     super(cards);
     this.cleanUp = "deck/popFlop";
   }
 }
 
 class DeckResetSelection extends BaseSelection {
-  constructor(cards) {
+  constructor(cards: Card[]) {
     super(cards);
     this.cleanUp = "flop/resetDeck";
   }
 }
 
 class FlopSelection extends BaseSelection {
-  constructor(card) {
+  constructor(card: Card) {
     super([card]);
     this.cleanUp = "flop/popCard";
   }
@@ -69,7 +75,7 @@ class PlaySelection extends BaseSelection {
 }
 
 class FinalSelection extends BaseSelection {
-  constructor(stack, card) {
+  constructor(stack: number, card: Card) {
     super([card]);
     this.cleanUp = "final/" + stack + "/popCard";
   }

@@ -1,16 +1,13 @@
-<script>
-import { mapActions } from "vuex";
-export default {
-  name: "NewGameButton",
-  emits: ["confirm"],
-  methods: {
-    startGame() {
-      this.$emit("confirm");
-      this.newGame();
-    },
-    ...mapActions(["newGame"]),
-  },
-};
+<script setup vapor  lang="ts">
+import { useStore } from "vuex";
+
+const emit = defineEmits(["confirm"]);
+const store = useStore();
+
+function startGame() {
+  emit("confirm");
+  store.dispatch("newGame");
+}
 </script>
 <template>
   <button @click="startGame">

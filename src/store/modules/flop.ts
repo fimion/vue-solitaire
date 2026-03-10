@@ -9,7 +9,7 @@ export default {
   },
   getters: {
     topCard(state) {
-      let flopLen = state.flop.length,
+      const flopLen = state.flop.length,
         cardsLen = state.cards.length;
       if (flopLen) {
         return state.flop[flopLen - 1];
@@ -53,7 +53,7 @@ export default {
   },
   actions: {
     flopCards({ commit, state }, newCards) {
-      let newFlop = newCards.reverse().map((e) => {
+      const newFlop = newCards.reverse().map((e) => {
         e.faceUp = true;
         return e;
       });
@@ -65,7 +65,7 @@ export default {
       commit("FLOP_CARDS", []);
       commit("SET_CARDS_FACE_DOWN");
       commit("REVERSE_CARDS");
-      let deck = state.cards;
+      const deck = state.cards;
       commit("RESET_CARDS");
       return Promise.resolve(deck);
     },

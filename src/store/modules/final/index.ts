@@ -2,7 +2,7 @@ import { CARD_SUITS } from "@src/constants.js";
 import createFinalStack from "./_createFinalStack.js";
 
 function makeFinalSlots() {
-  let final = {};
+  const final = {};
   CARD_SUITS.forEach((e) => (final[e] = createFinalStack()));
   return final;
 }

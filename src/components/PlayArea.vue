@@ -1,17 +1,10 @@
-<script>
+<script setup vapor lang="ts">
+import { computed } from "vue";
+import { useStore } from "vuex";
 import PlayStack from "@components/PlayStack.vue";
-import { createNamespacedHelpers } from "vuex";
 
-const { mapState: playState } = createNamespacedHelpers("play");
-export default {
-  name: "PlayArea",
-  components: {
-    PlayStack,
-  },
-  computed: {
-    ...playState(["stacks"]),
-  },
-};
+const store = useStore();
+const stacks = computed(() => store.state.play.stacks);
 </script>
 
 <template>

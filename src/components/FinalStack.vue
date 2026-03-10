@@ -1,39 +1,39 @@
-<script>
-import { SUIT_SYMBOLS } from "@src/constants.js";
+<script setup vapor lang="ts">
+import { computed } from "vue";
+import { useStore } from "vuex";
 import { FinalStackAction } from "@class/Actions.js";
-import { isSelectedMixin } from "@components/_common.js";
+import { useSelection } from "@components/_common.js";
 
-export default {
-  name: "FinalStack",
-  mixins: [isSelectedMixin],
-  props: {
-    suit: {
-      type: String,
-      required: true,
-    },
+const props = defineProps({
+  suit: {
+    type: String,
+    required: true,
   },
-  computed: {
-    symbol() {
-      return SUIT_SYMBOLS[this.suit];
-    },
-    topCard() {
-      return this.$store.getters["final/" + this.suit + "/topCard"];
-    },
-    deckEmpty() {
-      return this.$store.getters["final/" + this.suit + "/deckEmpty"];
-    },
-  },
-  methods: {
-    handleClick() {
-      if (this.$store.getters.selectedCard) {
-        this.$store.dispatch(
-          "moveCards",
-          new FinalStackAction(this.suit, this.topCard),
-        );
-      }
-    },
-  },
-};
+});
+
+const store = useStore();
+const { isSelected: checkIsSelected } = useSelection();
+
+//const symbol = computed(() => SUIT_SYMBOLS[props.suit]);
+const topCard = computed(
+  () => store.getters["final/" + props.suit + "/topCard"],
+);
+const deckEmpty = computed(
+  () => store.getters["final/" + props.suit + "/deckEmpty"],
+);
+
+function handleClick() {
+  if (store.getters.selectedCard) {
+    store.dispatch(
+      "moveCards",
+      new FinalStackAction(props.suit, topCard.value),
+    );
+  }
+}
+
+function isSelected(card) {
+  return checkIsSelected(card);
+}
 </script>
 
 <template>

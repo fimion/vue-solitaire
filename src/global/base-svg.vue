@@ -1,7 +1,7 @@
-<script>
-export default {
+<script setup vapor lang="ts">
+defineOptions({
   name: "BaseSvg",
-};
+});
 </script>
 <template>
   <svg viewBox="0 0 100 150" v-bind="$attrs" xmlns="http://www.w3.org/2000/svg">

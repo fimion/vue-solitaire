@@ -1,26 +1,24 @@
-<script>
+<script setup vapor lang="ts">
+import { useStore } from "vuex";
 import { CARD_RANKS, CARD_SUITS } from "@src/constants.js";
 import Card from "@class/Card.js";
 
-export default {
-  name: "DevTools",
-  methods: {
-    createWinCondition() {
-      this.$store.commit("flop/RESET_DECK");
-      this.$store.commit("deck/RESET_CARDS");
-      this.$store.state.play.stacks.forEach((e, i) => {
-        this.$store.commit(`play/${i}/RESET_CARDS`);
-      });
-      CARD_SUITS.forEach((suit) => {
-        CARD_RANKS.forEach((rank) => {
-          const card = new Card(rank, suit);
-          card.faceUp = true;
-          this.$store.commit(`final/${suit}/PUSH_CARD`, card);
-        });
-      });
-    },
-  },
-};
+const store = useStore();
+
+function createWinCondition() {
+  store.commit("flop/RESET_DECK");
+  store.commit("deck/RESET_CARDS");
+  store.state.play.stacks.forEach((e, i) => {
+    store.commit(`play/${i}/RESET_CARDS`);
+  });
+  CARD_SUITS.forEach((suit) => {
+    CARD_RANKS.forEach((rank) => {
+      const card = new Card(rank, suit);
+      card.faceUp = true;
+      store.commit(`final/${suit}/PUSH_CARD`, card);
+    });
+  });
+}
 </script>
 
 <template>

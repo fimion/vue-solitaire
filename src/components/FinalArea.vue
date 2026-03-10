@@ -1,30 +1,25 @@
-<script>
-import { defineAsyncComponent } from "vue";
+<script setup vapor lang="ts">
+import {computed, defineVaporAsyncComponent, VaporComponent} from "vue";
+import { useStore } from "vuex";
 import FinalStack from "@components/FinalStack.vue";
 import { CARD_SUITS } from "@src/constants.js";
-import { createNamespacedHelpers } from "vuex";
 import NewGameButton from "@global/new-game-button.vue";
 
-const Confetti = defineAsyncComponent(() => import("./Victory/Confetti.vue"));
+const WinningConfetti = defineVaporAsyncComponent(
+  () => import("./Victory/WinningConfetti.vue") as Promise<VaporComponent>,
+);
 
-const { mapState: finalState } = createNamespacedHelpers("final");
-export default {
-  name: "FinalArea",
-  components: {
-    NewGameButton,
-    FinalStack,
-    Confetti,
-  },
-  computed: {
-    gameIsWon() {
-      return CARD_SUITS.map(
-        (e) => this.$store.state.final[e].cards.length === 13,
-      ).reduce((a, b) => b && a);
-    },
-    ...finalState(["stacks"]),
-  },
-};
+const store = useStore();
+
+const stacks = computed(() => store.state.final.stacks);
+
+const gameIsWon = computed(() => {
+  return CARD_SUITS.map((e) => store.state.final[e].cards.length === 13).reduce(
+    (a, b) => b && a,
+  );
+});
 </script>
+
 <template>
   <final-stack
     v-for="suit in stacks"
@@ -32,7 +27,7 @@ export default {
     :suit="suit"
   />
   <teleport v-if="gameIsWon" to="#portal">
-    <confetti />
+    <winning-confetti />
     <pop-up>
       <h1>You win!</h1>
       <new-game-button />

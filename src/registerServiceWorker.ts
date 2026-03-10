@@ -1,7 +1,7 @@
 import { register } from "register-service-worker";
 import store from "@store";
 
-if (process.env.NODE_ENV === "production") {
+if (import.meta.env.PROD) {
   register(`/service-worker.js`, {
     ready() {
       console.log(

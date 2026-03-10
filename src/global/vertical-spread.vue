@@ -1,5 +1,5 @@
 <script setup vapor lang="ts">
-import { useTemplateRef, watch } from "vue";
+import { useTemplateRef, onMounted, onUpdated, nextTick } from "vue";
 
 defineOptions({
   name: "VerticalSpread",
@@ -7,9 +7,6 @@ defineOptions({
 
 const spreadContainer = useTemplateRef<HTMLDivElement>("spread");
 
-watch(spreadContainer, () => {
-  addSpread()
-}, {deep: true})
 function addSpread() {
   let spread = 1;
   if (!spreadContainer.value) return;
@@ -21,6 +18,12 @@ function addSpread() {
     }
   });
 }
+onMounted(() => {
+  nextTick(addSpread);
+})
+onUpdated(() => {
+  nextTick(addSpread);
+})
 </script>
 
 <template>

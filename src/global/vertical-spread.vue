@@ -1,5 +1,5 @@
 <script setup vapor lang="ts">
-import { useTemplateRef, onMounted, onUpdated, nextTick } from "vue";
+import { useTemplateRef, onMounted, onUpdated, nextTick, watch } from "vue";
 
 defineOptions({
   name: "VerticalSpread",
@@ -10,6 +10,9 @@ const spreadContainer = useTemplateRef<HTMLDivElement>("spread");
 function addSpread() {
   let spread = 1;
   if (!spreadContainer.value) return;
+  if(spreadContainer.value.children && spreadContainer.value.children.length === 0) {
+    return setTimeout(addSpread, 0);
+  }
   Array.from(spreadContainer.value.children).forEach((e: HTMLElement) => {
     if (e.style) {
       e.style.gridRow = `${spread}/${spread + 8}`;
@@ -18,12 +21,10 @@ function addSpread() {
     }
   });
 }
-onMounted(() => {
-  nextTick(addSpread);
-})
 onUpdated(() => {
   nextTick(addSpread);
 })
+watch(spreadContainer, ()=>nextTick(addSpread));
 </script>
 
 <template>

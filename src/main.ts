@@ -1,22 +1,26 @@
-import { type VaporComponent, createVaporApp, defineVaporAsyncComponent } from "vue";
+import {type VaporComponent, createVaporApp, defineVaporAsyncComponent} from "vue";
 import store from "@store/index.js";
 import addGlobalComponents from "@global/index.js";
 import "./registerServiceWorker.js";
 
-import HeaderArea from "@components/HeaderArea.vue";
-
 /**
  *
- * @param {string} name - component name for dev tools
- * @param {function} loader - function that returns a promise that resolves to a component
- * @returns {object} a component definition that will allow for async loading.
+ * @param name - component name for dev tools
+ * @param loader - function that returns a promise that resolves to a component
+ * @returns a component definition that will allow for async loading.
  */
 function asyncComponent(name: string, loader: () => Promise<VaporComponent>) {
   const component = defineVaporAsyncComponent({
     loader,
   });
+  component.name = name;
   return component;
 }
+
+const HeaderApp = asyncComponent(
+    "HeaderArea",
+    ()=> import('@components/HeaderArea.vue') as Promise<VaporComponent>
+);
 
 const DeckApp = asyncComponent(
   "DeckArea",
@@ -72,7 +76,7 @@ const apps = [
   {
     el: "#header",
     name: "HeaderApp",
-    component: HeaderArea,
+    component: HeaderApp,
   },
 ];
 apps.forEach(({ el, component }) => {

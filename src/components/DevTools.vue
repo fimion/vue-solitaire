@@ -5,12 +5,13 @@ import Card from "@class/Card.js";
 
 const store = useStore();
 
-function createWinCondition() {
+async function createWinCondition() {
   store.commit("flop/RESET_DECK");
   store.commit("deck/RESET_CARDS");
   store.state.play.stacks.forEach((e, i) => {
     store.commit(`play/${i}/RESET_CARDS`);
   });
+  await store.dispatch("final/newGame");
   CARD_SUITS.forEach((suit) => {
     CARD_RANKS.forEach((rank) => {
       const card = new Card(rank, suit);

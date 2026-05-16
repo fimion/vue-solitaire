@@ -3,12 +3,9 @@ import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import DefaultCardFaces from "@template/card-faces/default-card-faces.vue";
 import NewGameButton from "@global/new-game-button.vue";
-import PopUp from "@global/pop-up.vue";
+import BaseModal from "@global/base-modal.vue";
 
 const store = useStore();
-
-const showOptions = ref(false);
-const showNewConfirm = ref(false);
 
 const options = computed(() => store.state.options);
 const appUpdated = computed(() => store.state.appUpdated);
@@ -30,12 +27,6 @@ const cardsDrawn = computed({
   },
 });
 
-function startGame() {
-  showNewConfirm.value = false;
-  // wait, wait... missing newGame. Let's export it or mapAction manually.
-  // Actually, newGame was a mapped action but not used in the template here? Wait, `new-game-button` emts `confirm`.
-  // It triggers `@confirm="startGame"`. startGame sets showNewConfirm = false;
-}
 </script>
 <template>
   <div class="github">
@@ -46,47 +37,32 @@ function startGame() {
     There is an update! Refresh to load the new version.
   </div>
   <div class="buttons">
-    <button class="btn" @click="showNewConfirm = true">
-      New
-      <teleport v-if="showNewConfirm" to="#portal">
-        <pop-up>
-          <div>Are you sure you want to start a new game?</div>
-          <new-game-button class="btn" @confirm="startGame" />
-          <button class="btn" @click="showNewConfirm = false">
-            Do Not Start a New Game
-          </button>
-          <button
-            class="close"
-            aria-label="Close New Game Dialogue"
-            @click="showNewConfirm = false"
-          >
-            X
-          </button>
-        </pop-up>
-      </teleport>
-    </button>
-    <!--<button class="btn">Undo</button>-->
-    <button aria-label="Options" class="btn" @click="showOptions = true">
-      Opts
-      <teleport v-if="showOptions" to="#portal">
-        <pop-up>
-          <div>
-            <label for="cardsDrawn">Number of cards drawn at a time: </label>
-            <select id="cardsDrawn" v-model="cardsDrawn" name="cardsDrawn">
-              <option :value="1">One</option>
-              <option :value="3">Three</option>
-            </select>
-          </div>
-          <button
-            class="close"
-            aria-label="Close New Game Dialogue"
-            @click="showOptions = false"
-          >
-            X
-          </button>
-        </pop-up>
-      </teleport>
-    </button>
+    <base-modal>
+      <template #activator-text>New</template>
+      <form method="dialog">
+        <h1>Start A New Game</h1>
+        <p>Are you sure you want to start a new game?</p>
+        <new-game-button/>
+        <button>
+          Do Not Start a New Game
+        </button>
+      </form>
+    </base-modal>
+    <base-modal>
+      <template #activator-text>Options</template>
+      <form method="dialog">
+        <h1>Options</h1>
+        <p>Options save automatically</p>
+        <label for="cardsDrawn">Number of cards drawn at a time: </label>
+        <select id="cardsDrawn" v-model="cardsDrawn" name="cardsDrawn">
+          <option :value="1">One</option>
+          <option :value="3">Three</option>
+        </select>
+        <div>
+          <button>Close Options</button>
+        </div>
+      </form>
+    </base-modal>
   </div>
 </template>
 <style scoped>
@@ -97,28 +73,6 @@ a:focus,
 a:active {
   color: var(--color-white);
   text-decoration: none;
-}
-
-.btn {
-  padding: 5px;
-  margin-right: 5px;
-
-  background-color: var(--color-btn);
-  border-color: var(--color-btn-border);
-}
-
-.close {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 20px;
-  min-width: 20px;
-  background: none;
-  border: 1px solid var(--color-black);
-  border-radius: 50%;
 }
 
 .github {

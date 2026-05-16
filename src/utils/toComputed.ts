@@ -1,9 +1,5 @@
-import { computed, type ComputedRef } from "vue";
-import _get from "lodash/get";
-/**
- * @callback getObject
- * @return {Array|Object} returns a reference to the object/array we want computed values of.
- */
+import {computed, type ComputedRef} from "vue";
+import _get from "lodash-es/get";
 
 /**
  * This will take in a function that returns a reactive object and return an
@@ -13,12 +9,17 @@ import _get from "lodash/get";
  * @param {string|string[]} findThing
  */
 export const toComputed = (
-  obj: Record<string | number, unknown>,
-  findThing: string | string[],
+    obj: Record<string | number, unknown>,
+    findThing: string | string[],
 ): Record<string | number, ComputedRef<unknown>> => {
   const myComputedValues: Record<string | number, ComputedRef<unknown>> = {};
   Object.keys(_get(obj, findThing, {})).forEach((key) => {
-    myComputedValues[key] = computed(() => _get(obj, [findThing, key]));
+    myComputedValues[key] = computed(() => _get(obj,
+        [
+          ...(Array.isArray(findThing) ? findThing : [findThing]),
+          key,
+        ],
+    ));
   });
   return myComputedValues;
 };

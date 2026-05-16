@@ -21,49 +21,49 @@
         "noUnusedLocals": false,
         "noUnusedParameters": false,
         "noFallthroughCasesInSwitch": true,
-        "baseUrl": ".",
+        //"baseUrl": ".",
         "paths": {
             "@components/*": [
-                "src/components/*"
+                "./src/components/*"
             ],
             "@components": [
-                "src/components"
+                "./src/components"
             ],
             "@assets/*": [
-                "src/assets/*"
+                "./src/assets/*"
             ],
             "@assets": [
-                "src/assets"
+                "./src/assets"
             ],
             "@store/*": [
-                "src/store/*"
+                "./src/store/*"
             ],
             "@store": [
-                "src/store"
+                "./src/store"
             ],
             "@global/*": [
-                "src/global/*"
+                "./src/global/*"
             ],
             "@global": [
-                "src/global"
+                "./src/global"
             ],
             "@class/*": [
-                "src/class/*"
+                "./src/class/*"
             ],
             "@class": [
-                "src/class"
+                "./src/class"
             ],
             "@template/*": [
-                "src/template/*"
+                "./src/template/*"
             ],
             "@template": [
-                "src/template"
+                "./src/template"
             ],
             "@src/*": [
-                "src/*"
+                "./src/*"
             ],
             "@src": [
-                "src"
+                "./src"
             ]
         }
     },

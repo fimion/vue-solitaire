@@ -65,16 +65,18 @@ function isSelected(card: Card) {
       @click="clickHandler(topCard)"
     />
   </card-stack>
-  <playing-card
-    v-for="card in flop"
-    :key="card.card"
-    :disabled="!isTopCard(card)"
-    class="card-flop"
-    :card="card"
-    :is-selected="isSelected(card)"
-    @dblclick="dblClickHandler(card)"
-    @click="clickHandler(card)"
-  />
+  <div v-else class="card-flop">
+    <playing-card
+        v-for="card in flop"
+        :key="card.card"
+        :disabled="!isTopCard(card)"
+        :card="card"
+        :is-selected="isSelected(card)"
+        @dblclick="dblClickHandler(card)"
+        @click="clickHandler(card)"
+    />
+  </div>
+
 </template>
 <style scoped>
 .card-stack {
@@ -82,32 +84,31 @@ function isSelected(card: Card) {
   grid-row-start: 1;
 }
 
-.card-flop:first-of-type {
+.card-flop{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr) var(--grid-gap);
+  grid-template-rows: 1fr;
+  align-items: start;
+  min-height: 100%;
+}
+.card-flop:deep(>*:first-of-type) {
   grid-column: 1 / span 3;
   z-index: 1;
   position: relative;
   grid-row-start: 1;
 }
 
-.card-flop:nth-of-type(2) {
+.card-flop:deep(>*:nth-of-type(2)) {
   grid-column: 2 / span 3;
   position: relative;
   grid-row-start: 1;
   z-index: 2;
 }
 
-.card-flop:nth-of-type(3) {
+.card-flop:deep(>*:nth-of-type(3)) {
   grid-column: 3 / span 3;
   position: relative;
   grid-row-start: 1;
   z-index: 2;
-}
-</style>
-<style>
-#flop {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr) var(--grid-gap);
-  grid-template-rows: 1fr;
-  align-items: start;
 }
 </style>

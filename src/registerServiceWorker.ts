@@ -1,5 +1,5 @@
 import { register } from "register-service-worker";
-import store from "@store";
+import pinia, { useGameStore } from "@stores/index.js";
 
 if (import.meta.env.PROD) {
   register(`/service-worker.js`, {
@@ -20,7 +20,7 @@ if (import.meta.env.PROD) {
     },
     updated() {
       console.log("New content is available; please refresh.");
-      store.dispatch("appUpdated");
+      useGameStore(pinia).markAppUpdated();
     },
     offline() {
       console.log(

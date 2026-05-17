@@ -1,6 +1,6 @@
 <script setup vapor lang="ts">
 import {computed, defineVaporAsyncComponent, useTemplateRef, VaporComponent} from "vue";
-import {useStore} from "vuex";
+import { useFinalStore } from "@stores/final.js";
 import FinalStack from "@components/FinalStack.vue";
 import {CARD_SUITS} from "@src/constants.js";
 
@@ -8,15 +8,15 @@ const WinningConfetti = defineVaporAsyncComponent(
     () => import("./Victory/WinningConfetti.vue") as Promise<VaporComponent>,
 );
 
-const store = useStore();
+const finalStore = useFinalStore();
 
-const stacks = computed(() => store.state.final.stacks);
+const stacks = computed(() => finalStore.suits);
 
 const gameIsWon = computed(() => {
   const isWin = CARD_SUITS.map((e) => {
-    console.log("isWin?", e, store.state.final[e].cards.length, store.state.final[e].cards.map(el=>el.rank))
+    console.log("isWin?", e, finalStore.stacks[e].length, finalStore.stacks[e].map(el=>el.rank))
 
-    return store.state.final[e].cards.length === 13
+    return finalStore.stacks[e].length === 13
   }).reduce(
       (a, b) => b && a,
   );

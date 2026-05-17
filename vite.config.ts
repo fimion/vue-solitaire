@@ -3,7 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import { VitePWA } from "vite-plugin-pwa";
 import path from "node:path";
 
-function resolveSrc(_path) {
+function resolveSrc(_path: string) {
   return path.resolve(__dirname, _path);
 }
 
@@ -12,7 +12,7 @@ export default defineConfig({
     alias: {
       "@components": resolveSrc("src/components"),
       "@assets": resolveSrc("src/assets"),
-      "@store": resolveSrc("src/store"),
+      "@stores": resolveSrc("src/stores"),
       "@global": resolveSrc("src/global"),
       "@class": resolveSrc("src/class"),
       "@template": resolveSrc("src/template"),

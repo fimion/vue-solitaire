@@ -1,6 +1,8 @@
 <script setup vapor lang="ts">
 import { computed } from "vue";
-import { useStore } from "vuex";
+import { usePlayStore } from "@stores/play.js";
+import { useFinalStore } from "@stores/final.js";
+import { useGameStore } from "@stores/game.js";
 import {
   PlayStackAction,
   FinalStackAction,
@@ -18,10 +20,12 @@ const props = defineProps({
   },
 });
 
-const store = useStore();
+const playStore = usePlayStore();
+const finalStore = useFinalStore();
+const gameStore = useGameStore();
 const { isSelected: checkIsSelected, currentSelection } = useSelection();
 
-const cards = computed(() => store.state.play[props.stack].cards);
+const cards = computed(() => playStore.stacks[props.stack]);
 const bottomCard = computed(() => {
   if (cards.value.length) {
     return cards.value[cards.value.length - 1];
@@ -29,14 +33,14 @@ const bottomCard = computed(() => {
   return null;
 });
 
-const selectedCard = computed(() => store.getters.selectedCard);
+const selectedCard = computed(() => gameStore.selectedCard);
 
 function moveCards(action: BaseAction) {
-  store.dispatch("moveCards", action);
+  gameStore.moveCards(action);
 }
 
 function selectCards(selection: BaseSelection) {
-  store.dispatch("selectCards", selection);
+  gameStore.selectCards(selection);
 }
 
 function cardDisabled(card: Card) {
@@ -44,7 +48,7 @@ function cardDisabled(card: Card) {
 }
 
 function getFinalStackTopCard(suit: string) {
-  return store.getters["final/" + suit + "/topCard"];
+  return finalStore.topCard(suit) as import("@class/Card.ts").default;
 }
 
 function emptyClickHandler() {

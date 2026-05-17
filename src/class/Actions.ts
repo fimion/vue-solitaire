@@ -2,12 +2,18 @@ import { CARD_RANKS, SUIT_OPPOSITES } from "@src/constants.js";
 import type Card from "@class/Card.ts";
 import { type BaseSelection } from "@class/Selections.ts";
 import EmptyCard from "@class/EmptyCard.ts";
+import { useFlopStore } from "@stores/flop.js";
+import { useDeckStore } from "@stores/deck.js";
+import { usePlayStore } from "@stores/play.js";
+import { useFinalStore } from "@stores/final.js";
+
+type ActionFn = (cards: Card[]) => void | Promise<void>;
 
 export class BaseAction {
-  action: string | null;
+  action: ActionFn | null;
   target: Card | EmptyCard | null;
 
-  constructor(action: string | null) {
+  constructor(action: ActionFn | null) {
     this.action = action;
     this.target = null;
   }
@@ -30,19 +36,19 @@ export class ClearSelectionAction extends BaseAction {
 
 export class CardFlopAction extends BaseAction {
   constructor() {
-    super("flop/flopCards");
+    super((cards) => useFlopStore().flopCards(cards));
   }
 }
 
 export class DeckResetAction extends BaseAction {
   constructor() {
-    super("deck/resetDeck");
+    super((cards) => useDeckStore().resetDeck(cards));
   }
 }
 
 export class PlayStackAction extends BaseAction {
   constructor(stack: number, target: Card | EmptyCard | null) {
-    super("play/" + stack + "/concatCards");
+    super((cards) => usePlayStore().concatCards(stack, cards));
     this.target = target;
   }
   validate(selection: BaseSelection) {
@@ -66,7 +72,7 @@ export class FinalStackAction extends BaseAction {
   stack: string;
 
   constructor(stack: string, target: Card) {
-    super("final/" + stack + "/pushCard");
+    super((cards) => useFinalStore().pushCard(stack, cards[0]));
     this.stack = stack;
     this.target = target;
   }

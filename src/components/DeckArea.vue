@@ -1,24 +1,30 @@
 <script setup vapor lang="ts">
 import { computed } from "vue";
-import { useStore } from "vuex";
+import { useDeckStore } from "@stores/deck.js";
+import { useFlopStore } from "@stores/flop.js";
+import { useGameStore } from "@stores/game.js";
 
 import { CardFlopAction, DeckResetAction } from "@class/Actions.js";
 import { DeckSelection, DeckResetSelection } from "@class/Selections.js";
 
-const store = useStore();
+import type Card from "@class/Card.ts";
 
-const topCard = computed(() => store.getters["deck/topCard"]);
-const deckEmpty = computed(() => store.getters["deck/deckEmpty"]);
-const nextFlop = computed(() => store.getters["deck/nextFlop"]);
+const deckStore = useDeckStore();
+const flopStore = useFlopStore();
+const gameStore = useGameStore();
 
-const getDeck = computed(() => store.getters["flop/getDeck"]);
+const topCard = computed(() => deckStore.topCard as Card);
+const deckEmpty = computed(() => deckStore.deckEmpty);
+const nextFlop = computed(() => deckStore.nextFlop);
+
+const getDeck = computed(() => flopStore.getDeck);
 
 function moveCards(action) {
-  store.dispatch("moveCards", action);
+  gameStore.moveCards(action);
 }
 
 function selectCards(selection) {
-  store.dispatch("selectCards", selection);
+  gameStore.selectCards(selection);
 }
 
 function flipCard() {

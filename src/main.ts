@@ -1,5 +1,5 @@
 import {type VaporComponent, createVaporApp, defineVaporAsyncComponent} from "vue";
-import store from "@store/index.js";
+import pinia, { useGameStore } from "@stores/index.js";
 import addGlobalComponents from "@global/index.js";
 import "./registerServiceWorker.js";
 
@@ -50,8 +50,6 @@ const PlayApp = asyncComponent(
  *
  */
 
-store.dispatch("preInit");
-
 const apps = [
   {
     el: "#deck",
@@ -83,13 +81,15 @@ apps.forEach(({ el, component }) => {
   if (document.querySelector(el)) {
     const app = createVaporApp(component as VaporComponent);
     addGlobalComponents(app);
-    app.use(store);
+    app.use(pinia);
     app.mount(el);
   }
 });
 
-store.dispatch("postInit");
+const gameStore = useGameStore();
+gameStore.preInit();
 
 if (!import.meta.env.PROD) {
   import("./devHelpers.js");
 }
+

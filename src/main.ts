@@ -86,7 +86,7 @@ apps.forEach(({ el, component }) => {
   }
 });
 
-const gameStore = useGameStore();
+const gameStore = useGameStore(pinia);
 gameStore.preInit();
 
 if (!import.meta.env.PROD) {

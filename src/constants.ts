@@ -25,7 +25,7 @@ export const READ_ONLY: PropertyDescriptor = Object.freeze({
  * @description A list of card ranks for a standard 52 card playing deck.
  * @constant
  */
-export const CARD_RANKS: CardRank[] = [
+export const CARD_RANKS: readonly CardRank[] = [
   "A",
   "2",
   "3",
@@ -45,7 +45,7 @@ export const CARD_RANKS: CardRank[] = [
  * @description A list of card suits for a standard 52 card playing deck.
  * @constant
  */
-export const CARD_SUITS: CardSuit[] = ["C", "D", "H", "S"] as const;
+export const CARD_SUITS: readonly CardSuit[] = ["C", "D", "H", "S"] as const;
 
 /**
  * @description A list of card suits that are red.

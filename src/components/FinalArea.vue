@@ -1,6 +1,6 @@
 <script setup vapor lang="ts">
 import {computed, defineVaporAsyncComponent, useTemplateRef, VaporComponent} from "vue";
-import { useFinalStore } from "@stores/final.js";
+import {useFinalStore} from "@stores/final.js";
 import FinalStack from "@components/FinalStack.vue";
 import {CARD_SUITS} from "@src/constants.js";
 
@@ -13,15 +13,9 @@ const finalStore = useFinalStore();
 const stacks = computed(() => finalStore.suits);
 
 const gameIsWon = computed(() => {
-  const isWin = CARD_SUITS.map((e) => {
-    console.log("isWin?", e, finalStore.stacks[e].length, finalStore.stacks[e].map(el=>el.rank))
-
-    return finalStore.stacks[e].length === 13
-  }).reduce(
+  return CARD_SUITS.map((e) => finalStore.stacks[e].length === 13).reduce(
       (a, b) => b && a,
-  );
-  console.log("WinningConfetti", isWin);
-  return isWin
+  )
 });
 
 const modalRef = useTemplateRef("modal")

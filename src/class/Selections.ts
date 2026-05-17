@@ -7,6 +7,12 @@
 /** @typedef {import('@/class/Card')} Card */
 
 import type Card from "@class/Card.ts";
+import { useDeckStore } from "@stores/deck.js";
+import { useFlopStore } from "@stores/flop.js";
+import { usePlayStore } from "@stores/play.js";
+import { useFinalStore } from "@stores/final.js";
+
+type CleanUpFn = (cards: Card[]) => void | Promise<void>;
 
 /**
  * This class defines the basic things all Selections will contain.
@@ -14,7 +20,7 @@ import type Card from "@class/Card.ts";
  */
 class BaseSelection {
   cards: Card[];
-  cleanUp: string | null;
+  cleanUp: CleanUpFn | null;
   hasAction: boolean;
 
   /**
@@ -30,7 +36,7 @@ class BaseSelection {
 
     /**
      * Our clean up action we want to dispatch.
-     * @type {string|null}
+     * @type {CleanUpFn|null}
      */
     this.cleanUp = null;
 
@@ -49,35 +55,35 @@ class BaseSelection {
 class DeckSelection extends BaseSelection {
   constructor(cards: Card[]) {
     super(cards);
-    this.cleanUp = "deck/popFlop";
+    this.cleanUp = (c) => useDeckStore().popFlop(c);
   }
 }
 
 class DeckResetSelection extends BaseSelection {
   constructor(cards: Card[]) {
     super(cards);
-    this.cleanUp = "flop/resetDeck";
+    this.cleanUp = () => useFlopStore().resetDeck();
   }
 }
 
 class FlopSelection extends BaseSelection {
   constructor(card: Card) {
     super([card]);
-    this.cleanUp = "flop/popCard";
+    this.cleanUp = () => useFlopStore().popCard();
   }
 }
 
 class PlaySelection extends BaseSelection {
-  constructor(stack, cards) {
+  constructor(stack: number, cards: Card[]) {
     super(cards);
-    this.cleanUp = "play/" + stack + "/spliceCards";
+    this.cleanUp = (c) => usePlayStore().spliceCards(stack, c);
   }
 }
 
 class FinalSelection extends BaseSelection {
-  constructor(stack: number, card: Card) {
+  constructor(suit: string, card: Card) {
     super([card]);
-    this.cleanUp = "final/" + stack + "/popCard";
+    this.cleanUp = () => useFinalStore().popCard(suit);
   }
 }
 
@@ -89,3 +95,4 @@ export {
   PlaySelection,
   FinalSelection,
 };
+

@@ -1,12 +1,12 @@
 <script setup vapor  lang="ts">
-import { useStore } from "vuex";
+import { useGameStore } from "@stores/game.js";
 
 const emit = defineEmits(["confirm"]);
-const store = useStore();
+const gameStore = useGameStore();
 
 function startGame() {
   emit("confirm");
-  store.dispatch("newGame");
+  gameStore.newGame();
 }
 </script>
 <template>

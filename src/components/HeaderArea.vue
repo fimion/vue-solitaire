@@ -1,28 +1,26 @@
 <script setup vapor lang="ts">
 import { computed, ref } from "vue";
-import { useStore } from "vuex";
+import { useDeckStore } from "@stores/deck.js";
+import { useGameStore } from "@stores/game.js";
 import DefaultCardFaces from "@template/card-faces/default-card-faces.vue";
 import NewGameButton from "@global/new-game-button.vue";
 import BaseModal from "@global/base-modal.vue";
 
-const store = useStore();
+const deckStore = useDeckStore();
+const gameStore = useGameStore();
 
-const options = computed(() => store.state.options);
-const appUpdated = computed(() => store.state.appUpdated);
+const appUpdated = computed(() => gameStore.appUpdated);
 
 const cardsDrawn = computed({
   get() {
-    return options.value.cardsDrawn;
+    return deckStore.cardsDrawn;
   },
   set(value) {
     const confirm = globalThis.confirm(
       "Changing this setting will deal a new game. Are you sure?",
     );
     if (confirm) {
-      store.dispatch("setCardsDrawn", value);
-    } else {
-      store.commit("SET_CARDS_DRAWN", options.value.cardsDrawn);
-      // Removed this.$forceUpdate() as computed properties handle reactivity correctly.
+      gameStore.setCardsDrawn(value);
     }
   },
 });

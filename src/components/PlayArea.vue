@@ -1,10 +1,10 @@
 <script setup vapor lang="ts">
 import { computed } from "vue";
-import { useStore } from "vuex";
+import { usePlayStore } from "@stores/play.js";
 import PlayStack from "@components/PlayStack.vue";
 
-const store = useStore();
-const stacks = computed(() => store.state.play.stacks);
+const playStore = usePlayStore();
+const stacks = computed(() => playStore.stacks);
 </script>
 
 <template>

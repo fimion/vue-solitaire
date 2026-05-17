@@ -3,31 +3,29 @@
  */
 
 /**
- * @typedef {'A'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'|'10'|'J'|'Q'|'K'} CardRank
  * @description allowed card ranks in a standard 52 card deck
  */
-
+export type CardRank = 'A'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'|'10'|'J'|'Q'|'K';
 /**
- * @typedef {'C'|'D'|'H'|'S'} CardSuit
  * @description allowed suits in a standard 52 card deck
  */
+export type CardSuit = 'C' | 'D' | 'H' | 'S';
+
 
 /**
  * the way to set something read only
- * @type {PropertyDescriptor}
  * @constant
  */
-export const READ_ONLY = Object.freeze({
+export const READ_ONLY: PropertyDescriptor = Object.freeze({
   writable: false,
   configurable: false,
 });
 
 /**
  * @description A list of card ranks for a standard 52 card playing deck.
- * @type {CardRank[]}
  * @constant
  */
-export const CARD_RANKS = [
+export const CARD_RANKS: readonly CardRank[] = [
   "A",
   "2",
   "3",
@@ -41,32 +39,28 @@ export const CARD_RANKS = [
   "J",
   "Q",
   "K",
-];
+] as const;
 
 /**
  * @description A list of card suits for a standard 52 card playing deck.
- * @type {CardSuit[]}
  * @constant
  */
-export const CARD_SUITS = ["C", "D", "H", "S"];
+export const CARD_SUITS: readonly CardSuit[] = ["C", "D", "H", "S"] as const;
 
 /**
  * @description A list of card suits that are red.
- * @type {Set.<string>}
  * @constant
  */
 export const SUIT_RED = new Set(["D", "H"]);
 
 /**
  * @description A list of card suits that are black.
- * @type {Set.<string>}
  * @constant
  */
 export const SUIT_BLACK = new Set(["C", "S"]);
 
 /**
  * @description An object used to look up which suits are opposite the keyed suit.
- * @type {Map.<CardSuit,Set.<string>>}
  * @constant
  */
 export const SUIT_OPPOSITES = new Map([
@@ -78,10 +72,9 @@ export const SUIT_OPPOSITES = new Map([
 
 /**
  * A Map of the symbols for the suits.
- * @type {object.<CardSuit,string>}
  * @constant
  */
-export const SUIT_SYMBOLS = {
+export const SUIT_SYMBOLS: Record<CardSuit, string> = {
   H: "♥",
   D: "♦",
   C: "♣",
@@ -89,10 +82,9 @@ export const SUIT_SYMBOLS = {
 };
 /**
  * A map of the suits to their names
- * @type {object.<CardSuit,string>}
  * @constant
  */
-export const SUIT_NAMES = {
+export const SUIT_NAMES: Record<CardSuit, string> = {
   H: "Hearts",
   D: "Diamonds",
   C: "Clubs",
@@ -101,10 +93,9 @@ export const SUIT_NAMES = {
 
 /**
  * A map of the ranks to their names.
- * @type {object.<CardRank,string>}
  * @constant
  */
-export const RANK_NAMES = {
+export const RANK_NAMES: Record<CardRank, string> = {
   A: "Ace",
   2: "Two",
   3: "Three",

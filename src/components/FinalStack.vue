@@ -1,8 +1,10 @@
 <script setup vapor lang="ts">
 import { computed } from "vue";
-import { useStore } from "vuex";
+import { useFinalStore } from "@stores/final.js";
+import { useGameStore } from "@stores/game.js";
 import { FinalStackAction } from "@class/Actions.js";
 import { useSelection } from "@components/_common.js";
+import type Card from "@class/Card.ts";
 
 const props = defineProps({
   suit: {
@@ -11,21 +13,16 @@ const props = defineProps({
   },
 });
 
-const store = useStore();
+const finalStore = useFinalStore();
+const gameStore = useGameStore();
 const { isSelected: checkIsSelected } = useSelection();
 
-//const symbol = computed(() => SUIT_SYMBOLS[props.suit]);
-const topCard = computed(
-  () => store.getters["final/" + props.suit + "/topCard"],
-);
-const deckEmpty = computed(
-  () => store.getters["final/" + props.suit + "/deckEmpty"],
-);
+const topCard = computed(() => finalStore.topCard(props.suit) as Card);
+const deckEmpty = computed(() => finalStore.deckEmpty(props.suit));
 
 function handleClick() {
-  if (store.getters.selectedCard) {
-    store.dispatch(
-      "moveCards",
+  if (gameStore.selectedCard) {
+    gameStore.moveCards(
       new FinalStackAction(props.suit, topCard.value),
     );
   }

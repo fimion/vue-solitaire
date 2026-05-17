@@ -6,7 +6,7 @@ import {
   SUIT_NAMES,
   RANK_NAMES,
   SUIT_SYMBOLS,
-  READ_ONLY,
+  READ_ONLY, CardRank, CardSuit,
 } from "@src/constants.js";
 
 /** @typedef {import('@/constants').CardRank} CardRank*/
@@ -19,8 +19,8 @@ import {
 class Card {
   faceUp: boolean;
   card: string;
-  rank: string;
-  suit: string;
+  rank: CardRank;
+  suit: CardSuit;
   symbol: string;
   readableName: string;
   isEmpty: boolean;
@@ -30,7 +30,7 @@ class Card {
    * @param {String.<CardRank>} rank
    * @param {String.<CardSuit>} suit
    */
-  constructor(rank: string, suit: string) {
+  constructor(rank: CardRank, suit: CardSuit) {
     /**
      * @description this card is face up of face down
      * @type {boolean}

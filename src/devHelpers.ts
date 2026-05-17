@@ -1,6 +1,6 @@
 import {createVaporApp, VaporComponent} from "vue";
-import store from "@store";
-import addGlobalComponents from "@global";
+import pinia from "@stores/index.js";
+import addGlobalComponents from "@global/index.js";
 import DevTools from "@components/DevTools.vue";
 
 const devToolsElement = document.createElement("div");
@@ -9,5 +9,5 @@ document.body.append(devToolsElement);
 
 const devToolsApp = createVaporApp(DevTools as VaporComponent);
 addGlobalComponents(devToolsApp);
-devToolsApp.use(store);
+devToolsApp.use(pinia);
 devToolsApp.mount(devToolsElement);

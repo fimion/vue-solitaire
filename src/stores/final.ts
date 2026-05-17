@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { CARD_SUITS } from "@src/constants.js";
+import { CARD_SUITS, type CardSuit } from "@src/constants.js";
 import EmptyCard from "@class/EmptyCard.js";
 import type Card from "@class/Card.ts";
 
@@ -19,7 +19,7 @@ export const useFinalStore = defineStore("final", {
     stacks: makeInitialStacks(),
   }),
   getters: {
-    suits(): Suit[] {
+    suits(): readonly CardSuit[] {
       return CARD_SUITS;
     },
   },

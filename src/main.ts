@@ -3,6 +3,9 @@ import pinia, { useGameStore } from "@stores/index.js";
 import addGlobalComponents from "@global/index.js";
 import "./registerServiceWorker.js";
 
+const gameStore = useGameStore(pinia);
+gameStore.preInit();
+
 /**
  *
  * @param name - component name for dev tools
@@ -86,8 +89,7 @@ apps.forEach(({ el, component }) => {
   }
 });
 
-const gameStore = useGameStore(pinia);
-gameStore.preInit();
+
 
 if (!import.meta.env.PROD) {
   import("./devHelpers.js");

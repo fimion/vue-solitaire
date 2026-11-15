@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { useFinalStore } from "@stores/final.js";
 import { useGameStore } from "@stores/game.js";
 import { FinalStackAction } from "@class/Actions.js";
+import { FinalSelection } from "@class/Selections.js";
 import { useSelection } from "@components/_common.js";
 import type Card from "@class/Card.ts";
 
@@ -25,6 +26,8 @@ function handleClick() {
     gameStore.moveCards(
       new FinalStackAction(props.suit, topCard.value),
     );
+  } else if (!deckEmpty.value) {
+    gameStore.selectCards(new FinalSelection(props.suit, topCard.value));
   }
 }
 

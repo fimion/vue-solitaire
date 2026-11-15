@@ -86,5 +86,6 @@ a:active {
   padding: 5px 10px;
   max-width: 780px;
   width: 100%;
+  box-sizing: border-box;
 }
 </style>

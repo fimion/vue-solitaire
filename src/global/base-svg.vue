@@ -12,6 +12,7 @@ defineOptions({
 svg {
   pointer-events: none;
   width: 100%;
+  max-height: 100%;
   fill: transparent;
 }
 </style>

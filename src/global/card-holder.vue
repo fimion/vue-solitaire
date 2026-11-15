@@ -16,10 +16,22 @@ import BaseSvg from "./base-svg.vue";
   border: var(--color-white) solid 3px;
   border-radius: 0.5rem;
   max-width: 100px;
-  max-height: 150px;
+  max-height: var(--card-height);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   background-color: transparent;
   opacity: 0.5;
+  padding: 0;
+  margin: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .card-holder {
+    max-height: 150px;
+  }
 }
 
 .card-holder:disabled {

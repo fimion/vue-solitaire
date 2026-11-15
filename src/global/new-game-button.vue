@@ -1,12 +1,18 @@
-<script setup vapor  lang="ts">
+<script setup vapor lang="ts">
 import { useGameStore } from "@stores/game.js";
+import type { Seed } from "@src/utils/shuffle.js";
 
+interface Props {
+  seed?: Seed;
+}
+
+const props = defineProps<Props>();
 const emit = defineEmits(["confirm"]);
 const gameStore = useGameStore();
 
 function startGame() {
   emit("confirm");
-  gameStore.newGame();
+  gameStore.newGame(props.seed);
 }
 </script>
 <template>

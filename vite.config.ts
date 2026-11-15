@@ -1,6 +1,7 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import vue from "@vitejs/plugin-vue";
 import { VitePWA } from "vite-plugin-pwa";
+import { playwright } from "@vitest/browser-playwright";
 import path from "node:path";
 
 function resolveSrc(_path: string) {
@@ -23,4 +24,12 @@ export default defineConfig({
     vue(),
     VitePWA({ injectRegister: null, filename: "service-worker.js", registerType: "autoUpdate" }),
   ],
+  test: {
+    browser: {
+      enabled: true,
+      provider: playwright(),
+      headless: true,
+      instances: [{ browser: "chromium" }],
+    },
+  },
 });

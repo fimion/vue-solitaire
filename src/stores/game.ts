@@ -5,6 +5,7 @@ import { useFinalStore } from "./final.js";
 import { usePlayStore } from "./play.js";
 import type { BaseAction } from "@class/Actions.ts";
 import type { BaseSelection } from "@class/Selections.ts";
+import type { Seed } from "@src/utils/shuffle.js";
 
 export const useGameStore = defineStore("game", {
   state: () => ({
@@ -43,7 +44,7 @@ export const useGameStore = defineStore("game", {
     markAppUpdated() {
       this.appUpdated = true;
     },
-    async newGame() {
+    async newGame(seed?: Seed) {
       const deckStore = useDeckStore();
       const flopStore = useFlopStore();
       const finalStore = useFinalStore();
@@ -52,8 +53,12 @@ export const useGameStore = defineStore("game", {
       finalStore.newGame();
       playStore.newGame();
       flopStore.newGame();
-      deckStore.newGame();
+      deckStore.newGame(seed);
       await playStore.initPlayArea();
+    },
+    async replayGame() {
+      const deckStore = useDeckStore();
+      return this.newGame(deckStore.seed ?? undefined);
     },
     setCardsDrawn(value: number) {
       const deckStore = useDeckStore();

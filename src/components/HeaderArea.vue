@@ -2,6 +2,7 @@
 import { computed, ref } from "vue";
 import { useDeckStore } from "@stores/deck.js";
 import { useGameStore } from "@stores/game.js";
+import { buildShareUrl, parseSeedFromSearch } from "@src/utils/shuffle.js";
 import DefaultCardFaces from "@template/card-faces/default-card-faces.vue";
 import NewGameButton from "@global/new-game-button.vue";
 import BaseModal from "@global/base-modal.vue";
@@ -10,6 +11,36 @@ const deckStore = useDeckStore();
 const gameStore = useGameStore();
 
 const appUpdated = computed(() => gameStore.appUpdated);
+const currentSeed = computed(() => deckStore.seed ?? undefined);
+const shareUrl = computed(() =>
+  buildShareUrl(
+    globalThis.location?.href ?? "http://localhost/",
+    deckStore.seed,
+  ),
+);
+const copied = ref(false);
+
+async function copyShareLink() {
+  await globalThis.navigator?.clipboard?.writeText(shareUrl.value);
+  copied.value = true;
+}
+
+function resetCopied() {
+  copied.value = false;
+}
+
+const invitedSeed = ref<bigint | null>(
+  parseSeedFromSearch(globalThis.location?.search ?? ""),
+);
+
+function clearSeedFromUrl() {
+  if (!globalThis.location || !globalThis.history?.replaceState) return;
+  const url = new URL(globalThis.location.href);
+  if (url.searchParams.has("seed")) {
+    url.searchParams.delete("seed");
+    globalThis.history.replaceState({}, "", url);
+  }
+}
 
 const cardsDrawn = computed({
   get() {
@@ -24,7 +55,6 @@ const cardsDrawn = computed({
     }
   },
 });
-
 </script>
 <template>
   <div class="github">
@@ -40,10 +70,43 @@ const cardsDrawn = computed({
       <form method="dialog">
         <h1>Start A New Game</h1>
         <p>Are you sure you want to start a new game?</p>
-        <new-game-button/>
+        <new-game-button />
         <button>
           Do Not Start a New Game
         </button>
+      </form>
+    </base-modal>
+    <base-modal>
+      <template #activator-text>Replay</template>
+      <form method="dialog">
+        <h1>Replay Current Game</h1>
+        <p>Are you sure you want to restart the current game?</p>
+        <new-game-button :seed="currentSeed">
+          Replay Game
+        </new-game-button>
+        <button>
+          Do Not Replay Game
+        </button>
+      </form>
+    </base-modal>
+    <base-modal @close="resetCopied">
+      <template #activator-text>Share</template>
+      <form method="dialog">
+        <h1>Share Current Game</h1>
+        <p>Share this link to play game {{ currentSeed }}:</p>
+        <p>
+          <input
+            type="text"
+            readonly
+            :value="shareUrl"
+            aria-label="Shareable game link"
+            class="share-url-input"
+          />
+        </p>
+        <button type="button" @click="copyShareLink">
+          {{ copied ? "Copied!" : "Copy Link" }}
+        </button>
+        <button>Close</button>
       </form>
     </base-modal>
     <base-modal>
@@ -61,6 +124,28 @@ const cardsDrawn = computed({
         </div>
       </form>
     </base-modal>
+    <base-modal
+      v-if="invitedSeed !== null"
+      default-open
+      @close="clearSeedFromUrl"
+    >
+      <template #activator>
+        <span><!-- Intentionally left blank --></span>
+      </template>
+      <form method="dialog">
+        <h1>Start Seeded Game</h1>
+        <p>
+          You've been invited to play game {{ invitedSeed }}. Would you like to
+          start a new game with that seed?
+        </p>
+        <new-game-button :seed="invitedSeed" @confirm="clearSeedFromUrl">
+          Start New Game
+        </new-game-button>
+        <button @click="clearSeedFromUrl">
+          Do Not Start a New Game
+        </button>
+      </form>
+    </base-modal>
   </div>
 </template>
 <style scoped>
@@ -74,6 +159,12 @@ a:active {
 }
 
 .github {
+}
+
+.share-url-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px;
 }
 </style>
 <style>

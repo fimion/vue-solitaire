@@ -168,6 +168,8 @@ const color = computed(() => (SUIT_RED.has(suit.value as string) ? "red" : "blac
   align-items: center;
   line-height: 0;
   height: 100%;
+  padding: 0;
+  margin: 0;
   position: relative;
   transition: box-shadow 0.2s ease,
   filter 0.2s ease,
@@ -239,7 +241,13 @@ text {
 }
 
 .corner {
-  font-size: 18px;
+  font-size: 22px;
+}
+
+@media screen and (min-width: 768px) {
+  .corner {
+    font-size: 18px;
+  }
 }
 
 .face-card {

@@ -45,6 +45,7 @@ export const useGameStore = defineStore("game", {
       this.appUpdated = true;
     },
     async newGame(seed?: Seed) {
+      this.currentSelection = null;
       const deckStore = useDeckStore();
       const flopStore = useFlopStore();
       const finalStore = useFinalStore();

@@ -1,5 +1,5 @@
 <script setup vapor lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, useTemplateRef } from "vue";
 import { useDeckStore } from "@stores/deck.js";
 import { useGameStore } from "@stores/game.js";
 import { buildShareUrl, parseSeedFromSearch } from "@src/utils/shuffle.js";
@@ -12,6 +12,7 @@ const gameStore = useGameStore();
 
 const appUpdated = computed(() => gameStore.appUpdated);
 const currentSeed = computed(() => deckStore.seed ?? undefined);
+const cardsDrawnSelect = useTemplateRef<HTMLSelectElement>("cardsDrawnSelect");
 const shareUrl = computed(() =>
   buildShareUrl(
     globalThis.location?.href ?? "http://localhost/",
@@ -52,6 +53,8 @@ const cardsDrawn = computed({
     );
     if (confirm) {
       gameStore.setCardsDrawn(value);
+    } else if (cardsDrawnSelect.value) {
+      cardsDrawnSelect.value.value = String(deckStore.cardsDrawn);
     }
   },
 });
@@ -115,7 +118,7 @@ const cardsDrawn = computed({
         <h1>Options</h1>
         <p>Options save automatically</p>
         <label for="cardsDrawn">Number of cards drawn at a time: </label>
-        <select id="cardsDrawn" v-model="cardsDrawn" name="cardsDrawn">
+        <select id="cardsDrawn" ref="cardsDrawnSelect" v-model="cardsDrawn" name="cardsDrawn">
           <option :value="1">One</option>
           <option :value="3">Three</option>
         </select>

@@ -62,11 +62,8 @@ export const useGameStore = defineStore("game", {
     },
     setCardsDrawn(value: number) {
       const deckStore = useDeckStore();
-      const oldValue = deckStore.cardsDrawn;
       deckStore.cardsDrawn = value;
-      if (oldValue !== value) {
-        return this.newGame();
-      }
+      return this.newGame();
     },
   },
   persist: {

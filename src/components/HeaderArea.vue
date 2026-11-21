@@ -1,5 +1,5 @@
 <script setup vapor lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useDeckStore } from "@stores/deck.js";
 import { useGameStore } from "@stores/game.js";
 import { buildShareUrl, parseSeedFromSearch } from "@src/utils/shuffle.js";
@@ -37,14 +37,28 @@ function clearSeedFromUrl() {
   }
 }
 
-const cardsDrawn = computed({
-  get() {
-    return deckStore.cardsDrawn;
+const cardsDrawn = ref(deckStore.cardsDrawn);
+
+watch(
+  () => deckStore.cardsDrawn,
+  (value) => {
+    cardsDrawn.value = value;
   },
-  set(value) {
-    const confirm = globalThis.confirm("Changing this setting will deal a new game. Are you sure?");
-    gameStore.setCardsDrawn(confirm ? value : deckStore.cardsDrawn);
-  },
+);
+
+watch(cardsDrawn, (value, oldValue) => {
+  if (value !== deckStore.cardsDrawn) {
+    const newName = value === 1 ? "one card" : "three cards";
+    const oldName = oldValue === 1 ? "one card" : "three cards";
+    const confirm = globalThis.confirm(
+      `Changing from dealing ${oldName} to ${newName} will deal a new game. Are you sure?`,
+    );
+    if (confirm) {
+      gameStore.setCardsDrawn(value);
+    } else {
+      cardsDrawn.value = deckStore.cardsDrawn;
+    }
+  }
 });
 </script>
 <template>

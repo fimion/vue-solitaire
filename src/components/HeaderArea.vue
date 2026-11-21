@@ -1,5 +1,5 @@
 <script setup vapor lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useDeckStore } from "@stores/deck.js";
 import { useGameStore } from "@stores/game.js";
 import { buildShareUrl, parseSeedFromSearch } from "@src/utils/shuffle.js";
@@ -13,10 +13,7 @@ const gameStore = useGameStore();
 const appUpdated = computed(() => gameStore.appUpdated);
 const currentSeed = computed(() => deckStore.seed ?? undefined);
 const shareUrl = computed(() =>
-  buildShareUrl(
-    globalThis.location?.href ?? "http://localhost/",
-    deckStore.seed,
-  ),
+  buildShareUrl(globalThis.location?.href ?? "http://localhost/", deckStore.seed),
 );
 const copied = ref(false);
 
@@ -29,9 +26,7 @@ function resetCopied() {
   copied.value = false;
 }
 
-const invitedSeed = ref<bigint | null>(
-  parseSeedFromSearch(globalThis.location?.search ?? ""),
-);
+const invitedSeed = ref<bigint | null>(parseSeedFromSearch(globalThis.location?.search ?? ""));
 
 function clearSeedFromUrl() {
   if (!globalThis.location || !globalThis.history?.replaceState) return;
@@ -42,18 +37,28 @@ function clearSeedFromUrl() {
   }
 }
 
-const cardsDrawn = computed({
-  get() {
-    return deckStore.cardsDrawn;
+const cardsDrawn = ref(deckStore.cardsDrawn);
+
+watch(
+  () => deckStore.cardsDrawn,
+  (value) => {
+    cardsDrawn.value = value;
   },
-  set(value) {
+);
+
+watch(cardsDrawn, (value, oldValue) => {
+  if (value !== deckStore.cardsDrawn) {
+    const newName = value === 1 ? "one card" : "three cards";
+    const oldName = oldValue === 1 ? "one card" : "three cards";
     const confirm = globalThis.confirm(
-      "Changing this setting will deal a new game. Are you sure?",
+      `Changing from dealing ${oldName} to ${newName} will deal a new game. Are you sure?`,
     );
     if (confirm) {
       gameStore.setCardsDrawn(value);
+    } else {
+      cardsDrawn.value = deckStore.cardsDrawn;
     }
-  },
+  }
 });
 </script>
 <template>
@@ -71,9 +76,7 @@ const cardsDrawn = computed({
         <h1>Start A New Game</h1>
         <p>Are you sure you want to start a new game?</p>
         <new-game-button />
-        <button>
-          Do Not Start a New Game
-        </button>
+        <button>Do Not Start a New Game</button>
       </form>
     </base-modal>
     <base-modal>
@@ -81,12 +84,8 @@ const cardsDrawn = computed({
       <form method="dialog">
         <h1>Replay Current Game</h1>
         <p>Are you sure you want to restart the current game?</p>
-        <new-game-button :seed="currentSeed">
-          Replay Game
-        </new-game-button>
-        <button>
-          Do Not Replay Game
-        </button>
+        <new-game-button :seed="currentSeed"> Replay Game </new-game-button>
+        <button>Do Not Replay Game</button>
       </form>
     </base-modal>
     <base-modal @close="resetCopied">
@@ -124,26 +123,20 @@ const cardsDrawn = computed({
         </div>
       </form>
     </base-modal>
-    <base-modal
-      v-if="invitedSeed !== null"
-      default-open
-      @close="clearSeedFromUrl"
-    >
+    <base-modal v-if="invitedSeed !== null" default-open @close="clearSeedFromUrl">
       <template #activator>
         <span><!-- Intentionally left blank --></span>
       </template>
       <form method="dialog">
         <h1>Start Seeded Game</h1>
         <p>
-          You've been invited to play game {{ invitedSeed }}. Would you like to
-          start a new game with that seed?
+          You've been invited to play game {{ invitedSeed }}. Would you like to start a new game
+          with that seed?
         </p>
         <new-game-button :seed="invitedSeed" @confirm="clearSeedFromUrl">
           Start New Game
         </new-game-button>
-        <button @click="clearSeedFromUrl">
-          Do Not Start a New Game
-        </button>
+        <button @click="clearSeedFromUrl">Do Not Start a New Game</button>
       </form>
     </base-modal>
   </div>

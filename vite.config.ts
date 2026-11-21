@@ -5,7 +5,7 @@ import { playwright } from "@vitest/browser-playwright";
 import path from "node:path";
 
 function resolveSrc(_path: string) {
-  return path.resolve(__dirname, _path);
+  return path.resolve(import.meta.dirname, _path);
 }
 
 export default defineConfig({
@@ -19,6 +19,9 @@ export default defineConfig({
       "@template": resolveSrc("src/template"),
       "@src": resolveSrc("src"),
     },
+  },
+  staged: {
+    "*": "vp check --fix",
   },
   plugins: [
     vue(),
